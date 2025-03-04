@@ -2,7 +2,14 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <nav th:fragment="nav">
     <div id="nav_section">
+        <!--teacher 부분은 th:if 로 나중에 role을 검사할 예정입니다-->
+        <a href="/view/teacher/problemRegist">문제등록</a>
 
+        <a href="/view/student/problemList">문제풀기</a>
+        <a href="/view/student/scoreList">성적조회</a>
+
+        <a href="/view/common/communityList">커뮤니티</a>
+        <a href="/view/common/suggestionList">건의사항</a>
     </div>
 </nav>
 </html>

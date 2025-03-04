@@ -2,7 +2,12 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <header th:fragment="header">
     <div id="header_section">
-        SQL 문제은행
+        <a href="/test1">SQL 문제은행</a>
+    </div>
+    <div id="header_authentication">
+    <!--th:if user != null 이면 로그아웃으로 뜨게 할 예정입니다-->
+        <a href="/test1">로그인</a>
+        <a href="/test1">회원가입</a>
     </div>
 </header>
 </html>
