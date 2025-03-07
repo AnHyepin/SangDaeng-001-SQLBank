@@ -1,0 +1,112 @@
+#adjust_section {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+#main_section {
+    width: 1000px;
+    margin-top: 20px;
+}
+
+#main_info_section {}
+
+.main_info_text,
+.main_choice_text {
+    font-size: 25px;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 8px;
+    color: #002b2b;
+}
+
+.main_info_input,
+.main_choice_input {
+    width: 1000px;
+    height: 100px;
+    font-size: 20px;
+    padding: 12px;
+    line-height: 1.5rem;
+    border: 1px #ddd solid;
+    border-radius: 10px;
+    scrollbar-width: none;
+}
+
+.main_info_input,
+.main_choice_input:focus {
+    outline: none;
+}
+
+#main_info_difficulty {
+    display: flex;
+    font-size: 25px;
+    border: 1px #ddd solid;
+    border-radius: 10px;
+    padding: 15px 25px 15px 15px;
+}
+
+#main_info_difficulty:focus {
+    outline: none;
+}
+
+#line {
+    width: 1000px;
+    border-bottom: 1px #ddd solid;
+    margin: 20px 0;
+}
+
+#main_choice_section {
+    position: relative;
+    overflow: visible;
+}
+
+.main_choice_description_text {
+    font-size: 20px;
+    color: #0062ff;
+}
+
+.main_choice_text {}
+
+.main_choice_input {}
+
+#button_container {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    display: flex;
+    justify-content: center;
+    width: 1000px;
+    gap: 50px;
+}
+
+#add_choice_btn {
+    width: 300px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #0092ff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 30px;
+    border-radius: 10px;
+    transition: 0.1s ease;
+}
+#add_choice_btn:hover{
+    scale: 1.05;
+}
+#regist_btn{
+    width: 300px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    font-size: 30px;
+    border-radius: 10px;
+    transition: 0.1s ease;
+}
+#regist_btn:hover{
+    scale: 1.05;
+}

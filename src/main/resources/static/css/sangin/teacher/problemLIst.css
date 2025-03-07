@@ -1,0 +1,108 @@
+#adjust_section {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+#main_section {
+    margin-top: 40px;
+}
+
+#search_container {
+    display: flex;
+    width: 1200px;
+    justify-content: flex-end;
+}
+
+#search_input {
+    height: 50px;
+    width: 300px;
+    font-size: 23px;
+    padding: 0 12px;
+    outline: none;
+    border-radius: 10px 0 0 10px;
+    border: #ddd 1px solid;
+}
+
+#search_btn {
+    height: 50px;
+    width: 80px;
+    font-size: 24px;
+    border-radius: 0 10px 10px 0;
+    background-color: #0092ff;
+    border: none;
+    color: white;
+}
+
+#problem_list_text {
+    margin: 30px 0;
+    font-size: 35px;
+    font-weight: bold;
+}
+
+#problem_text_box {
+    width: 1200px;
+    background-color: #0092ff;
+    border-radius: 10px 10px 0 0;
+    display: flex;
+}
+
+#problem_text_box>span {
+    align-items: center;
+    height: 60px;
+    font-size: 25px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    font-weight: bold;
+}
+
+#problem_id_text {
+    width: 15%;
+}
+
+#problem_question_text {
+    width: 55%;
+}
+
+#problem_created_by_text {
+    width: 15%;
+}
+
+#problem_created_at_text {
+    width: 15%;
+}
+
+
+.problem {
+    display: flex;
+    width: 1200px;
+    height: 60px;
+    align-items: center;
+    border-bottom: 1px #ddd solid;
+    border-left: 1px #ddd solid;
+    border-right: 1px #ddd solid;
+}
+
+.problem>span {
+    font-size: 24px;
+    display: flex;
+    justify-content: center;
+    overflow-x: hidden;
+}
+
+.problem_id {
+    width: 15%;
+}
+
+.problem_question {
+    width: 55%;
+}
+
+.problem_created_by {
+    width: 15%;
+}
+
+.problem_created_at {
+    width: 15%;
+}

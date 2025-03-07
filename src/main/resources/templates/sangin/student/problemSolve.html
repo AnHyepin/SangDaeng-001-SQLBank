@@ -1,24 +1,186 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{/layout/layout/layout}">
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>TITLE</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>시험지</title>
+    <link rel="stylesheet" href="/student/problemSolve.css">
 </head>
-<body>
-<!-- content -->
-<div layout:fragment="content">
-    <!--여기서부터-->
 
-    <!--여기까지 작업하시면 됩니다-->
+<body>
+<div id="adjust_section">
+    <div id="exam_paper">
+        <div id="main_section">
+            <!-- header -->
+            <div id="main_header">
+                <div id="main_header_box1">
+                    <span id="box1_left">연습용</span>
+                    <span id="box1_right">랜덤형</span>
+                </div>
+                <div id="main_header_box2">
+                    20XX 수강생 SQL 문제지
+                </div>
+                <div id="main_header_box3">
+                    초급 영역
+                </div>
+                <div id="main_header_box4">
+                    <span id="current_name_text">성명</span>
+                    <span id="current_name">한상인</span>
+                </div>
+            </div>
+            <!-- center -->
+            <div id="main_content">
+                <div id="main_left_section">
+
+                    <div class="problem">
+                        <div class="problem_metadata">
+                            <span class="problem_id">문제 ID : 72029543</span>
+                            <span class="created_by">출제자 : 관리자</span>
+                        </div>
+                        <div class="problem_question_box">
+                            <span class="problem_no">1.</span>
+                            <!-- <span class="question">각 문제의 정답은 몇 번입니까?</span> -->
+                            <span class="question">문제의 정답은 몇 번입니까?</span>
+                        </div>
+
+                        <span class="description">
+                                문제설명은 여기서 시작되는데 글자 여백과 width 최댓값을 조절할까 생각 중입니다 가로로 너무 긴경우에는 가독성이 떨어지기 때문입니다
+                                문제설명은 여기서 시작되는데 글자 여백과 width 최댓값을 조절할까 생각 중입니다 가로로 너무 긴경우에는 가독성이 떨어지기 때문입니다.
+                            </span>
+                        <div class="choice_box">
+                            <label class="choice">
+                                <input type="radio" name="answer1" value="1">
+                                <span class="radio_custom">①</span> 1번의 정답은 1번이 아닙니다
+                            </label>
+                            <label class="choice">
+                                <input type="radio" name="answer1" value="2">
+                                <span class="radio_custom">②</span> 2번의 정답은 1번이 아닙니다
+                            </label>
+                            <label class="choice">
+                                <input type="radio" name="answer1" value="3">
+                                <span class="radio_custom">③</span> 3번의 정답은 1번이 아닙니다
+                            </label>
+                            <label class="choice">
+                                <input type="radio" name="answer1" value="4">
+                                <span class="radio_custom">④</span> 4번의 정답은 1번이 아닙니다
+                            </label>
+                        </div>
+
+
+                    </div>
+
+                    <div class="problem">
+                        <div class="problem_metadata">
+                            <span class="problem_id">문제 ID : 72029543</span>
+                            <span class="created_by">출제자 : 관리자</span>
+                        </div>
+                        <div class="problem_question_box">
+                            <span class="problem_no">2.</span>
+                            <!-- <span class="question">각 문제의 정답은 몇 번입니까?</span> -->
+                            <span class="question">문제의 정답은 몇 번입니까?</span>
+                        </div>
+
+                        <span class="description">
+                                문제설명은 여기서 시작되는데 글자 여백과 width 최댓값을 조절할까 생각 중입니다 가로로 너무 긴경우에는 가독성이 떨어지기 때문입니다
+                                문제설명은 여기서 시작되는데 글자 여백과 width 최댓값을 조절할까 생각 중입니다 가로로 너무 긴경우에는 가독성이 떨어지기 때문입니다.</span>
+                        <div class="choice_box">
+                            <label class="choice">
+                                <input type="radio" name="answer2" value="1">
+                                <span class="radio_custom">①</span> 1번의 정답은 1번이 아닙니다
+                            </label>
+                            <label class="choice">
+                                <input type="radio" name="answer2" value="2">
+                                <span class="radio_custom">②</span> 2번의 정답은 1번이 아닙니다
+                            </label>
+                            <label class="choice">
+                                <input type="radio" name="answer2" value="3">
+                                <span class="radio_custom">③</span> 3번의 정답은 1번이 아닙니다
+                            </label>
+                            <label class="choice">
+                                <input type="radio" name="answer2" value="4">
+                                <span class="radio_custom">④</span> 4번의 정답은 1번이 아닙니다
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div id="main_right_section">
+
+                    <div class="problem">
+                        <div class="problem_metadata">
+                            <span class="problem_id">문제 ID : 72029543</span>
+                            <span class="created_by">출제자 : 관리자</span>
+                        </div>
+                        <div class="problem_question_box">
+                            <span class="problem_no">3.</span>
+                            <!-- <span class="question">각 문제의 정답은 몇 번입니까?</span> -->
+                            <span class="question">문제의 정답은 몇 번입니까?</span>
+                        </div>
+
+                        <span class="description">
+                                문제설명은 여기서 시작되는데 글자 여백과 width 최댓값을 조절할까 생각 중입니다 가로로 너무 긴경우에는 가독성이 떨어지기 때문입니다
+                                문제설명은 여기서 시작되는데 글자 여백과 width 최댓값을 조절할까 생각 중입니다 가로로 너무 긴경우에는 가독성이 떨어지기 때문입니다.</span>
+                        <div class="choice_box">
+                            <label class="choice">
+                                <input type="radio" name="answer3" value="1">
+                                <span class="radio_custom">①</span> 1번의 정답은 1번이 아닙니다
+                            </label>
+                            <label class="choice">
+                                <input type="radio" name="answer3" value="2">
+                                <span class="radio_custom">②</span> 2번의 정답은 1번이 아닙니다
+                            </label>
+                            <label class="choice">
+                                <input type="radio" name="answer3" value="3">
+                                <span class="radio_custom">③</span> 3번의 정답은 1번이 아닙니다
+                            </label>
+                            <label class="choice">
+                                <input type="radio" name="answer3" value="4">
+                                <span class="radio_custom">④</span> 4번의 정답은 1번이 아닙니다
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="problem">
+                        <div class="problem_metadata">
+                            <span class="problem_id">문제 ID : 72029543</span>
+                            <span class="created_by">출제자 : 관리자</span>
+                        </div>
+                        <div class="problem_question_box">
+                            <span class="problem_no">4.</span>
+                            <!-- <span class="question">각 문제의 정답은 몇 번입니까?</span> -->
+                            <span class="question">문제의 정답은 몇 번입니까?</span>
+                        </div>
+
+                        <span class="description">
+                                문제설명은 여기서 시작되는데 글자 여백과 width 최댓값을 조절할까 생각 중입니다 가로로 너무 긴경우에는 가독성이 떨어지기 때문입니다
+                                문제설명은 여기서 시작되는데 글자 여백과 width 최댓값을 조절할까 생각 중입니다 가로로 너무 긴경우에는 가독성이 떨어지기 때문입니다.</span>
+                        <div class="choice_box">
+                            <label class="choice">
+                                <input type="radio" name="answer4" value="1">
+                                <span class="radio_custom">①</span> 1번의 정답은 1번이 아닙니다
+                            </label>
+                            <label class="choice">
+                                <input type="radio" name="answer4" value="2">
+                                <span class="radio_custom">②</span> 2번의 정답은 1번이 아닙니다
+                            </label>
+                            <label class="choice">
+                                <input type="radio" name="answer4" value="3">
+                                <span class="radio_custom">③</span> 3번의 정답은 1번이 아닙니다
+                            </label>
+                            <label class="choice">
+                                <input type="radio" name="answer4" value="4">
+                                <span class="radio_custom">④</span> 4번의 정답은 1번이 아닙니다
+                            </label>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 
-<!--이거밖에서 스크립트 작성하면 안돌아갑니다...-->
-<div layout:fragment="scripts">
-    <script>
-        <!--스크립트 여기 안에서 작성하시면 돼요-->
-    </script>
-</div>
 </html>
