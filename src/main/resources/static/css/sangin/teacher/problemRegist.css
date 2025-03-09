@@ -9,10 +9,7 @@
     margin-top: 20px;
 }
 
-#main_info_section {}
-
-.main_info_text,
-.main_choice_text {
+.main_info_text {
     font-size: 25px;
     font-weight: bold;
     margin-top: 20px;
@@ -20,8 +17,7 @@
     color: #002b2b;
 }
 
-.main_info_input,
-.main_choice_input {
+.main_info_input {
     width: 1000px;
     height: 100px;
     font-size: 20px;
@@ -32,13 +28,11 @@
     scrollbar-width: none;
 }
 
-.main_info_input,
-.main_choice_input:focus {
+.main_info_input:focus {
     outline: none;
 }
 
 #main_info_difficulty {
-    display: flex;
     font-size: 25px;
     border: 1px #ddd solid;
     border-radius: 10px;
@@ -65,48 +59,84 @@
     color: #0062ff;
 }
 
-.main_choice_text {}
+.choice_item {
+    margin-top: 20px;
+}
 
-.main_choice_input {}
+.choice_item label {
+    font-size: 25px;
+    font-weight: bold;
+    color: #002b2b;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.choice_item input[type="radio"] {
+    width: 20px;
+    height: 20px;
+}
+
+.choice_item textarea {
+    width: 1000px;
+    height: 100px;
+    font-size: 20px;
+    padding: 12px;
+    line-height: 1.5rem;
+    border: 1px #ddd solid;
+    border-radius: 10px;
+    margin-top: 8px;
+    scrollbar-width: none;
+}
+
+.choice_item textarea:focus {
+    outline: none;
+}
+
+.choice_item input[type="radio"]:checked + span {
+    color: #ffffff; /* 흰색 텍스트 */
+    background-color: #007bff; /* 강조 배경색 (진한 파랑) */
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background-color 0.2s ease;
+}
+
+
+.choice_item label span {
+    transition: color 0.2s ease;
+}
+
 
 #button_container {
-    margin-top: 50px;
-    margin-bottom: 50px;
+    margin: 50px 0;
     display: flex;
     justify-content: center;
     width: 1000px;
     gap: 50px;
 }
 
-#add_choice_btn {
+#add_choice_btn,
+#regist_btn {
     width: 300px;
     height: 80px;
     display: flex;
     align-items: center;
     justify-content: center;
+    border: none;
+    cursor: pointer;
+    font-size: 30px;
+    border-radius: 10px;
+    transition: 0.1s ease;
+}
+
+#add_choice_btn {
     background-color: #0092ff;
     color: white;
-    border: none;
-    cursor: pointer;
-    font-size: 30px;
-    border-radius: 10px;
-    transition: 0.1s ease;
 }
-#add_choice_btn:hover{
-    scale: 1.05;
-}
-#regist_btn{
-    width: 300px;
-    height: 80px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    cursor: pointer;
-    font-size: 30px;
-    border-radius: 10px;
-    transition: 0.1s ease;
-}
-#regist_btn:hover{
+
+#add_choice_btn:hover,
+#regist_btn:hover {
     scale: 1.05;
 }
