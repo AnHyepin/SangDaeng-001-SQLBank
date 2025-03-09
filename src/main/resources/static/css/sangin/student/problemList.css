@@ -1,0 +1,47 @@
+#adjust_section {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+#main_section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    gap: 200px;
+    height: 600px;
+}
+
+#main_section>a {
+    font-size: 60px;
+    text-decoration: none;
+    color: inherit;
+    width: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 150px;
+    border-radius: 10px;
+    transition: 0.3s ease;
+    background-color: #ddd;
+}
+
+#easy_btn:hover {
+    background-color: #a9a9a9;
+    scale: 1.1;
+}
+
+#medium_btn:hover {
+    background-color: #66ff00;
+    scale: 1.1;
+    color: white;
+}
+#hard_btn:hover{
+    scale: 1.1;
+}
+#test_btn:hover{
+    color: red;
+    font-weight: bold;
+    scale: 1.1;
+}

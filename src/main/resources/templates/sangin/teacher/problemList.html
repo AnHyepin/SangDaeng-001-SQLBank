@@ -4,21 +4,67 @@
       layout:decorate="~{/layout/layout/layout}">
 <head>
     <meta charset="UTF-8">
-    <title>TITLE</title>
+    <title>문제 목록</title>
+    <link rel="stylesheet" href="/css/sangin/teacher/problemList.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
 <!-- content -->
 <div layout:fragment="content">
-    <!--여기서부터-->
+    <div id="adjust_section">
+        <div id="main_section">
 
-    <!--여기까지 작업하시면 됩니다-->
+            <div id="search_container">
+                <input type="text" id="search_input">
+                <button id="search_btn">검색</button>
+            </div>
+            <div id="problem_list_text">문제 목록</div>
+            <div id="problem_text_box">
+                <span id="problem_id_text">문제 ID</span>
+                <span id="problem_question_text">문제 질문</span>
+                <span id="problem_created_by_text">작성자</span>
+                <span id="problem_created_at_text">작성일</span>
+            </div>
+            <div id="problem_list_container">
+
+                <div class="problem">
+                    <span class="problem_id problem_text">1</span>
+                    <span class="problem_question problem_text">이것의 정답은 무엇입니까?</span>
+                    <span class="problem_created_by problem_text">관리자</span>
+                    <span class="problem_created_at problem_text">2025.03.07</span>
+                </div>
+
+                <div class="problem">
+                    <span class="problem_id problem_text">2</span>
+                    <span class="problem_question problem_text">이것의 정답은 무엇입니까?</span>
+                    <span class="problem_created_by problem_text">관리자</span>
+                    <span class="problem_created_at problem_text">2025.03.07</span>
+                </div>
+
+                <div class="problem">
+                    <span class="problem_id problem_text">3</span>
+                    <span class="problem_question problem_text">이것의 정답은 무엇입니까?</span>
+                    <span class="problem_created_by problem_text">관리자</span>
+                    <span class="problem_created_at problem_text">2025.03.07</span>
+                </div>
+
+                <div class="problem">
+                    <span class="problem_id problem_text">4</span>
+                    <span class="problem_question problem_text">이것의 정답은 무엇입니까?</span>
+                    <span class="problem_created_by problem_text">관리자</span>
+                    <span class="problem_created_at problem_text">2025.03.07</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </div>
 </body>
 
 <!--이거밖에서 스크립트 작성하면 안돌아갑니다...-->
 <div layout:fragment="scripts">
-    <script>
-        <!--스크립트 여기 안에서 작성하시면 돼요-->
-    </script>
+    <script src="/js/sangin/teacher/problemList.js"></script>
 </div>
 </html>
