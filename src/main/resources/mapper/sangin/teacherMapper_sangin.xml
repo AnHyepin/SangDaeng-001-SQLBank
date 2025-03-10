@@ -5,13 +5,47 @@
 <mapper namespace="com.example.sangdaeng001sqlbank.dao.sangin.TeacherDao_sangin">
     <insert id="insertProblem" parameterType="com.example.sangdaeng001sqlbank.dto.ProblemDto"
             useGeneratedKeys="true" keyProperty="problemId">
-        INSERT INTO tbl_problems (question, description, difficulty, created_at)
-        VALUES (#{question}, #{description}, #{difficulty}, NOW())
+        INSERT INTO tbl_problems (question, description, difficulty, created_by, created_at)
+        VALUES (#{question}, #{description}, #{difficulty}, #{createdBy}, NOW())
     </insert>
 
     <insert id="insertProblemChoice" parameterType="com.example.sangdaeng001sqlbank.dto.ProblemChoiceDto">
         INSERT INTO tbl_problem_choices(problem_id, choice_text, is_correct)
         VALUES (#{problemId}, #{choiceText}, #{isCorrect})
     </insert>
+
+    <select id="getProblemList" resultType="com.example.sangdaeng001sqlbank.dto.ProblemDto">
+        select * from tbl_problems;
+    </select>
+
+    <select id="getProblemDetail" resultType="com.example.sangdaeng001sqlbank.dto.ProblemDto">
+        select * from tbl_problems where problem_id = #{problemId}
+    </select>
+
+    <select id="getProblemChoice" resultType="com.example.sangdaeng001sqlbank.dto.ProblemChoiceDto">
+        select * from tbl_problem_choices where problem_id = #{problemId}
+    </select>
+
+    <update id="updateProblem">
+        UPDATE tbl_problems
+        SET question = #{problem.question},
+        description = #{problem.description},
+        difficulty = #{problem.difficulty}
+        WHERE problem_id = #{problemId}
+    </update>
+
+    <delete id="deleteChoicesByProblemId">
+        DELETE FROM tbl_problem_choices WHERE problem_id = #{problemId}
+    </delete>
+
+    <update id="updateProblemStatus">
+        UPDATE tbl_problems
+        SET permit_yn = #{permitYn}
+        WHERE problem_id = #{problemId}
+    </update>
+
+    <delete id="deleteProblem">
+        DELETE FROM tbl_problems WHERE problem_id = #{problemId}
+    </delete>
 
 </mapper>

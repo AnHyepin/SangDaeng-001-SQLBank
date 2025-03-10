@@ -4,9 +4,8 @@
       layout:decorate="~{/layout/layout/layout}">
 <head>
     <meta charset="UTF-8">
-    <title>문제 등록</title>
+    <title>문제 수정</title>
     <link rel="stylesheet" href="/css/sangin/teacher/problemRegist.css">
-
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -14,6 +13,7 @@
 <body>
 <!-- content -->
 <div layout:fragment="content">
+    <input type="hidden" id="problem_id" th:value="${problemId}">
     <div id="adjust_section">
         <div id="main_section">
             <div id="main_info_section">
@@ -33,53 +33,12 @@
             <div id="main_choice_section">
                 <div class="main_choice_description_text">* 보기는 최소 5개 등록하셔야 합니다</div>
                 <div class="main_choice_description_text">* 반드시 하나의 정답을 설정하셔야 합니다</div>
-
-                <div class="choice_item">
-                    <label>
-                        <input type="radio" name="correctChoice" value="1">
-                        <span>보기 1</span>
-                    </label>
-                    <textarea class="main_choice_input"></textarea>
-                </div>
-
-                <div class="choice_item">
-                    <label>
-                        <input type="radio" name="correctChoice" value="2">
-                        <span>보기 2</span>
-                    </label>
-                    <textarea class="main_choice_input"></textarea>
-                </div>
-
-                <div class="choice_item">
-                    <label>
-                        <input type="radio" name="correctChoice" value="3">
-                        <span>보기 3</span>
-                    </label>
-                    <textarea class="main_choice_input"></textarea>
-                </div>
-
-                <div class="choice_item">
-                    <label>
-                        <input type="radio" name="correctChoice" value="4">
-                        <span>보기 4</span>
-                    </label>
-                    <textarea class="main_choice_input"></textarea>
-                </div>
-
-                <div class="choice_item">
-                    <label>
-                        <input type="radio" name="correctChoice" value="5">
-                        <span>보기 5</span>
-                    </label>
-                    <textarea class="main_choice_input"></textarea>
-                </div>
+                <!--동적 생성-->
             </div>
-
-
 
             <div id="button_container">
                 <button id="add_choice_btn">+ 보기 추가</button>
-                <button id="regist_btn">문제 등록</button>
+                <button id="regist_btn">문제 수정</button>
             </div>
 
         </div>
@@ -89,7 +48,9 @@
 
 <!--이거밖에서 스크립트 작성하면 안돌아갑니다...-->
 <div layout:fragment="scripts">
-    <script src="/js/sangin/teacher/problemRegist.js"></script>
+    <script src="/js/sangin/teacher/problemDetail.js"></script>
     <script src="/js/sangin/teacher/problemAddChoice.js"></script>
+    <script src="/js/sangin/teacher/ProblemUpdate.js"></script>
+
 </div>
 </html>

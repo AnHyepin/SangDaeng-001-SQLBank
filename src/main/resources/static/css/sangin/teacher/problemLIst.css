@@ -47,7 +47,7 @@
     display: flex;
 }
 
-#problem_text_box>span {
+#problem_text_box > span {
     align-items: center;
     height: 60px;
     font-size: 25px;
@@ -58,19 +58,27 @@
 }
 
 #problem_id_text {
-    width: 15%;
+    width: 10%;
 }
 
 #problem_question_text {
-    width: 55%;
+    width: 50%;
 }
 
 #problem_created_by_text {
-    width: 15%;
+    width: 10%;
 }
 
 #problem_created_at_text {
-    width: 15%;
+    width: 10%;
+}
+
+#problem_status_text {
+    width: 10%;
+}
+
+#problem_delete_btn_text {
+    width: 10%;
 }
 
 
@@ -84,25 +92,71 @@
     border-right: 1px #ddd solid;
 }
 
-.problem>span {
-    font-size: 24px;
+.problem > span {
+    font-size: 20px;
     display: flex;
     justify-content: center;
     overflow-x: hidden;
 }
 
 .problem_id {
-    width: 15%;
+    width: 10%;
 }
 
 .problem_question {
-    width: 55%;
+    width: 50%;
 }
 
 .problem_created_by {
-    width: 15%;
+    width: 10%;
 }
 
 .problem_created_at {
-    width: 15%;
+    width: 10%;
+}
+
+.problem_status_box {
+    display: flex;
+    width: 10%;
+    align-items: center;
+    justify-content: center;
+}
+
+.problem_status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 85%;
+    font-size: 20px;
+    height: 40px;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+}
+
+.active {
+    background-color: #8580ae;
+}
+
+.inactive {
+    background-color: #cdcdcd;
+}
+
+.problem_delete_btn_box {
+    display: flex;
+    width: 10%;
+    align-items: center;
+    justify-content: center;
+}
+
+.problem_delete_btn {
+    width: 50%;
+    font-size: 20px;
+    height: 40px;
+    border: none;
+    border-radius: 10px;
+    background-color: #b1b1b1;
+    color: white;
+    cursor: pointer;
 }
