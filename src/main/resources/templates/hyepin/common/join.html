@@ -5,12 +5,25 @@
 <head>
     <meta charset="UTF-8">
     <title>TITLE</title>
+    <link rel="stylesheet" href="/css/hyepin/common/join.css">
 </head>
 <body>
 <!-- content -->
 <div layout:fragment="content">
-    <h1>회원가입 페이지</h1>
     <!--여기서부터-->
+    <form id="joinForm">
+        <div class="join-content">
+            <input type="text" name="username" placeholder="ID를 입력하세요">
+            <input type="text" name="name" placeholder="이름을 입력하세요">
+            <input type="text" name="password" placeholder="PW를 입력하세요">
+            <input type="text" name="password" placeholder="PW를 한번 더 입력하세요">
+            <input type="text" name="email" placeholder="email을 입력하세요">
+        </div>
+    </form>
+
+    <div class="sign-up-btn">
+        <img src="/image/icon/sign-up.svg" alt="회원가입버튼">
+    </div>
 
     <!--여기까지 작업하시면 됩니다-->
 </div>
@@ -18,8 +31,6 @@
 
 <!--이거밖에서 스크립트 작성하면 안돌아갑니다...-->
 <div layout:fragment="scripts">
-    <script>
-        <!--스크립트 여기 안에서 작성하시면 돼요-->
-    </script>
+    <script src="/js/hyepin/common/join.js"></script>
 </div>
 </html>
