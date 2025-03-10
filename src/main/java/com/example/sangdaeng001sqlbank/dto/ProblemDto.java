@@ -2,6 +2,8 @@ package com.example.sangdaeng001sqlbank.dto;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class ProblemDto {
     private int problemId; // 문제 ID
@@ -10,4 +12,6 @@ public class ProblemDto {
     private String difficulty; // 난이도 (EASY, MEDIUM, HARD)
     private int createdBy; // 출제자 ID (NULL 가능)
     private String createdAt; // 출제일
+
+    private List<ProblemChoiceDto> choices; // 보기들
 }
