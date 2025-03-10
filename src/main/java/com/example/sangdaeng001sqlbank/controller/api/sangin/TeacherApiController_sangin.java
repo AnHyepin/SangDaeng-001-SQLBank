@@ -22,6 +22,11 @@ public class TeacherApiController_sangin {
 
     @PostMapping("/regist")
     public ResponseEntity<?> registProblem(@RequestBody ProblemDto requestDto) {
+        requestDto.setCreatedBy("admin");
+        System.out.println(requestDto);
+        System.out.println(requestDto);
+        System.out.println(requestDto);
+        System.out.println(requestDto);
         if (requestDto == null || requestDto.getChoices() == null || requestDto.getChoices().isEmpty()) {
             return ResponseEntity.badRequest().body("잘못된 요청입니다.");
         }

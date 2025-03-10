@@ -5,7 +5,7 @@ import com.example.sangdaeng001sqlbank.dto.ProblemDto;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
-public class TeacherDao_sangin {
+public interface TeacherDao_sangin {
 
     void insertProblem(ProblemDto problem);
 
