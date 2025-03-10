@@ -46,13 +46,14 @@ public class LoginService {
 
     //로그인
     public String login(UserDto userDto) {
-        // DB에서 사용자 정보 조회
-        User user = userRepository.findByUsername(userDto.getUsername())
-                .orElseThrow(() -> new IllegalArgumentException("사용자가 존재하지 않습니다."));
+        log.info("userDto: {}", userDto.toString());
 
-        // 비밀번호 검증
-        if (!passwordEncoder.matches(userDto.getPassword(), user.getPassword())) {
-            throw new IllegalArgumentException("비밀번호가 올바르지 않습니다.");
+        // DB에서 사용자 조회 (없으면 null)
+        User user = userRepository.findByUsername(userDto.getUsername()).orElse(null);
+
+        // PW 조회
+        if (user == null || !passwordEncoder.matches(userDto.getPassword(), user.getPassword())) {
+            return "ID 또는 PW가 일치하지 않습니다."; // 동일한 메시지 반환
         }
 
         // 인증 수행
@@ -60,8 +61,9 @@ public class LoginService {
                 new UsernamePasswordAuthenticationToken(userDto.getUsername(), userDto.getPassword())
         );
 
-        // JWT 토큰 생성 후 반환
-        return jwtTokenProvider.createToken(user.getUsername(), user.getName(), user.getRole());
+        // JWT 토큰 생성
+        jwtTokenProvider.createToken(user.getUsername(), user.getName(), user.getRole());
+        return "로그인 성공!";
     }
 
 }
