@@ -113,6 +113,7 @@ body {
 #main_left_section {
     border-right: #8b8b8b 1px solid;
     padding: 40px;
+    min-height: 600px;
     width: 50%;
 }
 

@@ -1,5 +1,7 @@
 package com.example.sangdaeng001sqlbank.controller.view.sangin;
 
+import ch.qos.logback.core.model.Model;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,9 +15,9 @@ public class StudentViewController_sangin {
         return "sangin/student/problemList";
     }
 
-    @GetMapping("/problemSolve")
+    @GetMapping("/exam")
     public String problemSolve() {
-        return "sangin/student/problemSolve";
+        return "sangin/student/exam";
     }
 
     @GetMapping("/scoreList")
