@@ -12,7 +12,6 @@ public class LoinController {
 
     @GetMapping("/login")
     public String login(){
-        log.info("로그인 컨트롤러");
         return "hyepin/common/login";
     }
 

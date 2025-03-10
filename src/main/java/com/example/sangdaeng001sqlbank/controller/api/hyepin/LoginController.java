@@ -39,12 +39,17 @@ public class LoginController {
 
     //로그인
     @PostMapping
-    public ResponseEntity<?> login(@RequestBody UserDto userDto) {
+    public ResponseEntity<?> login(@ModelAttribute UserDto userDto) {
         try {
-            String token = loginService.login(userDto);
-            return ResponseEntity.ok(Map.of("token", token));
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            String msg = loginService.login(userDto);
+
+            if ("ID 또는 PW가 일치하지 않습니다.".equals(msg)) {
+                return ResponseEntity.badRequest().body(msg); // 400 상태코드 + 메시지 반환
+            }
+
+            return ResponseEntity.ok(msg);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("서버 오류");
         }
     }
 

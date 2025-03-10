@@ -1,4 +1,4 @@
-.join-content {
+.login-content {
     padding: 30px;
     margin: 0 auto;
     width: 50%;
@@ -7,18 +7,18 @@
     gap: 10px;
 }
 
-.join-content input {
+.login-content input {
     padding: 15px;
     border-radius: 10px;
     border: 1px solid gray;
 }
 
-.sign-up-btn {
+.sign-in-btn {
     display: flex;
     justify-content: center;
 }
-.sign-up-btn:hover img {
+.sign-in-btn:hover img {
     cursor: pointer;
     transform: scale(1.2);
-    content: url('/image/icon/sign-up-push.svg');
+    content: url('/image/icon/sign-in-push.svg');
 }
