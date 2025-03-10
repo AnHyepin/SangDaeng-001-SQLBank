@@ -10,7 +10,7 @@ public class ProblemDto {
     private String question; // 문제 질문
     private String description; // 문제 설명
     private String difficulty; // 난이도 (EASY, MEDIUM, HARD)
-    private int createdBy; // 출제자 ID (NULL 가능)
+    private String createdBy; // 출제자 ID
     private String createdAt; // 출제일
 
     private List<ProblemChoiceDto> choices; // 보기들
