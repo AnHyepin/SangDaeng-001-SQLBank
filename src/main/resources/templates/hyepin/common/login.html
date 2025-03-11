@@ -5,23 +5,32 @@
 <head>
     <meta charset="UTF-8">
     <title>TITLE</title>
-    <link rel="stylesheet" href="/css/hyepin/common/login.css">
+    <link rel="stylesheet" href="/css/hyepin/common/sign.css">
 </head>
 <body>
 <!-- content -->
 <div layout:fragment="content">
     <!--여기서부터-->
     <form id="loginForm">
-        <div class="login-content">
-            <input type="text" name="username" placeholder="ID를 입력하세요">
-            <input type="text" name="password" placeholder="PW를 입력하세요">
+        <div class="sign-content">
+            <h3>ID</h3>
+                <input type="text" name="username" placeholder="ID를 입력하세요">
+            <h3>PW</h3>
+                <input type="text" name="password" placeholder="PW를 입력하세요">
         </div>
     </form>
 
-    <div class="sign-in-btn">
-        <img src="/image/icon/sign-in.svg" alt="로그인버튼">
+    <div class="sign-btn-container">
+        <div class="sign-in-btn">
+            <img src="/image/icon/sign-in.svg" alt="로그인버튼">
+        </div>
     </div>
 
+    <div class="sign-content-bottom">
+        <a href="/view/common/findIdPw"><div>ID / PW 찾기</div></a>
+        <div>|</div>
+        <a href="/view/common/join"><div>회원가입</div></a>
+    </div>
     <!--여기까지 작업하시면 됩니다-->
 </div>
 </body>

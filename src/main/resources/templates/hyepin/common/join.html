@@ -5,24 +5,31 @@
 <head>
     <meta charset="UTF-8">
     <title>TITLE</title>
-    <link rel="stylesheet" href="/css/hyepin/common/join.css">
+    <link rel="stylesheet" href="/css/hyepin/common/sign.css">
 </head>
 <body>
 <!-- content -->
 <div layout:fragment="content">
     <!--여기서부터-->
     <form id="joinForm">
-        <div class="join-content">
-            <input type="text" name="username" placeholder="ID를 입력하세요">
-            <input type="text" name="name" placeholder="이름을 입력하세요">
-            <input type="text" name="password" id="password" placeholder="PW를 입력하세요">
-            <input type="text" name="password2" id="password2" placeholder="PW를 한번 더 입력하세요">
-            <input type="text" name="email" placeholder="email을 입력하세요">
+        <div class="sign-content">
+            <h3>ID</h3>
+                <input type="text" name="username" placeholder="ID를 입력하세요">
+            <h3>이름</h3>
+                <input type="text" name="name" placeholder="이름을 입력하세요">
+            <h3>비밀번호</h3>
+                <input type="text" name="password" id="password" placeholder="PW를 입력하세요">
+            <h3>비밀번호 확인</h3>
+                <input type="text" name="password2" id="password2" placeholder="PW를 한번 더 입력하세요">
+            <h3>이메일</h3>
+                <input type="text" name="email" placeholder="email을 입력하세요">
         </div>
     </form>
 
-    <div class="sign-up-btn">
-        <img src="/image/icon/sign-up.svg" alt="회원가입버튼">
+    <div class="sign-btn-container">
+        <div class="sign-up-btn">
+            <img src="/image/icon/sign-up.svg" alt="회원가입버튼">
+        </div>
     </div>
 
     <!--여기까지 작업하시면 됩니다-->
