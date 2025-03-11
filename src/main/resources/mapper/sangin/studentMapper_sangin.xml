@@ -70,7 +70,23 @@
         ORDER BY ad.problem_id, ad.attempt_id;
     </select>
 
-
+    <select id="getProblemDetail" resultType="com.example.sangdaeng001sqlbank.dto.ProblemDetailDto">
+        SELECT
+        p.problem_id,
+        p.question,
+        p.description,
+        selectedChoice.choice_text AS selectedChoiceText,
+        correctChoice.choice_text AS correctChoiceText,
+        ad.is_correct
+        FROM tbl_attempt_details ad
+        JOIN tbl_problems p ON ad.problem_id = p.problem_id
+        LEFT JOIN tbl_problem_choices selectedChoice
+        ON ad.selected_choice_id = selectedChoice.choice_id
+        LEFT JOIN tbl_problem_choices correctChoice
+        ON ad.problem_id = correctChoice.problem_id AND correctChoice.is_correct = 1
+        WHERE ad.problem_id = #{problemId}
+        LIMIT 1
+    </select>
 
     <!-- 사용자의 최대 times 값 조회 -->
     <select id="getMaxAttemptTimes" resultType="int">

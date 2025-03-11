@@ -109,6 +109,11 @@ public class StudentService_sangin {
         return studentDao.getAttemptDetails(sessionId);
     }
 
+    public ProblemDetailDto getProblemDetail(int problemId) {
+        return studentDao.getProblemDetail(problemId);
+    }
+
+
     @Transactional
     public int submitExam(int userId, ExamSubmissionDto answers) {
         // 1️⃣ 사용자의 새로운 시험 회차(times) 값을 가져옴

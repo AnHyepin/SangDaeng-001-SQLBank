@@ -57,4 +57,14 @@ public class StudentApiController_sangin {
         return ResponseEntity.ok(details);
     }
 
+    @GetMapping("/problemDetail")
+    public ResponseEntity<ProblemDetailDto> getProblemDetail(@RequestParam("problemId") int problemId) {
+        ProblemDetailDto problemDetail = studentService.getProblemDetail(problemId);
+        if (problemDetail == null) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(problemDetail);
+    }
+
+
 }

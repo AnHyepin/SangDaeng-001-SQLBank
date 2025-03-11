@@ -19,6 +19,7 @@ public interface StudentDao_sangin {
      **/
     void insertAttemptSession(AttemptSessionDto attemptSessionDto);
 
+    ProblemDetailDto getProblemDetail(int problemId);
     /**
      * 사용자 풀이 기록 저장
      **/

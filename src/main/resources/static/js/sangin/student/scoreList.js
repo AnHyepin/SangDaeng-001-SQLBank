@@ -42,13 +42,15 @@ async function loadScoreList() {
                 default: difficultyText = 'ERROR';
             }
 
-            // ✅ OX 결과 변환
-            let oxResults = attemptDetails.map(attempt => `<td>${attempt.isCorrect === 1 ? "⭕" : "❌"}</td>`).join("");
+            // ✅ OX 결과 변환 (각 문제의 problemId만 사용)
+            let oxResults = attemptDetails.map(attempt =>
+                `<td class="ox_btn" data-problem-id="${attempt.problemId}">
+                    ${attempt.isCorrect === 1 ? "⭕" : "❌"}
+                </td>`).join("");
 
             // ✅ 테이블 행 추가
             const row = document.createElement("tr");
             row.innerHTML = `
-                <td class="detail_btn" data-session-id="${session.sessionId}">🔍</td>
                 <td>${session.times} 회차</td>
                 <td>${session.totalScore}점</td>
                 <td>${difficultyText}</td>
@@ -56,9 +58,12 @@ async function loadScoreList() {
             `;
             tableBody.appendChild(row);
 
-            // ✅ 상세 보기 이벤트 추가
-            row.querySelector(".detail_btn").addEventListener("click", function () {
-                loadScoreDetail(session.sessionId);
+            // ✅ OX 버튼 클릭 시 문제 상세보기
+            row.querySelectorAll(".ox_btn").forEach(btn => {
+                btn.addEventListener("click", function () {
+                    const problemId = this.dataset.problemId;
+                    loadProblemDetail(problemId);
+                });
             });
         });
 
@@ -67,19 +72,19 @@ async function loadScoreList() {
     }
 }
 
-// ✅ 특정 회차의 문제별 정답 상세 조회
-async function loadScoreDetail(sessionId) {
+// ✅ 특정 문제 상세 조회 (OX 버튼 클릭 시)
+async function loadProblemDetail(problemId) {
     try {
-        const response = await axios.get(`/api/student/scoreDetail?sessionId=${sessionId}`);
-        const sessionData = response.data;
-        renderScoreDetail(sessionData);
+        const response = await axios.get(`/api/student/problemDetail?problemId=${problemId}`);
+        const problemData = response.data;
+        renderProblemDetail(problemData);
     } catch (error) {
-        console.error("🚨 회차 상세 정답 불러오기 실패:", error);
+        console.error("🚨 문제 상세 불러오기 실패:", error);
     }
 }
 
-// ✅ 상세보기 데이터 렌더링 (모달)
-function renderScoreDetail(sessionData) {
+// ✅ 상세보기 모달 데이터 렌더링
+function renderProblemDetail(problemData) {
     const detailContainer = document.getElementById("score_detail_container");
 
     if (!detailContainer) {
@@ -87,30 +92,13 @@ function renderScoreDetail(sessionData) {
         return;
     }
 
-    detailContainer.innerHTML = ""; // 기존 상세 초기화
-
-    sessionData.forEach((attempt, index) => {
-        const isCorrect = attempt.isCorrect === 1 ? "⭕" : "❌";
-        const attemptDiv = document.createElement("div");
-        attemptDiv.className = "attempt_row";
-        attemptDiv.innerHTML = `
-            <div class="attempt_text"><b>문제 ${index + 1}.</b></div>
-            <div class="attempt_text">사용자 선택: <span>${attempt.selectedChoiceText || "선택 없음"}</span></div>
-            <div class="attempt_text">정답: <span>${attempt.correctChoiceText}</span></div>
-            <div class="attempt_text">결과: <span>${isCorrect}</span></div>
-        `;
-        detailContainer.appendChild(attemptDiv);
-    });
+    detailContainer.innerHTML = `
+        <div class="problem_title"><b>문제:</b> ${problemData.question}</div>
+        <div class="problem_choice"><b>내가 선택한 답:</b> <span class="${problemData.isCorrect ? 'correct-answer' : 'wrong-answer'}">
+            ${problemData.selectedChoiceText || "선택 없음"}
+        </span></div>
+        <div class="problem_correct"><b>정답:</b> <span class="correct-answer">${problemData.correctChoiceText}</span></div>
+    `;
 
     document.getElementById("score_detail_modal").style.display = "block"; // 모달 표시
-}
-
-// ✅ 모달 닫기 이벤트
-const closeModalBtn = document.getElementById("score_close_modal");
-if (closeModalBtn) {
-    closeModalBtn.addEventListener("click", function () {
-        document.getElementById("score_detail_modal").style.display = "none";
-    });
-} else {
-    console.error("🚨 오류: 'score_close_modal' 요소를 찾을 수 없습니다.");
 }
