@@ -1,12 +1,12 @@
 /* ✅ 모달 기본 스타일 */
 .score_modal {
     display: none;
-    position: fixed;
+    position: absolute;
     z-index: 10;
     left: 0;
     top: 0;
     width: 100%;
-    height: 100%;
+    height: 110vh;
     background-color: rgba(0, 0, 0, 0.5);
 }
 
@@ -16,8 +16,7 @@
     margin: 10% auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 50%;
-    text-align: center;
+    width: 70%;
     border-radius: 8px;
 }
 
@@ -37,10 +36,26 @@
 /* ✅ 상세 정답 스타일 */
 .attempt_row {
     display: flex;
-    justify-content: space-between;
     padding: 10px;
     border-bottom: 1px solid #ddd;
 }
+
+.attempt_text:nth-child(1) {
+    width: 10%;
+}
+
+.attempt_text:nth-child(2) {
+    width: 40%;
+}
+
+.attempt_text:nth-child(3) {
+    width: 40%;
+}
+
+.attempt_text:nth-child(4) {
+    width: 10%;
+}
+
 
 .attempt_text span {
     font-weight: bold;
@@ -87,26 +102,3 @@
     background-color: #f9f9f9;
 }
 
-/* 클릭 가능한 회차 */
-.clickable {
-    cursor: pointer;
-    color: #007BFF;
-    font-weight: bold;
-    transition: color 0.2s ease;
-}
-
-.clickable:hover {
-    color: #0056b3;
-    text-decoration: underline;
-}
-
-/* 정답 선택 스타일 */
-.correct-answer {
-    font-weight: bold;
-    color: green;
-}
-
-.wrong-answer {
-    font-weight: bold;
-    color: red;
-}

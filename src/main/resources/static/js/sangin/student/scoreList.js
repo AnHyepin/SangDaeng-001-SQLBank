@@ -1,5 +1,15 @@
 document.addEventListener("DOMContentLoaded", function () {
     loadScoreList();
+
+    // ✅ 모달 닫기 버튼 이벤트 추가
+    const closeModalBtn = document.getElementById("score_close_modal");
+    if (closeModalBtn) {
+        closeModalBtn.addEventListener("click", function () {
+            document.getElementById("score_detail_modal").style.display = "none";
+        });
+    } else {
+        console.error("🚨 오류: 'score_close_modal' 요소를 찾을 수 없습니다.");
+    }
 });
 
 // ✅ 성적 리스트 불러오기 (비동기 병렬 처리)
@@ -8,6 +18,12 @@ async function loadScoreList() {
         const scoreResponse = await axios.get(`/api/student/scoreList`);
         const scoreList = scoreResponse.data;
         const tableBody = document.getElementById("score_table_body");
+
+        if (!tableBody) {
+            console.error("🚨 오류: 'score_table_body' 요소를 찾을 수 없습니다.");
+            return;
+        }
+
         tableBody.innerHTML = ""; // 기존 데이터 초기화
 
         // ✅ 모든 세션의 scoreDetail을 병렬 요청
@@ -27,7 +43,7 @@ async function loadScoreList() {
             }
 
             // ✅ OX 결과 변환
-            let oxResults = attemptDetails.map(attempt => attempt.isCorrect === 1 ? "⭕" : "❌").join('</td><td>');
+            let oxResults = attemptDetails.map(attempt => `<td>${attempt.isCorrect === 1 ? "⭕" : "❌"}</td>`).join("");
 
             // ✅ 테이블 행 추가
             const row = document.createElement("tr");
@@ -36,7 +52,7 @@ async function loadScoreList() {
                 <td>${session.times} 회차</td>
                 <td>${session.totalScore}점</td>
                 <td>${difficultyText}</td>
-                <td>${oxResults}</td>
+                ${oxResults}
             `;
             tableBody.appendChild(row);
 
@@ -47,7 +63,7 @@ async function loadScoreList() {
         });
 
     } catch (error) {
-        console.error("성적 목록 불러오기 실패:", error);
+        console.error("🚨 성적 목록 불러오기 실패:", error);
     }
 }
 
@@ -58,13 +74,19 @@ async function loadScoreDetail(sessionId) {
         const sessionData = response.data;
         renderScoreDetail(sessionData);
     } catch (error) {
-        console.error("회차 상세 정답 불러오기 실패:", error);
+        console.error("🚨 회차 상세 정답 불러오기 실패:", error);
     }
 }
 
-// ✅ 상세보기 데이터 렌더링
+// ✅ 상세보기 데이터 렌더링 (모달)
 function renderScoreDetail(sessionData) {
     const detailContainer = document.getElementById("score_detail_container");
+
+    if (!detailContainer) {
+        console.error("🚨 오류: 'score_detail_container' 요소를 찾을 수 없습니다.");
+        return;
+    }
+
     detailContainer.innerHTML = ""; // 기존 상세 초기화
 
     sessionData.forEach((attempt, index) => {
@@ -84,6 +106,11 @@ function renderScoreDetail(sessionData) {
 }
 
 // ✅ 모달 닫기 이벤트
-document.getElementById("score_close_modal").addEventListener("click", function () {
-    document.getElementById("score_detail_modal").style.display = "none";
-});
+const closeModalBtn = document.getElementById("score_close_modal");
+if (closeModalBtn) {
+    closeModalBtn.addEventListener("click", function () {
+        document.getElementById("score_detail_modal").style.display = "none";
+    });
+} else {
+    console.error("🚨 오류: 'score_close_modal' 요소를 찾을 수 없습니다.");
+}
