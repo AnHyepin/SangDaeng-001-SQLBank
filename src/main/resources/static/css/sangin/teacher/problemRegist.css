@@ -77,9 +77,14 @@
     width: 20px;
     height: 20px;
 }
-
+.choice_box1{
+    display: flex;
+    align-items: center;
+    gap: 100px;
+    width: 100%;
+}
 .choice_item textarea {
-    width: 1000px;
+    flex:1;
     height: 100px;
     font-size: 20px;
     padding: 12px;
@@ -88,6 +93,21 @@
     border-radius: 10px;
     margin-top: 8px;
     scrollbar-width: none;
+}
+.delete_choice_btn{
+    width: 100px;
+    height: 45px;
+    background: #0092ff;
+    color: #fff;
+    text-align: center;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+.delete_choice_btn:hover{
+    scale: 1.05;
 }
 
 .choice_item textarea:focus {

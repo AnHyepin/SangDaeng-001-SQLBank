@@ -1,24 +1,57 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{/layout/layout/layout}">
-<head>
-    <meta charset="UTF-8">
-    <title>TITLE</title>
-</head>
-<body>
-<!-- content -->
-<div layout:fragment="content">
-    <!--여기서부터-->
+    <!DOCTYPE html>
+    <html xmlns:th="http://www.thymeleaf.org"
+          xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+          layout:decorate="~{/layout/layout/layout}">
+    <head>
+        <meta charset="UTF-8">
+        <title>성적 조회</title>
+        <link rel="stylesheet" href="/css/sangin/student/scoreList.css">
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    </head>
+    <body>
+    <!-- content -->
+    <div layout:fragment="content">
+        <div id="adjust_section">
+            <div id="main_section">
+                <table id="score_table">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>회차</th>
+                        <th>점수</th>
+                        <th>유형</th>
+                        <th>1</th>
+                        <th>2</th>
+                        <th>3</th>
+                        <th>4</th>
+                        <th>5</th>
+                        <th>6</th>
+                        <th>7</th>
+                        <th>8</th>
+                        <th>9</th>
+                        <th>10</th>
+                    </tr>
+                    </thead>
+                    <tbody id="score_table_body">
+                    <!-- 동적 데이터 삽입 -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- 상세 정답 모달 -->
+    <div id="score_detail_modal" class="score_modal">
+        <div class="score_modal_content">
+            <span id="score_close_modal" class="score_close">&times;</span>
+            <h2>정답 상세보기</h2>
+            <div id="score_detail_container"></div>
+        </div>
+    </div>
 
-    <!--여기까지 작업하시면 됩니다-->
-</div>
-</body>
+    </body>
 
-<!--이거밖에서 스크립트 작성하면 안돌아갑니다...-->
-<div layout:fragment="scripts">
-    <script>
-        <!--스크립트 여기 안에서 작성하시면 돼요-->
-    </script>
-</div>
-</html>
+    <!--이거밖에서 스크립트 작성하면 안돌아갑니다...-->
+    <div layout:fragment="scripts">
+        <script src="/js/sangin/student/scoreList.js"></script>
+    </div>
+    </html>

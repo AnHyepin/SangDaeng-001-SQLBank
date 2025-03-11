@@ -65,3 +65,11 @@ header {
     text-decoration: none;
     color: #424242;
 }
+footer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ddd;
+    height: 200px;
+    margin-top: 50px;
+}

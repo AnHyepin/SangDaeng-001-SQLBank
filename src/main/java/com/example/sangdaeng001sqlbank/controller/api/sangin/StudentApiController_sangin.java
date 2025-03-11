@@ -1,12 +1,9 @@
 package com.example.sangdaeng001sqlbank.controller.api.sangin;
 
-import com.example.sangdaeng001sqlbank.dto.ProblemDto;
+import com.example.sangdaeng001sqlbank.dto.*;
 import com.example.sangdaeng001sqlbank.service.sangin.StudentService_sangin;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,15 +16,45 @@ public class StudentApiController_sangin {
         this.studentService = studentService;
     }
 
-    @GetMapping("/exam")
+    @GetMapping("/loadExam")
     public ResponseEntity<List<ProblemDto>> getProblemsByDifficulty(@RequestParam("difficulty") String difficulty) {
         List<ProblemDto> problems = studentService.getProblemsByDifficulty(difficulty);
         if (problems.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
-        System.out.println("@@@@");
-        System.out.println(problems);
-        System.out.println("@@@@");
         return ResponseEntity.ok(problems);
     }
+
+    /** ✅ 시험 제출 API **/
+    @PostMapping("/submitExam")
+    public ResponseEntity<?> submitExam( @RequestBody ExamSubmissionDto answers) {
+        if (answers == null) {
+            return ResponseEntity.badRequest().body("문제가 제출되지 않았습니다.");
+        }
+        int userId = 1;
+        int totalScore = studentService.submitExam(userId, answers);
+        return ResponseEntity.ok().body("시험 제출 완료! 최종 점수: " + totalScore);
+    }
+
+    // ✅ 사용자의 성적 리스트 조회
+    @GetMapping("/scoreList")
+    public ResponseEntity<List<ScoreListDto>> getScoreList() {
+        int userId = 1;
+        List<ScoreListDto> scoreList = studentService.getScoreListWithDetails(userId);
+        if (scoreList.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(scoreList);
+    }
+
+    // ✅ 특정 회차의 상세 정답 조회
+    @GetMapping("/scoreDetail")
+    public ResponseEntity<List<AttemptDetailDto>> getAttemptDetails(@RequestParam("sessionId") int sessionId) {
+        List<AttemptDetailDto> details = studentService.getAttemptDetails(sessionId);
+        if (details.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(details);
+    }
+
 }

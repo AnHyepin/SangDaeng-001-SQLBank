@@ -10,9 +10,19 @@ document.getElementById('add_choice_btn').addEventListener('click', function () 
             <input type="radio" name="correctChoice" value="${choiceCount}">
             <span>보기 ${choiceCount}</span>
         </label>
-        <textarea class="main_choice_input"></textarea>
+        <div class="choice_box1">
+            <textarea class="main_choice_input"></textarea>
+            <button type="button" class="delete_choice_btn">삭제</button>
+        </div>
     `;
+
     choiceSection.appendChild(choiceDiv);
+
+    // 삭제 버튼 클릭 이벤트 추가
+    choiceDiv.querySelector('.delete_choice_btn').addEventListener('click', function () {
+        choiceDiv.remove();
+        updateChoiceNumbers();
+    });
 });
 
 // 정답 설정 시 '- 정답' 표시 추가
@@ -26,3 +36,14 @@ document.getElementById('main_choice_section').addEventListener('change', functi
         selectedSpan.textContent += ' - 정답';
     }
 });
+
+// ✅ 보기 삭제 후 번호 업데이트
+function updateChoiceNumbers() {
+    const choiceItems = document.querySelectorAll('.choice_item');
+    choiceItems.forEach((item, index) => {
+        const label = item.querySelector('label span');
+        const radio = item.querySelector('input[type="radio"]');
+        radio.value = index + 1;
+        label.textContent = `보기 ${index + 1}`;
+    });
+}

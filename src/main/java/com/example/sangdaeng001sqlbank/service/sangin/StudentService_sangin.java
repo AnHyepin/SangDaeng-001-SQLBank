@@ -1,9 +1,10 @@
 package com.example.sangdaeng001sqlbank.service.sangin;
 
 import com.example.sangdaeng001sqlbank.dao.sangin.StudentDao_sangin;
-import com.example.sangdaeng001sqlbank.dto.ProblemChoiceDto;
-import com.example.sangdaeng001sqlbank.dto.ProblemDto;
+import com.example.sangdaeng001sqlbank.dto.*;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
+
 import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.List;
@@ -93,4 +94,61 @@ public class StudentService_sangin {
             problemDto.setChoices(finalChoices); // 최종 보기를 문제에 추가
         }
     }
+
+    public List<ScoreListDto> getScoreListWithDetails(int userId) {
+        List<ScoreListDto> scoreList = studentDao.getScoreList(userId);
+        for (ScoreListDto score : scoreList) {
+            List<AttemptDetailDto> details = studentDao.getAttemptDetails(score.getSessionId());
+            score.setAttemptDetails(details);
+        }
+        return scoreList;
+    }
+
+    // ✅ 특정 회차의 문제별 정답 상세 조회
+    public List<AttemptDetailDto> getAttemptDetails(int sessionId) {
+        return studentDao.getAttemptDetails(sessionId);
+    }
+
+    @Transactional
+    public int submitExam(int userId, ExamSubmissionDto answers) {
+        // 1️⃣ 사용자의 새로운 시험 회차(times) 값을 가져옴
+        int newTimes = studentDao.getMaxAttemptTimes(userId) + 1;
+
+        // 2️⃣ 풀이 회차 저장 (시험 기록 생성)
+        AttemptSessionDto sessionDto = new AttemptSessionDto();
+        sessionDto.setUserId(userId);
+        sessionDto.setDifficulty(answers.getDifficulty());
+        sessionDto.setTimes(newTimes); // 새로운 회차 값 설정
+        studentDao.insertAttemptSession(sessionDto); // session_id 생성됨
+
+        int sessionId = sessionDto.getSessionId(); // 자동 생성된 sessionId 가져오기
+        int totalScore = 0;
+
+        // 3️⃣ 문제별 사용자의 선택 저장 및 채점
+        for (ExamAnswerDto answer : answers.getAnswers()) {
+            int correctChoiceId = studentDao.getCorrectChoiceId(answer.getProblemId());
+            boolean isCorrect = (correctChoiceId == answer.getSelectedChoiceId());
+
+            // 풀이 기록 저장
+            AttemptDetailDto attemptDetail = new AttemptDetailDto();
+            attemptDetail.setSessionId(sessionId);
+            attemptDetail.setProblemId(answer.getProblemId());
+            attemptDetail.setSelectedChoiceId(answer.getSelectedChoiceId());
+            attemptDetail.setIsCorrect(isCorrect ? 1 : 0);
+            studentDao.insertAttemptDetail(attemptDetail);
+
+            // 정답이면 점수 추가
+            if (isCorrect) {
+                totalScore += 10; // 문제당 10점 (변경 가능)
+            }
+        }
+
+        // 4️⃣ 최종 점수 및 회차 업데이트
+        sessionDto.setTotalScore(totalScore);
+        studentDao.updateAttemptSessionScore(sessionDto);
+
+        return totalScore; // 최종 점수 반환
+    }
+
+
 }

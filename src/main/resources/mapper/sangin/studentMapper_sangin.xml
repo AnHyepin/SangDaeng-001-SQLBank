@@ -9,9 +9,57 @@
         WHERE difficulty = #{difficulty}
         ORDER BY RAND() LIMIT 10
     </select>
+
     <select id="getProblemChoicesByDifficulty" resultType="com.example.sangdaeng001sqlbank.dto.ProblemChoiceDto">
         select *
         from tbl_problem_choices
         where problem_id = #{problemId}
     </select>
+
+    <select id="getCorrectChoiceId" resultType="int">
+        SELECT choice_id FROM tbl_problem_choices
+        WHERE problem_id = #{problemId} AND is_correct = 1
+    </select>
+
+    <!-- 풀이 회차 저장 -->
+    <insert id="insertAttemptSession" useGeneratedKeys="true" keyProperty="sessionId">
+        INSERT INTO tbl_attempt_sessions (user_id, difficulty, times)
+        VALUES (#{userId}, #{difficulty}, ${times});
+    </insert>
+
+    <!-- 사용자 풀이 기록 저장 -->
+    <insert id="insertAttemptDetail">
+        INSERT INTO tbl_attempt_details (session_id, problem_id, selected_choice_id, is_correct)
+        VALUES (#{sessionId}, #{problemId}, #{selectedChoiceId}, #{isCorrect});
+    </insert>
+
+    <!-- 풀이 회차의 최종 점수 업데이트 -->
+    <update id="updateAttemptSessionScore">
+        UPDATE tbl_attempt_sessions
+        SET total_score = #{totalScore}
+        WHERE session_id = #{sessionId};
+    </update>
+
+    <select id="getScoreList" resultType="com.example.sangdaeng001sqlbank.dto.ScoreListDto">
+        SELECT *
+        FROM tbl_attempt_sessions
+        WHERE user_id = #{userId}
+        ORDER BY session_id DESC
+    </select>
+
+    <select id="getAttemptDetails" resultType="com.example.sangdaeng001sqlbank.dto.AttemptDetailDto">
+        SELECT ad.attempt_id, ad.session_id, ad.problem_id, ad.selected_choice_id,
+        (CASE WHEN ad.selected_choice_id = pc.choice_id THEN 1 ELSE 0 END) AS is_correct
+        FROM tbl_attempt_details ad
+        LEFT JOIN tbl_problem_choices pc
+        ON ad.problem_id = pc.problem_id AND pc.is_correct = 1
+        WHERE ad.session_id = #{sessionId}
+        ORDER BY ad.problem_id
+    </select>
+
+    <!-- 사용자의 최대 times 값 조회 -->
+    <select id="getMaxAttemptTimes" resultType="int">
+        SELECT COALESCE(MAX(times), 0) FROM tbl_attempt_sessions WHERE user_id = #{userId}
+    </select>
+
 </mapper>

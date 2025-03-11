@@ -25,8 +25,4 @@ public class TeacherViewController_sangin {
         return "sangin/teacher/problemRegist";
     }
 
-    @GetMapping("/problemUpdate")
-    public String problemUpdate() {
-        return "sangin/teacher/problemUpdate";
-    }
 }

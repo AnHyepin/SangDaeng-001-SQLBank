@@ -80,6 +80,9 @@
 #problem_delete_btn_text {
     width: 10%;
 }
+#problem_list_container{
+    margin-bottom: 100px;
+}
 
 
 .problem {
@@ -105,6 +108,7 @@
 
 .problem_question {
     width: 50%;
+    cursor : pointer;
 }
 
 .problem_created_by {

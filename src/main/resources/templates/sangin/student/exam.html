@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>시험지</title>
-    <link rel="stylesheet" href="/css/sangin/student/problemSolve.css">
+    <link rel="stylesheet" href="/css/sangin/student/exam.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -29,7 +29,7 @@
                 <div id="main_header_box4">
                     <span id="current_name_text">성명</span>
                     <span id="current_name">한상인</span>
-<!--                    <span id="current_name">${currentUser.name}</span>-->
+                    <!--<span id="current_name">${currentUser.name}</span>-->
                 </div>
             </div>
             <!-- center -->
@@ -45,7 +45,14 @@
         </div>
     </div>
 </div>
-<script src="/js/sangin/student/exam.js"></script>
+<a href="/" id="home_link">
+    Home
+</a>
+<button id="submit_exam_btn">
+    제출
+</button>
+<script src="/js/sangin/student/loadExam.js"></script>
+<script src="/js/sangin/student/submitExam.js"></script>
 </body>
 
 </html>

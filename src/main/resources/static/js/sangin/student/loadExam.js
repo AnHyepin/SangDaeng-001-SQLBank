@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function loadProblems() {
-    // URL에서 난이도 가져오기 (difficulty=easy 형태)
+    // URL에서 난이도 가져오기
     const urlParams = new URLSearchParams(window.location.search);
     let difficulty = urlParams.get("difficulty");
 
@@ -11,28 +11,35 @@ function loadProblems() {
         alert("잘못된 접근입니다.");
         return;
     }
+
     const mainHeaderDifficulty = document.getElementById("main_header_box3");
     const box1Left = document.getElementById("box1_left");
     let difficultyText = '';
-    if(difficulty == 'easy') {
-        difficultyText = '초급 영역';
-    }else if(difficulty == 'medium') {
-        difficultyText = '중급 영역';
-    }else if(difficulty == 'hard') {
-        difficultyText = '고급 영역';
-    }else if(difficulty == 'test') {
-        difficultyText = '모의고사 영역';
-        box1Left.innerHTML = '시험용';
-    }else{
-        difficultyText = '잘못된 접근 영역';
+
+    switch (difficulty) {
+        case 'easy':
+            difficultyText = '초급 영역';
+            break;
+        case 'medium':
+            difficultyText = '중급 영역';
+            break;
+        case 'hard':
+            difficultyText = '고급 영역';
+            break;
+        case 'test':
+            difficultyText = '모의고사 영역';
+            box1Left.innerHTML = '시험용';
+            break;
+        default:
+            difficultyText = '잘못된 접근 영역';
     }
+
     mainHeaderDifficulty.textContent = difficultyText;
 
-    // URL에서 가져온 difficulty 값을 대문자로 변환하여 처리
+    // 대문자로 변환하여 API 요청
     difficulty = difficulty.toUpperCase();
 
-    // 난이도에 따라 문제 요청
-    axios.get(`/api/student/exam?difficulty=${difficulty}`)
+    axios.get(`/api/student/loadExam?difficulty=${difficulty}`)
         .then(response => {
             const problems = response.data;
             if (problems.length === 0) {
@@ -40,9 +47,7 @@ function loadProblems() {
                 return;
             }
 
-            // 문제 개수 제한 (최대 10개)
-            const selectedProblems = problems.slice(0, 10);
-            renderProblems(selectedProblems);
+            renderProblems(problems.slice(0, 10)); // 문제 개수 제한
         })
         .catch(error => {
             console.error("문제 불러오기 실패:", error);
@@ -56,16 +61,18 @@ function renderProblems(problems) {
     leftSection.innerHTML = "";
     rightSection.innerHTML = "";
 
-    const numberToKorean = ["①", "②", "③", "④"]; // 보기에 사용할 한글 숫자 배열
+    const numberToKorean = ["①", "②", "③", "④", "⑤", "⑥", "⑦", "⑧"];
 
     problems.forEach((problem, index) => {
         const problemDiv = document.createElement("div");
         problemDiv.className = "problem";
+        problemDiv.dataset.problemId = problem.problemId; // ✅ data-attribute로 problemId 저장
+
         problemDiv.innerHTML = `
             <div class="problem_metadata">
                 <span class="problem_id">문제 고유 ID : ${problem.problemId}</span>
                 <span class="created_by">출제자 : ${problem.createdBy}</span>
-<!--                <span class="difficulty">난이도 : ${problem.difficulty}</span>-->
+                <input type="hidden" class="hidden_problem_id" value="${problem.problemId}"> <!-- ✅ hidden input 추가 -->
             </div>
             <div class="problem_question_box">
                 <span class="problem_no">${index + 1}.</span>
@@ -75,14 +82,16 @@ function renderProblems(problems) {
             <div class="choice_box">
                 ${problem.choices.map((choice, i) => `
                     <label class="choice">
-                        <input type="radio" name="answer${problem.problemId}" value="${i + 1}">
-                        <span class="radio_custom">${numberToKorean[i]}</span> ${choice.choiceText}
+                        <input type="radio" name="answer${problem.problemId}" value="${choice.choiceId}">
+                        <span class="radio_custom">${numberToKorean[i]}</span>
+                        <span class="choice_context">
+                            ${choice.choiceText}
+                        </span>
                     </label>
                 `).join("")}
             </div>
         `;
 
-        // 왼쪽 5문제, 오른쪽 5문제
         if (index < 5) {
             leftSection.appendChild(problemDiv);
         } else {
