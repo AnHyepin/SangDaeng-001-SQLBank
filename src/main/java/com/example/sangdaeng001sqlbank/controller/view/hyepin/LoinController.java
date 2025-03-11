@@ -20,5 +20,10 @@ public class LoinController {
         return "hyepin/common/join";
     }
 
+    @GetMapping("/findIdPw")
+    public String findIdPw(){
+        return "hyepin/common/find-id-pw";
+    }
+
 
 }

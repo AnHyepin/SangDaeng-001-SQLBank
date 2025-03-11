@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>TITLE</title>
+    <link rel="stylesheet" href="/css/hyepin/common/sign.css">
+</head>
+<body>
+<!-- content -->
+<div layout:fragment="content">
+    <!--여기서부터-->
+
+    <div class="tap-container">
+        <div class="tab active" onclick="handleTabClick('find-id', this)">ID 찾기</div>
+        <div class="tab" onclick="handleTabClick('find-pw', this)">PW 찾기</div>
+    </div>
+
+    <div class="form-container">
+        <form id="find-id" class="form-content">
+            <div class="sign-content">
+                <h3>이름</h3>
+                <input type="text" name="name" placeholder="이름을 입력하세요">
+                <h3>이메일</h3>
+                <input type="text" name="email" placeholder="email을 입력하세요">
+                <h3 class="value-field"></h3>
+            </div>
+        </form>
+
+        <form id="find-pw" class="form-content hidden">
+            <div class="sign-content">
+                <h3>ID</h3>
+                <input type="text" name="username" id="username" placeholder="ID를 입력하세요">
+                <h3>이름</h3>
+                <input type="text" name="name" placeholder="이름을 입력하세요">
+                <h3>이메일</h3>
+                <input type="text" name="email" placeholder="email을 입력하세요">
+                <h3 class="value-field"></h3>
+            </div>
+        </form>
+    </div>
+
+    <div class="sign-btn-container">
+        <div class="find-id-pw-btn" style="width: 250px;">
+            <img src="/image/icon/find-id-pw.svg" alt="찾기버튼">
+        </div>
+    </div>
+
+    <!-- 모달 영역 -->
+    <div class="modal-overlay hidden">
+        <div class="change-modal" onclick="event.stopPropagation();">
+            <span class="close-btn" onclick="closeModal()">✖</span>
+            <form id="change-pw" class="form-content">
+                <input type="hidden" id="modal-username" name="username">
+                <div class="sign-content" style="width: 100%">
+                    <h3>비밀번호 변경</h3>
+                    <input type="text" name="password" id="password" placeholder="변경하실 PW를 입력하세요">
+                    <h3>비밀번호 확인</h3>
+                    <input type="text" name="password2" id="password2" placeholder="PW를 한번 더 입력하세요">
+                </div>
+            </form>
+
+            <div class="sign-btn-container">
+                <div class="change-btn" style="width: 250px;" onclick="submitChangePw()">
+                    <img src="/image/icon/change.svg" alt="비밀번호 변경 버튼">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--여기까지 작업하시면 됩니다-->
+</div>
+</body>
+
+<!--이거밖에서 스크립트 작성하면 안돌아갑니다...-->
+<div layout:fragment="scripts">
+    <script src="/js/hyepin/common/find-id-pw.js"></script>
+</div>
+</html>
