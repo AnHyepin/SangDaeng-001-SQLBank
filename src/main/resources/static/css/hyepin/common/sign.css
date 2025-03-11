@@ -1,0 +1,154 @@
+.sign-content {
+    padding: 30px;
+    margin: 0 auto;
+    width: 35%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.sign-content input {
+    padding: 15px;
+    border-radius: 15px;
+    border: 1px solid gray;
+    height: 60px;
+    margin-bottom: 20px;
+}
+
+.sign-content h3{
+    margin: 0px;
+}
+
+.sign-btn-container{
+    display: flex;
+    justify-content: center; /* 가로 중앙 정렬 */
+    align-items: center; /* 세로 중앙 정렬 (필요 시 추가) */
+}
+
+.sign-up-btn, .sign-in-btn, .find-id-pw-btn, .change-btn{
+    display: inline-block;
+    text-align: center;
+}
+.sign-up-btn img, .sign-in-btn img , .find-id-pw-btn img, .find-id-pw-btn img{
+    display: block;
+    width: 100%;
+}
+
+.sign-up-btn:hover img {
+    cursor: pointer;
+    transform: scale(1.2);
+    content: url('/image/icon/sign-up-push.svg');
+}
+
+.sign-in-btn:hover img {
+    cursor: pointer;
+    transform: scale(1.2);
+    content: url('/image/icon/sign-in-push.svg');
+}
+
+.find-id-pw-btn:hover img {
+    cursor: pointer;
+    transform: scale(1.2);
+    content: url('/image/icon/find-id-pw-push.svg');
+}
+
+.change-btn:hover img {
+    cursor: pointer;
+    transform: scale(1.2);
+    content: url('/image/icon/change-push.svg');
+}
+
+
+
+.sign-content-bottom{
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    margin-top: 40px;
+}
+
+.sign-content-bottom div{
+    font-size: 18px;
+}
+
+.tap-container{
+    padding: 20px 30px 20px 30px;
+    margin: 0 auto;
+    width: 35%;
+    display: flex;
+    justify-content: center;
+    gap: 150px;
+}
+
+.tap-container div{
+    font-size: 30px;
+}
+
+.tab {
+    padding: 10px 20px;
+    cursor: pointer;
+    position: relative;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.tab::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 0;
+    height: 3px;
+    background-color: blue;
+    transition: width 0.3s ease, left 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.tab.active::after {
+    width: 100%; /* 선택된 탭에만 밑줄 표시 */
+}
+
+.form-content {
+    display: block;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* 모달 오버레이 (배경) */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+/* 모달 본체 */
+.change-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    width: 350px;
+}
+
+/* 닫기 버튼 */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    cursor: pointer;
+    font-size: 20px;
+}

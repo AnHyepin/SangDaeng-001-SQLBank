@@ -1,5 +1,6 @@
 package com.example.sangdaeng001sqlbank.service.hyepin;
 
+import com.example.sangdaeng001sqlbank.dao.hyepin.UserDao;
 import com.example.sangdaeng001sqlbank.dto.UserDto;
 import com.example.sangdaeng001sqlbank.entity.User;
 import com.example.sangdaeng001sqlbank.jwt.JwtTokenProvider;
@@ -20,13 +21,14 @@ public class LoginService {
     private final AuthenticationManager authenticationManager;
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
+    private final UserDao userDao;
 
     //회원가입
     public String registerUser(UserDto userDto) {
         log.info("userDto: {}", userDto.toString());
 
         if (userRepository.findByUsername(userDto.getUsername()).isPresent()) {
-           return "중복된 ID입니다.";
+            return "중복된 ID입니다.";
         }
 
         if (userRepository.findByEmail(userDto.getEmail()).isPresent()) {
@@ -66,4 +68,31 @@ public class LoginService {
         return "로그인 성공!";
     }
 
+    //ID 찾기
+    public UserDto findId(UserDto userDto) {
+        User user = userRepository.findByNameAndEmail(userDto.getName(), userDto.getEmail()).orElse(null);
+        return (user != null) ?  UserDto.builder()
+                .username(user.getUsername())
+                .name(user.getName())
+                .password(user.getPassword())
+                .email(user.getEmail())
+                .build() : null;
+    }
+
+    //PW 찾기
+    public UserDto findPw(UserDto userDto) {
+        User user = userRepository.findByUsernameAndNameAndEmail(userDto.getUsername(), userDto.getName(), userDto.getEmail()).orElse(null);
+        return (user != null) ?  UserDto.builder()
+                .username(user.getUsername())
+                .name(user.getName())
+                .password(user.getPassword())
+                .email(user.getEmail())
+                .build() : null;
+    }
+
+    public int changePw(UserDto userDto) {
+        userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        int result  = userDao.updatePassword(userDto);
+        return result;
+    }
 }
