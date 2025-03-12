@@ -38,9 +38,9 @@ public class StudentApiController_sangin {
 
     // ✅ 사용자의 성적 리스트 조회
     @GetMapping("/scoreList")
-    public ResponseEntity<List<ScoreListDto>> getScoreList() {
+    public ResponseEntity<List<AttemptSessionDto>> getScoreList() {
         int userId = 1;
-        List<ScoreListDto> scoreList = studentService.getScoreListWithDetails(userId);
+        List<AttemptSessionDto> scoreList = studentService.getScoreListWithDetails(userId);
         if (scoreList.isEmpty()) {
             return ResponseEntity.noContent().build();
         }

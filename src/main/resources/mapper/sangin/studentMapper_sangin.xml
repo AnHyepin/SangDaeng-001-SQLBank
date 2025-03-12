@@ -40,7 +40,7 @@
         WHERE session_id = #{sessionId};
     </update>
 
-    <select id="getScoreList" resultType="com.example.sangdaeng001sqlbank.dto.ScoreListDto">
+    <select id="getScoreList" resultType="com.example.sangdaeng001sqlbank.dto.AttemptSessionDto">
         SELECT *
         FROM tbl_attempt_sessions
         WHERE user_id = #{userId}
@@ -53,22 +53,19 @@
         ad.session_id,
         ad.problem_id,
         ad.selected_choice_id,
-        sc.choice_text AS selected_choice_text,  -- 사용자가 선택한 보기의 텍스트
-        cc.choice_text AS correct_choice_text,  -- 정답 보기의 텍스트
         (CASE
-        WHEN ad.selected_choice_id IS NULL THEN NULL  -- 선택 안 했으면 NULL
+        WHEN ad.selected_choice_id IS NULL THEN NULL
         WHEN ad.selected_choice_id = cc.choice_id THEN 1
         ELSE 0
         END) AS is_correct
         FROM tbl_attempt_details ad
-        LEFT JOIN tbl_problem_choices sc
-        ON ad.selected_choice_id = sc.choice_id  -- 사용자가 선택한 보기 가져오기
         LEFT JOIN tbl_problem_choices cc
         ON ad.problem_id = cc.problem_id
-        AND cc.is_correct = 1  -- 정답 가져오기
+        AND cc.is_correct = 1
         WHERE ad.session_id = #{sessionId}
         ORDER BY ad.problem_id, ad.attempt_id;
     </select>
+
 
     <select id="getProblemDetail" resultType="com.example.sangdaeng001sqlbank.dto.ProblemDetailDto">
         SELECT

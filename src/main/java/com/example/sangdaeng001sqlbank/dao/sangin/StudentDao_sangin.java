@@ -28,7 +28,7 @@ public interface StudentDao_sangin {
     void updateAttemptSessionScore(AttemptSessionDto attemptSessionDto);
 
     //사용자의 성적 리스트 조회
-    List<ScoreListDto> getScoreList(@Param("userId") int userId);
+    List<AttemptSessionDto> getScoreList(@Param("userId") int userId);
 
     //특정 회차의 문제별 정답 상세 조회
     List<AttemptDetailDto> getAttemptDetails(@Param("sessionId") int sessionId);

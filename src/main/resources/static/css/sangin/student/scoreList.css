@@ -43,12 +43,12 @@
 /* ✅ 정답 강조 */
 .correct-answer {
     font-weight: bold;
-    cursor: pointer;
+    color: blue;
 }
 
 .wrong-answer {
     font-weight: bold;
-    cursor: pointer;
+    color: red;
 }
 
 .ox_btn{

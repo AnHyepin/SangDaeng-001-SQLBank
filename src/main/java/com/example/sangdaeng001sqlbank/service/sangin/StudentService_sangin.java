@@ -95,9 +95,9 @@ public class StudentService_sangin {
         }
     }
 
-    public List<ScoreListDto> getScoreListWithDetails(int userId) {
-        List<ScoreListDto> scoreList = studentDao.getScoreList(userId);
-        for (ScoreListDto score : scoreList) {
+    public List<AttemptSessionDto> getScoreListWithDetails(int userId) {
+        List<AttemptSessionDto> scoreList = studentDao.getScoreList(userId);
+        for (AttemptSessionDto score : scoreList) {
             List<AttemptDetailDto> details = studentDao.getAttemptDetails(score.getSessionId());
             score.setAttemptDetails(details);
         }

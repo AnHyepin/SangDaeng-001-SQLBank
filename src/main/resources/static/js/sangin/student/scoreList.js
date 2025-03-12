@@ -12,13 +12,13 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-// ✅ 성적 리스트 불러오기 (비동기 병렬 처리)
 async function loadScoreList() {
     try {
+        // ✅ 성적 리스트 + 상세 데이터 한 번에 가져오기
         const scoreResponse = await axios.get(`/api/student/scoreList`);
         const scoreList = scoreResponse.data;
-        const tableBody = document.getElementById("score_table_body");
 
+        const tableBody = document.getElementById("score_table_body");
         if (!tableBody) {
             console.error("🚨 오류: 'score_table_body' 요소를 찾을 수 없습니다.");
             return;
@@ -26,14 +26,8 @@ async function loadScoreList() {
 
         tableBody.innerHTML = ""; // 기존 데이터 초기화
 
-        // ✅ 모든 세션의 scoreDetail을 병렬 요청
-        const detailRequests = scoreList.map(session => axios.get(`/api/student/scoreDetail?sessionId=${session.sessionId}`));
-        const detailResponses = await Promise.all(detailRequests);
-
-        scoreList.forEach((session, index) => {
-            const attemptDetails = detailResponses[index].data;
+        scoreList.forEach((session) => {
             let difficultyText = '';
-
             switch (session.difficulty) {
                 case 'EASY': difficultyText = '초급'; break;
                 case 'MEDIUM': difficultyText = '중급'; break;
@@ -42,8 +36,8 @@ async function loadScoreList() {
                 default: difficultyText = 'ERROR';
             }
 
-            // ✅ OX 결과 변환 (각 문제의 problemId만 사용)
-            let oxResults = attemptDetails.map(attempt =>
+            // ✅ OX 결과 변환 (session.attemptDetails 활용)
+            let oxResults = session.attemptDetails.map(attempt =>
                 `<td class="ox_btn" data-problem-id="${attempt.problemId}">
                     ${attempt.isCorrect === 1 ? "⭕" : "❌"}
                 </td>`).join("");
