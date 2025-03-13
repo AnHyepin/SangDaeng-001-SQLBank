@@ -31,7 +31,7 @@ function loadProblemList() {
 
                 // 문제 상세 페이지 이동 이벤트 추가
                 problemDiv.querySelector('.problem_question').addEventListener('click', function () {
-                    window.location.href = `/view/teacher/problemDetail/${problem.problemId}`;
+                    window.location.href = `/view/teacher/problemUpdate/${problem.problemId}`;
                 });
 
                 // 상태 변경 (활성화 <-> 비활성화)

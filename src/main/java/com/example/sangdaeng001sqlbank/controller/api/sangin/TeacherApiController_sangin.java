@@ -40,7 +40,7 @@ public class TeacherApiController_sangin {
         return ResponseEntity.ok(teacherService.getProblemList());
     }
 
-    @GetMapping("/problemDetail/{problemId}")
+    @GetMapping("/problemDetailLoadUpdate/{problemId}")
     public ResponseEntity<ProblemDto> getProblemDetail(@PathVariable int problemId) {
         if(teacherService.getProblemDetail(problemId) == null){
             return ResponseEntity.badRequest().body(null);

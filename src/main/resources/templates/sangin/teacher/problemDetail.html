@@ -16,30 +16,6 @@
     <input type="hidden" id="problem_id" th:value="${problemId}">
     <div id="adjust_section">
         <div id="main_section">
-            <div id="main_info_section">
-                <div class="main_info_text">문제 질문</div>
-                <textarea name="question" class="main_info_input"></textarea>
-                <div class="main_info_text">문제 설명</div>
-                <textarea name="description" class="main_info_input"></textarea>
-                <div class="main_info_text">난이도</div>
-                <select name="difficulty" id="main_info_difficulty">
-                    <option value="EASY">초급</option>
-                    <option value="MEDIUM">중급</option>
-                    <option value="HARD">고급</option>
-                </select>
-                <div id="line"></div>
-            </div>
-
-            <div id="main_choice_section">
-                <div class="main_choice_description_text">* 보기는 최소 5개 등록하셔야 합니다</div>
-                <div class="main_choice_description_text">* 반드시 하나의 정답을 설정하셔야 합니다</div>
-                <!--동적 생성-->
-            </div>
-
-            <div id="button_container">
-                <button id="add_choice_btn">+ 보기 추가</button>
-                <button id="regist_btn">문제 수정</button>
-            </div>
 
         </div>
     </div>
@@ -48,8 +24,6 @@
 
 <!--이거밖에서 스크립트 작성하면 안돌아갑니다...-->
 <div layout:fragment="scripts">
-    <script src="/js/sangin/teacher/problemDetail.js"></script>
-    <script src="/js/sangin/teacher/ProblemUpdate.js"></script>
 
 </div>
 </html>
