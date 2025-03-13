@@ -4,7 +4,7 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.sangdaeng001sqlbank.dao.sangin.CommonDao_sangin">
     <select id="getProblemList" resultType="com.example.sangdaeng001sqlbank.dto.ProblemDto">
-        select * from tbl_problems;
+        select * from tbl_problems order by problem_id desc;
     </select>
 
     <select id="getProblemDetail" resultType="com.example.sangdaeng001sqlbank.dto.ProblemDto">
