@@ -74,7 +74,7 @@ function toggleProblemStatus(problemId, statusElement) {
 function deleteProblem(problemId) {
     if (!confirm("정말로 이 문제를 삭제하시겠습니까?")) return;
 
-    axios.delete(`/api/teacher/delete/${problemId}`)
+    axios.delete(`/api/teacher/problem/${problemId}`)
         .then(response => {
             alert("문제가 삭제되었습니다.");
             loadProblemList(); // 삭제 후 리스트 갱신

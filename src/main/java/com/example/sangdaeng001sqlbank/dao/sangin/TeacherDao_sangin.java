@@ -28,4 +28,7 @@ public interface TeacherDao_sangin {
     int updateProblemStatus(@Param("problemId") int problemId, @Param("permitYn") String permitYn);
 
     int deleteProblem(int problemId);
+
+    // ✅ 댓글 삭제
+    int deleteDiscussion(int commentId);
 }

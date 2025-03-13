@@ -42,7 +42,8 @@
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
-    transition: 0.3s ease-in-out;
+    transition: 0.2s ease-in-out;
+    margin-top: 30px;
 }
 #score_detail_link:hover {
     scale: 1.05;

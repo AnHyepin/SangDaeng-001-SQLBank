@@ -13,7 +13,7 @@
     height: 600px;
 }
 
-#main_section>a {
+#main_section > a {
     font-size: 60px;
     text-decoration: none;
     color: inherit;
@@ -25,23 +25,30 @@
     border-radius: 10px;
     transition: 0.3s ease;
     background-color: #ddd;
+    /*box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);*/
 }
 
 #easy_btn:hover {
     background-color: #a9a9a9;
     scale: 1.1;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
 #medium_btn:hover {
     background-color: #66ff00;
     scale: 1.1;
     color: white;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
-#hard_btn:hover{
+
+#hard_btn:hover {
     scale: 1.1;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
-#test_btn:hover{
+
+#test_btn:hover {
     color: red;
     font-weight: bold;
     scale: 1.1;
+    box-shadow: 20px 20px 20px 0px rgba(255, 1, 1, 0.5);
 }

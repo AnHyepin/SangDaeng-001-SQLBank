@@ -120,6 +120,7 @@
     font-weight: bold;
     color: green;
 }
+
 #comment_section {
     margin-top: 30px;
     width: 1000px;
@@ -129,10 +130,17 @@
     padding: 20px;
 }
 
-#comment_list_text {
-    font-size: 22px;
-    font-weight: bold;
+#comment_list_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 20px;
+    height: 50px;
+}
+
+#comment_list_text {
+    font-size: 23px;
+    font-weight: bold;
 }
 
 #comment_list {
@@ -142,6 +150,7 @@
 
 /* ✅ 개별 댓글 스타일 */
 .comment_item {
+    position: relative;
     display: flex;
     flex-direction: column;
     margin-bottom: 15px;
@@ -172,6 +181,187 @@
     color: #444;
     line-height: 1.4;
     padding-left: 10px;
+    width: 80%;
 }
+
+#comment_register_btn {
+    height: 50px;
+    width: 120px;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    text-align: center;
+    background: linear-gradient(45deg, #28a745, #218838); /* 초록색 */
+    box-shadow: 0 4px 8px rgba(40, 167, 69, 0.3);
+    transition: all 0.2s ease-in-out;
+    margin-right: 10px;
+}
+
+#comment_register_btn:hover {
+    transform: scale(1.05);
+    background: linear-gradient(45deg, #218838, #1e7e34);
+}
+
+#comment_register_btn i {
+    margin-right: 8px;
+}
+
+
+.comment_delete_btn {
+    height: 40px;
+    width: 80px;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+    color: white;
+    background-color: #c5c5c5;
+    font-weight: bold;
+    font-size: 15px;
+    text-align: center;
+    text-decoration: none;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}
+
+/*/* ✅ 모달 배경 (어두운 배경) */
+#comment_modal_background {
+    display: none; /* 기본적으로 숨김 */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* 반투명한 어두운 배경 */
+    backdrop-filter: blur(5px); /* 블러 효과 */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* ✅ 모달 창 */
+#comment_modal {
+    background: white;
+    width: 600px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: all 0.3s ease-in-out;
+}
+
+/* ✅ 모달이 열릴 때 애니메이션 */
+#comment_modal_background.active {
+    display: flex;
+}
+
+#comment_modal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ✅ 모달 헤더 */
+#comment_modal_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 25px;
+    font-weight: bold;
+    padding-bottom: 10px;
+}
+
+/* ✅ 닫기 버튼 */
+#comment_modal_close {
+    cursor: pointer;
+    font-size: 24px;
+    color: #555;
+    transition: color 0.2s ease;
+}
+
+#comment_modal_close:hover {
+    color: #000;
+}
+
+/* ✅ 모달 입력 영역 */
+#comment_modal_content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 10px;
+}
+
+#comment_input_text {
+    font-size: 20px;
+}
+
+#comment_input {
+    width: 100%;
+    height: 150px;
+    padding: 10px;
+    font-size: 18px;
+    border: 1px solid #ddd;
+    outline: none;
+    border-radius: 5px;
+    resize: none;
+    line-height: 23px;
+}
+
+#comment_caution {
+    font-size: 18px;
+    color: #2e97df;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+/* ✅ 버튼 박스 */
+#comment_modal_btn_box {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* ✅ 등록 버튼 */
+#comment_submit_btn {
+    width: 48%;
+    padding: 10px;
+    background: #007bff;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+#comment_submit_btn:hover {
+    background: #0056b3;
+    transform: scale(1.05);
+}
+
+/* ✅ 취소 버튼 */
+#comment_cancel_btn {
+    width: 48%;
+    padding: 10px;
+    background: #ddd;
+    color: black;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+#comment_cancel_btn:hover {
+    background: #bbb;
+    transform: scale(1.05);
+}
+
 
 

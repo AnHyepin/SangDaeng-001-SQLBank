@@ -28,7 +28,9 @@ public class TeacherService_sangin {
         }
     }
 
-
+    public boolean deleteDiscussion(int commentId) {
+        return teacherDao.deleteDiscussion(commentId) > 0;
+    }
 
     public ProblemDto getProblemDetailLoadUpdate(int problemId) {
         ProblemDto problemDto = teacherDao.getProblemDetailLoadUpdate(problemId);

@@ -64,13 +64,24 @@ public class TeacherApiController_sangin {
     }
 
     // ✅ 문제 삭제 (DELETE)
-    @DeleteMapping("/delete/{problemId}")
+    @DeleteMapping("/problem/{problemId}")
     public ResponseEntity<?> deleteProblem(@PathVariable("problemId") int problemId) {
         boolean deleted = teacherService.deleteProblem(problemId);
         if (!deleted) {
             return ResponseEntity.badRequest().body("삭제 실패");
         }
         return ResponseEntity.ok().body("삭제 성공");
+    }
+
+    // ✅ 댓글 삭제
+    @DeleteMapping("/discussion/{commentId}")
+    public ResponseEntity<String> deleteDiscussion(@PathVariable int commentId) {
+        boolean isSuccess = teacherService.deleteDiscussion(commentId);
+        if (isSuccess) {
+            return ResponseEntity.ok("댓글이 삭제되었습니다.");
+        } else {
+            return ResponseEntity.badRequest().body("댓글 삭제 실패");
+        }
     }
 
 

@@ -13,6 +13,32 @@
     <!-- content -->
     <div layout:fragment="content">
         <input type="hidden" id="problem_id" th:value="${problemId}">
+        <!-- 댓글 등록 모달 -->
+        <div id="comment_modal_background">
+            <div id="comment_modal">
+                <!-- 모달 헤더 -->
+                <div id="comment_modal_header">
+                    <span>댓글 등록</span>
+                    <span id="comment_modal_close">&times;</span>
+                </div>
+
+                <!-- 모달 입력 폼 -->
+                <div id="comment_modal_content">
+                    <div id="comment_input_text">댓글 내용</div>
+
+                    <textarea id="comment_input" placeholder="댓글을 입력하세요..."></textarea>
+                </div>
+                <div id="comment_caution">
+                    * 등록 후 삭제는 문의가 필요하니 신중히 댓글을 작성하여 주십시오.
+                </div>
+                <!-- 모달 버튼 -->
+                <div id="comment_modal_btn_box">
+                    <button id="comment_submit_btn">등록</button>
+                    <button id="comment_cancel_btn">취소</button>
+                </div>
+            </div>
+        </div>
+
         <div id="adjust_section">
             <div id="main_section">
                 <table id="title_section">
@@ -62,37 +88,14 @@
                 </div>
             </div>
             <div id="comment_section">
-                <div id="comment_list_text">댓글 목록</div>
+                <div id="comment_list_header">
+                    <div id="comment_list_text">댓글 목록</div>
+                    <button id="comment_register_btn">
+                        + 댓글 등록
+                    </button>
+                </div>
                 <div id="comment_list">
-                    <div class="comment_item">
-                        <div class="comment_user_id">작성자</div>
-                        <div class="comment_created_at">작성일</div>
-                        <div class="comment_content">내용</div>
-                    </div>
 
-                    <div class="comment_item">
-                        <div class="comment_user_id">작성자</div>
-                        <div class="comment_created_at">작성일</div>
-                        <div class="comment_content">내용</div>
-                    </div>
-
-                    <div class="comment_item">
-                        <div class="comment_user_id">작성자</div>
-                        <div class="comment_created_at">작성일</div>
-                        <div class="comment_content">내용</div>
-                    </div>
-
-                    <div class="comment_item">
-                        <div class="comment_user_id">작성자</div>
-                        <div class="comment_created_at">작성일</div>
-                        <div class="comment_content">내용</div>
-                    </div>
-
-                    <div class="comment_item">
-                        <div class="comment_user_id">작성자</div>
-                        <div class="comment_created_at">작성일</div>
-                        <div class="comment_content">내용</div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -103,5 +106,6 @@
     <!--이거밖에서 스크립트 작성하면 안돌아갑니다...-->
     <div layout:fragment="scripts">
         <script src="/js/sangin/common/problemDetail.js"></script>
+        <script src="/js/sangin/common/problemDiscussion.js"></script>
     </div>
     </html>

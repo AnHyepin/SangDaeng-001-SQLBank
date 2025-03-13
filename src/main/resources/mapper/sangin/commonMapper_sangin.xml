@@ -18,4 +18,19 @@
         FROM tbl_problems p
         WHERE p.problem_id = #{problemId}
     </select>
+
+    <insert id="addDiscussion">
+        INSERT INTO tbl_problem_discussions (problem_id, user_id, content, created_at)
+        VALUES (#{problemId}, #{userId}, #{content}, NOW());
+    </insert>
+
+    <select id="getDiscussionsByProblemId" resultType="com.example.sangdaeng001sqlbank.dto.ProblemDiscussionDto">
+        SELECT discussion_id, problem_id, user_id, content, created_at
+        FROM tbl_problem_discussions
+        WHERE problem_id = #{problemId}
+        ORDER BY created_at DESC;
+    </select>
+
+
+
 </mapper>

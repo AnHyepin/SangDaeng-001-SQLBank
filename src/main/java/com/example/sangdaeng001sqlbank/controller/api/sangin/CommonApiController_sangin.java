@@ -1,14 +1,12 @@
 package com.example.sangdaeng001sqlbank.controller.api.sangin;
 
+import com.example.sangdaeng001sqlbank.dto.ProblemDiscussionDto;
 import com.example.sangdaeng001sqlbank.dto.ProblemDto;
 import com.example.sangdaeng001sqlbank.service.sangin.CommonService_sangin;
 import com.example.sangdaeng001sqlbank.service.sangin.TeacherService_sangin;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -37,5 +35,26 @@ public class CommonApiController_sangin {
         }
         return ResponseEntity.ok(commonService.getProblemDetail(problemId));
     }
+
+    // ✅ 댓글 등록
+    @PostMapping("/discussion")
+    public ResponseEntity<String> addDiscussion(@RequestBody ProblemDiscussionDto problemDiscussionDto) {
+        int userId = 1;
+        problemDiscussionDto.setUserId(userId);
+        boolean isSuccess = commonService.addDiscussion(problemDiscussionDto);
+        if (isSuccess) {
+            return ResponseEntity.ok("댓글이 등록되었습니다.");
+        } else {
+            return ResponseEntity.badRequest().body("댓글 등록 실패");
+        }
+    }
+
+    // ✅ 특정 문제에 대한 댓글 목록 조회
+    @GetMapping("/discussionList")
+    public ResponseEntity<List<ProblemDiscussionDto>> discussionList(@RequestParam("problemId") int problemId) {
+        List<ProblemDiscussionDto> discussions = commonService.getDiscussionsByProblemId(problemId);
+        return ResponseEntity.ok(discussions);
+    }
+
 
 }

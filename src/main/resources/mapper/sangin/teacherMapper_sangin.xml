@@ -46,4 +46,7 @@
         DELETE FROM tbl_problems WHERE problem_id = #{problemId}
     </delete>
 
+    <delete id="deleteDiscussion">
+        DELETE FROM tbl_problem_discussions WHERE discussion_id = #{discussionId};
+    </delete>
 </mapper>
