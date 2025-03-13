@@ -9,7 +9,7 @@
     align-items: center;
     justify-content: center;
     width: auto;
-    gap: 200px;
+    gap: 100px;
     height: 600px;
 }
 
@@ -26,6 +26,7 @@
     transition: 0.3s ease;
     background-color: #ddd;
     /*box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);*/
+
 }
 
 #easy_btn:hover {
@@ -51,4 +52,17 @@
     font-weight: bold;
     scale: 1.1;
     box-shadow: 20px 20px 20px 0px rgba(255, 1, 1, 0.5);
+    animation: wave 0.01s infinite ease-in-out;
+
+}
+@keyframes wave {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); } /* 위로 이동 */
+    100% { transform: translateY(0px); } /* 원래 위치로 돌아옴 */
+}
+
+/* ✅ 파동 효과 적용 */
+.wave-effect {
+    display: inline-block;
+    animation: wave 2s infinite ease-in-out;
 }

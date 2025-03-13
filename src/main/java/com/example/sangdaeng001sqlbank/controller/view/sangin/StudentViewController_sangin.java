@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/view/student")
 public class StudentViewController_sangin {
 
-    @GetMapping("/problemList")
+    @GetMapping("/difficulty")
     public String problemList() {
-        return "sangin/student/problemList";
+        return "sangin/student/difficulty";
     }
 
     @GetMapping("/exam")
