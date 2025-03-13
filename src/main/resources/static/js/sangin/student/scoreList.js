@@ -80,7 +80,7 @@ async function loadProblemDetail(problemId) {
 // ✅ 상세보기 모달 데이터 렌더링
 function renderProblemDetail(problemData) {
     const detailContainer = document.getElementById("score_detail_container");
-
+    const link = document.getElementById("score_detail_link");
     if (!detailContainer) {
         console.error("🚨 오류: 'score_detail_container' 요소를 찾을 수 없습니다.");
         return;
@@ -93,6 +93,9 @@ function renderProblemDetail(problemData) {
         </span></div>
         <div class="problem_correct"><b>정답:</b> <span class="correct-answer">${problemData.correctChoiceText}</span></div>
     `;
+    link.addEventListener("click", function () {
+        window.location.href=`/view/common/problemDetail/${problemData.problemId}`;
+    })
 
     document.getElementById("score_detail_modal").style.display = "block"; // 모달 표시
 }

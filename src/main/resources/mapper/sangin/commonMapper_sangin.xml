@@ -3,4 +3,19 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.sangdaeng001sqlbank.dao.sangin.CommonDao_sangin">
+    <select id="getProblemList" resultType="com.example.sangdaeng001sqlbank.dto.ProblemDto">
+        select * from tbl_problems;
+    </select>
+
+    <select id="getProblemDetail" resultType="com.example.sangdaeng001sqlbank.dto.ProblemDto">
+        SELECT
+        p.*,
+        (SELECT choice_text
+        FROM tbl_problem_choices
+        WHERE problem_id = p.problem_id
+        AND is_correct = 1
+        LIMIT 1) AS answer
+        FROM tbl_problems p
+        WHERE p.problem_id = #{problemId}
+    </select>
 </mapper>

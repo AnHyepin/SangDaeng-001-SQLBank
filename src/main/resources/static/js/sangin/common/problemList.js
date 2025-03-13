@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function loadProblemList() {
-    axios.get('/api/teacher/problemList')
+    axios.get('/api/common/problemList')
         .then(response => {
             const problemListContainer = document.getElementById('problem_list_container');
             problemListContainer.innerHTML = ''; // 기존 목록 초기화
@@ -31,7 +31,7 @@ function loadProblemList() {
 
                 // 문제 상세 페이지 이동 이벤트 추가
                 problemDiv.querySelector('.problem_question').addEventListener('click', function () {
-                    window.location.href = `/view/teacher/problemUpdate/${problem.problemId}`;
+                    window.location.href = `/view/common/problemDetail/${problem.problemId}`;
                 });
 
                 // 상태 변경 (활성화 <-> 비활성화)

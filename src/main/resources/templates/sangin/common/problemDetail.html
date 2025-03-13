@@ -1,0 +1,107 @@
+    <!DOCTYPE html>
+    <html xmlns:th="http://www.thymeleaf.org"
+          xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+          layout:decorate="~{/layout/layout/layout}">
+    <head>
+        <meta charset="UTF-8">
+        <title>문제 상세</title>
+        <link rel="stylesheet" href="/css/sangin/common/problemDetail.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    </head>
+    <body>
+    <!-- content -->
+    <div layout:fragment="content">
+        <input type="hidden" id="problem_id" th:value="${problemId}">
+        <div id="adjust_section">
+            <div id="main_section">
+                <table id="title_section">
+                    <thead>
+                    <tr>
+                        <th>문제 ID</th>
+                        <th>출제자</th>
+                        <th>난이도</th>
+                        <th>등록일</th>
+                        <th>상태</th>
+                        <th>수정</th>
+                        <th>삭제</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td id="problemId"></td>
+                        <td id="createdBy"></td>
+                        <td id="difficulty"></td>
+                        <td id="createdAt"></td>
+                        <td>
+                            <button id="statusBtn"></button>
+                        </td>
+                        <td>
+                            <button id="updateBtn">수정</button>
+                        </td>
+                        <td>
+                            <button id="deleteBtn">삭제</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <div class="info_section">
+                    <span class="info_title">질문</span>
+                    <span id="question" class="info_content"></span>
+                </div>
+
+                <div class="info_section">
+                    <span class="info_title">설명</span>
+                    <span id="description" class="info_content"></span>
+                </div>
+
+                <div class="info_section">
+                    <span class="info_title">정답</span>
+                    <span id="answer" class="info_content answer"></span>
+                </div>
+            </div>
+            <div id="comment_section">
+                <div id="comment_list_text">댓글 목록</div>
+                <div id="comment_list">
+                    <div class="comment_item">
+                        <div class="comment_user_id">작성자</div>
+                        <div class="comment_created_at">작성일</div>
+                        <div class="comment_content">내용</div>
+                    </div>
+
+                    <div class="comment_item">
+                        <div class="comment_user_id">작성자</div>
+                        <div class="comment_created_at">작성일</div>
+                        <div class="comment_content">내용</div>
+                    </div>
+
+                    <div class="comment_item">
+                        <div class="comment_user_id">작성자</div>
+                        <div class="comment_created_at">작성일</div>
+                        <div class="comment_content">내용</div>
+                    </div>
+
+                    <div class="comment_item">
+                        <div class="comment_user_id">작성자</div>
+                        <div class="comment_created_at">작성일</div>
+                        <div class="comment_content">내용</div>
+                    </div>
+
+                    <div class="comment_item">
+                        <div class="comment_user_id">작성자</div>
+                        <div class="comment_created_at">작성일</div>
+                        <div class="comment_content">내용</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </body>
+
+    <!--이거밖에서 스크립트 작성하면 안돌아갑니다...-->
+    <div layout:fragment="scripts">
+        <script src="/js/sangin/common/problemDetail.js"></script>
+    </div>
+    </html>

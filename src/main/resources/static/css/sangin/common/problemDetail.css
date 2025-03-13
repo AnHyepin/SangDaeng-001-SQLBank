@@ -1,0 +1,177 @@
+#adjust_section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+#main_section {
+    width: 1000px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+#title_section {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#title_section th,
+#title_section td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    font-size: 16px;
+}
+
+#title_section th {
+    background-color: #007BFF;
+    color: white;
+    font-weight: bold;
+}
+
+#statusBtn {
+    height: 30px;
+    width: 80px;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+}
+
+.active {
+    background-color: #8580ae;
+}
+
+.inactive {
+    background-color: #cdcdcd;
+}
+
+#updateBtn {
+    height: 30px;
+    width: 50px;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+    background-color: #cdcdcd;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+}
+
+#deleteBtn {
+    height: 30px;
+    width: 50px;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+    background-color: #cdcdcd;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+}
+
+#deleteBtn:hover, #updateBtn:hover {
+    scale: 1.05;
+    background-color: #cccccc;
+}
+
+
+/* ✅ 정보 섹션 (질문, 설명, 정답) */
+.info_section {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f5f5f5;
+}
+
+.info_title {
+    font-weight: bold;
+    width: 100px;
+    text-align: left;
+    color: #333;
+}
+
+.info_content {
+    margin-top: 10px;
+    flex: 1;
+    padding-left: 10px;
+    font-size: 16px;
+    color: #555;
+}
+
+/* ✅ 정답 강조 */
+.answer {
+    font-weight: bold;
+    color: green;
+}
+#comment_section {
+    margin-top: 30px;
+    width: 1000px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+#comment_list_text {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+#comment_list {
+    max-height: 500px;
+    overflow-y: auto; /* 댓글이 많을 경우 스크롤 */
+}
+
+/* ✅ 개별 댓글 스타일 */
+.comment_item {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f5f5f5;
+}
+
+/* ✅ 댓글 작성자 */
+.comment_user_id {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+/* ✅ 댓글 작성일 */
+.comment_created_at {
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 5px;
+}
+
+/* ✅ 댓글 내용 */
+.comment_content {
+    font-size: 16px;
+    color: #444;
+    line-height: 1.4;
+    padding-left: 10px;
+}
+
+

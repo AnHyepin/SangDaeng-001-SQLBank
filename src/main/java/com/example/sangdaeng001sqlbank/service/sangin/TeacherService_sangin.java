@@ -28,12 +28,10 @@ public class TeacherService_sangin {
         }
     }
 
-    public List<ProblemDto> getProblemList() {
-        return teacherDao.getProblemList();
-    }
 
-    public ProblemDto getProblemDetail(int problemId) {
-        ProblemDto problemDto = teacherDao.getProblemDetail(problemId);
+
+    public ProblemDto getProblemDetailLoadUpdate(int problemId) {
+        ProblemDto problemDto = teacherDao.getProblemDetailLoadUpdate(problemId);
         List<ProblemChoiceDto> problemChoiceDtos = teacherDao.getProblemChoice(problemId);
         problemDto.setChoices(problemChoiceDtos);
         return problemDto;

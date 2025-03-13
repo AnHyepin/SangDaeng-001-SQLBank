@@ -14,11 +14,9 @@
         VALUES (#{problemId}, #{choiceText}, #{isCorrect})
     </insert>
 
-    <select id="getProblemList" resultType="com.example.sangdaeng001sqlbank.dto.ProblemDto">
-        select * from tbl_problems;
-    </select>
 
-    <select id="getProblemDetail" resultType="com.example.sangdaeng001sqlbank.dto.ProblemDto">
+
+    <select id="getProblemDetailLoadUpdate" resultType="com.example.sangdaeng001sqlbank.dto.ProblemDto">
         select * from tbl_problems where problem_id = #{problemId}
     </select>
 

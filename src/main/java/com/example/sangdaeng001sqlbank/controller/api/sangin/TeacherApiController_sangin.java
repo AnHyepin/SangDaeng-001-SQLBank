@@ -5,6 +5,7 @@ import com.example.sangdaeng001sqlbank.service.sangin.TeacherService_sangin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,20 +33,14 @@ public class TeacherApiController_sangin {
         return ResponseEntity.ok().body("등록 성공");
     }
 
-    @GetMapping("/problemList")
-    public ResponseEntity<List<ProblemDto>> getProblemList() {
-        if(teacherService.getProblemList() == null){
-            return ResponseEntity.badRequest().body(null);
-        }
-        return ResponseEntity.ok(teacherService.getProblemList());
-    }
+
 
     @GetMapping("/problemDetailLoadUpdate/{problemId}")
-    public ResponseEntity<ProblemDto> getProblemDetail(@PathVariable int problemId) {
-        if(teacherService.getProblemDetail(problemId) == null){
+    public ResponseEntity<ProblemDto> getProblemDetailLoadUpdate(@PathVariable int problemId) {
+        if(teacherService.getProblemDetailLoadUpdate(problemId) == null){
             return ResponseEntity.badRequest().body(null);
         }
-        return ResponseEntity.ok(teacherService.getProblemDetail(problemId));
+        return ResponseEntity.ok(teacherService.getProblemDetailLoadUpdate(problemId));
     }
 
     @PutMapping("/update/{problemId}")

@@ -11,14 +11,17 @@ import java.util.List;
 public interface TeacherDao_sangin {
 
     void insertProblem(ProblemDto problem);
+
     void insertProblemChoice(ProblemChoiceDto choice);
 
-    List<ProblemDto> getProblemList();
 
-    ProblemDto getProblemDetail(int problemId);
+
+    ProblemDto getProblemDetailLoadUpdate(int problemId);
+
     List<ProblemChoiceDto> getProblemChoice(int problemId);
 
     int updateProblem(@Param("problemId") int problemId, @Param("problem") ProblemDto problem);
+
     // 기존 보기 삭제
     void deleteChoicesByProblemId(int problemId);
 

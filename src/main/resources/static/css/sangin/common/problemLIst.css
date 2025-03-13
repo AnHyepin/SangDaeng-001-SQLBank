@@ -36,7 +36,7 @@
 
 #problem_list_text {
     margin: 30px 0;
-    font-size: 35px;
+    font-size: 30px;
     font-weight: bold;
 }
 
@@ -50,7 +50,7 @@
 #problem_text_box > span {
     align-items: center;
     height: 60px;
-    font-size: 25px;
+    font-size: 23px;
     color: white;
     display: flex;
     justify-content: center;
@@ -96,7 +96,7 @@
 }
 
 .problem > span {
-    font-size: 20px;
+    font-size: 19px;
     display: flex;
     justify-content: center;
     overflow-x: hidden;

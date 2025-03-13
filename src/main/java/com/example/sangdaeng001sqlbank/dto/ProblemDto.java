@@ -13,6 +13,7 @@ public class ProblemDto {
     private int createdBy; // 출제자 ID
     private String createdAt; // 출제일
     private char permitYn;
+    private String answer;
 
     private List<ProblemChoiceDto> choices; // 보기들
 }
