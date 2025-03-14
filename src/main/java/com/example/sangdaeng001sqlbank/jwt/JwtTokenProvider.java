@@ -2,6 +2,7 @@ package com.example.sangdaeng001sqlbank.jwt;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -15,15 +16,46 @@ import java.util.Date;
 public class JwtTokenProvider {
 
     private final Key key;
+    private final long accessTokenExpiration;
+    private final long refreshTokenExpiration;
 
-    public JwtTokenProvider(@Value("${jwt.secret}") String secretKey) {
-        this.key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
+    public JwtTokenProvider(
+            @Value("${jwt.secret}") String secretKey,
+            @Value("${jwt.access-expiration}") long accessTokenExpiration,
+            @Value("${jwt.refresh-expiration}") long refreshTokenExpiration) {
+        this.key = Keys.hmacShaKeyFor(secretKey.getBytes());
+        this.accessTokenExpiration = accessTokenExpiration;
+        this.refreshTokenExpiration = refreshTokenExpiration;
     }
 
-    @Value("${jwt.expiration}")
-    private long expirationTime;
+//    public String createToken(String username, String name, String role) {
+//
+//        return Jwts.builder()
+//                .setSubject(username)
+//                .claim("name", name)
+//                .claim("role", role)
+//                .setIssuedAt(new Date())
+//                .setExpiration(new Date(System.currentTimeMillis() + expirationTime))
+//                .signWith(SignatureAlgorithm.HS256, key)
+//                .compact();
+//    }
 
-    public String createToken(String username, String name, String role) {
+    // Access Token 생성 (1시간 유지)
+    public String createAccessToken(String username, String name, String role) {
+        log.info("JWT Claims username: {}, name: {}, role: {}", username, name, role);
+
+        return Jwts.builder()
+                .setSubject(username)
+                .claim("name", name)
+                .claim("role", role)
+                .setIssuedAt(new Date()) // 토큰 발급 시간
+                .setExpiration(new Date(System.currentTimeMillis() + accessTokenExpiration)) // 1시간 후 만료
+                .signWith(key, SignatureAlgorithm.HS256)
+                .compact();
+    }
+
+    // Refresh Token 생성 (7일 유지)
+    public String createRefreshToken(String username, String name , String role) {
         log.info("JWT Claims username: {}, name: {}, role: {}", username, name, role);
 
         return Jwts.builder()
@@ -31,8 +63,8 @@ public class JwtTokenProvider {
                 .claim("name", name)
                 .claim("role", role)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + expirationTime))
-                .signWith(SignatureAlgorithm.HS256, key)
+                .setExpiration(new Date(System.currentTimeMillis() + refreshTokenExpiration)) // 7일 후 만료
+                .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
     }
 
@@ -45,47 +77,23 @@ public class JwtTokenProvider {
                 .getSubject();
     }
 
-//    public String getNameFromToken(String token) {
-//        return Jwts.parser()
-//                .setSigningKey(key)
-//                .build()
-//                .parseClaimsJws(token)
-//                .getBody()
-//                .get("name", String.class);
-//    }
-
     public String getNameFromToken(String token) {
-        Claims claims = Jwts.parser()
+        return Jwts.parser()
                 .setSigningKey(key)
                 .build()
                 .parseClaimsJws(token)
-                .getBody();
-
-        log.info("JWT Claims name: {}", claims);
-
-        return claims.get("name", String.class);
+                .getBody()
+                .get("name", String.class);
     }
 
     public String getRoleFromToken(String token) {
-        Claims claims = Jwts.parser()
+        return Jwts.parser()
                 .setSigningKey(key)
                 .build()
                 .parseClaimsJws(token)
-                .getBody();
-
-        log.info("JWT Claims role: {}", claims);
-
-        return claims.get("role", String.class);
+                .getBody()
+                .get("role", String.class);
     }
-
-//    public String getRoleFromToken(String token) {
-//        return Jwts.parser()
-//                .setSigningKey(key)
-//                .build()
-//                .parseClaimsJws(token)
-//                .getBody()
-//                .get("role", String.class);
-//    }
 
     public boolean validateToken(String token) {
         try {
@@ -107,4 +115,6 @@ public class JwtTokenProvider {
         }
         return false;
     }
+
+
 }
