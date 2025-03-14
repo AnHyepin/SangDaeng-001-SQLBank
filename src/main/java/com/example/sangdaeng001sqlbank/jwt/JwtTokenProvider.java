@@ -29,7 +29,7 @@ public class JwtTokenProvider {
     }
 
     // Access Token 생성 (1시간 유지)
-    public String createAccessToken(Long userId, String username, String name, String role) {
+    public String createAccessToken(int userId, String username, String name, String role) {
         log.info("Access Token userId: {}, username: {}, name: {}, role: {}", userId, username, name, role);
 
         return Jwts.builder()
@@ -44,7 +44,7 @@ public class JwtTokenProvider {
     }
 
     // Refresh Token 생성 (7일 유지)
-    public String createRefreshToken(Long userId, String username,String name , String role) {
+    public String createRefreshToken(int userId, String username,String name , String role) {
         log.info("Refresh Token userId: {}, username: {}, name: {}, role: {}", userId, username, name, role);
 
         return Jwts.builder()
@@ -67,14 +67,14 @@ public class JwtTokenProvider {
                 .getSubject();
     }
 
-    public Long getUserIdFromToken(String token) {
+    public int getUserIdFromToken(String token) {
         return Jwts.parser()
                 .setSigningKey(key)
                 .build()
                 .parseClaimsJws(token)
                 .getBody()
                 .get("userId", Number.class)
-                .longValue();
+                .intValue();
     }
 
     public String getNameFromToken(String token) {
