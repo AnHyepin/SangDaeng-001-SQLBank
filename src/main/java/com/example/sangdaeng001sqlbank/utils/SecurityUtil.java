@@ -61,17 +61,6 @@ public class SecurityUtil {
         return "ROLE_UNKNOWN";
     }
 
-    // SecurityContextHolder에서 현재 로그인된 사용자 이름 가져오기
-    public static String getPassword() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.getPrincipal() instanceof CustomUserDetails) {
-            CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-            return userDetails.getPassword();
-        }
-        return null;
-    }
-
-    
     //JWT는 시험용으로 만든것. SecurityContextHolder 사용하시면 됩니다
     // JWT에서 ID 가져오기
     public String getUsernameFromToken(HttpServletRequest request) {
