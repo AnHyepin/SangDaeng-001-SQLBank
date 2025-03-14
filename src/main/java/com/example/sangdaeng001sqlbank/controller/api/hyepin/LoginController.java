@@ -2,11 +2,14 @@ package com.example.sangdaeng001sqlbank.controller.api.hyepin;
 
 import com.example.sangdaeng001sqlbank.dto.UserDto;
 import com.example.sangdaeng001sqlbank.entity.User;
+import com.example.sangdaeng001sqlbank.jwt.JwtCookieUtil;
 import com.example.sangdaeng001sqlbank.jwt.JwtTokenProvider;
 import com.example.sangdaeng001sqlbank.repository.UserRepository;
 import com.example.sangdaeng001sqlbank.service.hyepin.LoginService;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
@@ -28,6 +31,13 @@ public class LoginController {
     private final AuthenticationManager authenticationManager;
     private final LoginService loginService;
     private final UserRepository userRepository;
+    private final JwtCookieUtil jwtCookieUtil;
+
+    @Value("${jwt.access-expiration}")
+    private int accessTokenExpiration;
+
+    @Value("${jwt.refresh-expiration}")
+    private int refreshTokenExpiration;
 
     //회원가입
     @PostMapping("/join")
@@ -49,7 +59,7 @@ public class LoginController {
 
     //로그인
     @PostMapping("/login")
-    public ResponseEntity<?> login(@ModelAttribute UserDto userDto) {
+    public ResponseEntity<?> login(@ModelAttribute UserDto userDto, HttpServletResponse response) {
         try {
             String msg = loginService.login(userDto);
 
@@ -70,20 +80,17 @@ public class LoginController {
                     new UsernamePasswordAuthenticationToken(userDto.getUsername(), userDto.getPassword())
             );
 
-            // JWT 토큰 생성
-            String token = jwtTokenProvider.createToken(user.getUsername(), user.getName(), user.getRole());
+            // Access Token & Refresh Token 생성
+            String accessToken = jwtTokenProvider.createAccessToken(user.getUsername(), user.getName(), user.getRole());
+            String refreshToken = jwtTokenProvider.createRefreshToken(user.getUsername(), user.getName(), user.getRole());
 
-            // HttpOnly Cookie 설정
-            ResponseCookie cookie = ResponseCookie.from("sangDaeng", token)
-                    .httpOnly(true)   //  XSS 공격 방지 (JS에서 접근 불가)
-                    .secure(true)     //  HTTPS에서만 전송 (개발 중에는 false)
-                    .path("/")        //  모든 경로에서 접근 가능
-                    .maxAge(3600)     //  1시간 유지
-                    .sameSite("Strict") //  CSRF 방지
-                    .build();
+            // Access Token을 HttpOnly Cookie에 저장
+            jwtCookieUtil.addTokenToCookie(response, "accessSD", accessToken, accessTokenExpiration);
+
+            // Refresh Token을 HttpOnly Cookie에 저장
+            jwtCookieUtil.addTokenToCookie(response, "refreshSD", refreshToken, refreshTokenExpiration);
 
             return ResponseEntity.ok()
-                    .header(HttpHeaders.SET_COOKIE, cookie.toString())
                     .body(Map.of("message", "로그인 성공!"));
 
         } catch (Exception e) {
@@ -93,18 +100,14 @@ public class LoginController {
 
     //로그아웃
     @PostMapping("/logout")
-    public ResponseEntity<?> logout() {
-        // HttpOnly Cookie 삭제 (Set-Cookie로 빈 값 설정)
-        ResponseCookie cookie = ResponseCookie.from("sangDaeng", "")
-                .httpOnly(true)   // XSS 공격 방지 (JS에서 접근 불가)
-                .secure(false)    // 개발 환경에서는 false, 배포 시 true (HTTPS 필요)
-                .path("/")        // 모든 경로에서 접근 가능
-                .maxAge(0)        // 즉시 만료 (쿠키 삭제)
-                .sameSite("Strict") // CSRF 방지
-                .build();
+    public ResponseEntity<?> logout(HttpServletResponse response) {
+        // HttpOnly Cookie 삭제
+        jwtCookieUtil.deleteCookie(response, "accessSD");
+
+        // HttpOnly Cookie 삭제
+        jwtCookieUtil.deleteCookie(response, "refreshSD");
 
         return ResponseEntity.ok()
-                .header(HttpHeaders.SET_COOKIE, cookie.toString())  // 클라이언트에 쿠키 삭제 요청
                 .body(Map.of("message", "로그아웃 성공!"));
     }
     
