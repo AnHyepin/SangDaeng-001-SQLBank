@@ -17,6 +17,11 @@ public class CustomUserDetails implements UserDetails {
     }
 
     @Override
+    public String getUsername() {
+        return user.getUsername();
+    }
+
+    @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singleton(new SimpleGrantedAuthority(user.getRole())); // 역할 기반 권한 설정
     }
@@ -26,9 +31,8 @@ public class CustomUserDetails implements UserDetails {
         return user.getPassword();
     }
 
-    @Override
-    public String getUsername() {
-        return user.getUsername();
+    public String getName() {
+        return user.getName();
     }
 
     @Override

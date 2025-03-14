@@ -20,9 +20,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const formData = new FormData(form);
 
-        axios.post('/api/login', formData)
+        axios.post('/api/auth/login', formData, { withCredentials: true })
             .then(response => {
-                alert(response.data);
+                alert(response.data.message);
                 window.location.href = "/";
             })
             .catch(error => {
