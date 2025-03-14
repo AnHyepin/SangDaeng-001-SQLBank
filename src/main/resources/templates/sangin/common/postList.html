@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>게시글 목록</title>
+    <link rel="stylesheet" href="/css/sangin/common/postList.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+<!-- content -->
+<div layout:fragment="content">
+    <div id="adjust_section">
+        <div id="main_section">
+            <div id="post_list_text" th:text="${categoryText}">
+            </div>
+            <input type="hidden" th:value="${category}" id="category">
+            <div id="post_list_shadow">
+                <div id="post_text_box">
+                    <span id="post_id_text">고유 ID</span>
+                    <span id="post_title_text">게시글 제목</span>
+                    <span id="post_created_by_text">작성자</span>
+                    <span id="post_created_at_text">작성일</span>
+                    <span id="post_delete_btn_text">삭제</span>
+                </div>
+                <div id="post_list_container">
+                    <!--동적 생성-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+<!--이거밖에서 스크립트 작성하면 안돌아갑니다...-->
+<div layout:fragment="scripts">
+    <script src="/js/sangin/common/postList.js"></script>
+</div>
+</html>

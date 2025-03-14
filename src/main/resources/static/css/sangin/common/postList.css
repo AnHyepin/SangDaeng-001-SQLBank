@@ -12,7 +12,6 @@
     display: flex;
     width: 1200px;
     justify-content: flex-end;
-
 }
 
 #search_input {
@@ -34,24 +33,25 @@
     border: none;
     color: white;
 }
-#problem_list_shadow{
+
+#post_list_shadow {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-#problem_list_text {
+#post_list_text {
     margin: 30px 0;
     font-size: 30px;
     font-weight: bold;
 }
 
-#problem_text_box {
-    width: 1200px;
+#post_text_box {
+    width: 1100px;
     background-color: #0092ff;
     border-radius: 10px 10px 0 0;
     display: flex;
 }
 
-#problem_text_box > span {
+#post_text_box > span {
     align-items: center;
     height: 60px;
     font-size: 23px;
@@ -61,109 +61,84 @@
     font-weight: bold;
 }
 
-#problem_id_text {
-    width: 10%;
+#post_id_text {
+    flex: 1;
 }
 
-#problem_question_text {
-    width: 50%;
+#post_title_text {
+    flex: 4;
 }
 
-#problem_created_by_text {
-    width: 10%;
+#post_created_by_text {
+    flex: 1;
 }
 
-#problem_created_at_text {
-    width: 10%;
+#post_created_at_text {
+    flex: 1;
 }
 
-#problem_status_text {
-    width: 10%;
+#post_delete_btn_text {
+    flex: 1;
 }
 
-#problem_delete_btn_text {
-    width: 10%;
-}
-#problem_list_container{
+#post_list_container {
     margin-bottom: 100px;
 }
 
-
-.problem {
+.post {
     display: flex;
-    width: 1200px;
+    width: 1100px;
     height: 60px;
     align-items: center;
     border-bottom: 1px #ddd solid;
     border-left: 1px #ddd solid;
-    border-right: 1px #ddd solid;
+    border-right: 1px #ececec solid;
 }
-.problem:nth-child(even) {
+.post:nth-child(even) {
     background-color: #f9f9f9;
 }
 
-.problem > span {
+.post > span {
     font-size: 19px;
     display: flex;
     justify-content: center;
     overflow-x: hidden;
 }
 
-.problem_id {
-    width: 10%;
+.post_id {
+    flex: 1;
 }
 
-.problem_question {
-    width: 50%;
-    cursor : pointer;
-}
-
-.problem_created_by {
-    width: 10%;
-}
-
-.problem_created_at {
-    width: 10%;
-}
-
-.problem_status_box {
-    display: flex;
-    width: 10%;
-    align-items: center;
-    justify-content: center;
-}
-
-.problem_status {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 85%;
-    font-size: 20px;
-    height: 40px;
-    border: none;
-    border-radius: 10px;
-    color: white;
+.post_title {
+    flex: 4;
     cursor: pointer;
 }
 
-.active {
-    background-color: #8580ae;
+.post_created_by {
+    flex: 1;
 }
 
-.inactive {
-    background-color: #cdcdcd;
+.post_created_at {
+    flex: 1;
+}
+.post_delete_btn {
+    flex: 1;
 }
 
-.problem_delete_btn_box {
+
+.post_delete_btn_box {
     display: flex;
-    width: 10%;
     align-items: center;
     justify-content: center;
+    flex: 1;
 }
 
-.problem_delete_btn {
-    width: 50%;
+.post_delete_btn {
+    display: inline-block;
+    align-items: center;
+    justify-content: center;
     font-size: 20px;
+    flex: 0.5;
     height: 40px;
     border: none;
     border-radius: 10px;
