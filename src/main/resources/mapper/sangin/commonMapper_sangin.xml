@@ -20,7 +20,7 @@
         AND is_correct = 1
         LIMIT 1) AS answer
         FROM tbl_problems p
-        LEFT JOIN tbl_users u ON p.user_id = u.user_id  -- 작성자 정보 조인
+        LEFT JOIN tbl_users u ON p.created_by = u.user_id  -- 작성자 정보 조인
         WHERE p.problem_id = #{problemId}
     </select>
 
