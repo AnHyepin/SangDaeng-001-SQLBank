@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const formData = new FormData(form);
 
-        axios.post('/api/login/join', formData)
+        axios.post('/api/auth/join', formData)
             .then(response => {
                 alert(response.data);
                 window.location.href = "/view/common/login";

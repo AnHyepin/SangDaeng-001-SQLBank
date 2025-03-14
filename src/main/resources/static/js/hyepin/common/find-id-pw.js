@@ -26,7 +26,7 @@ document.querySelector(".find-id-pw-btn").addEventListener("click", function (ev
     let formData = new FormData(form);
     let valueField = form.querySelector(".value-field");
 
-    axios.post(`/api/login/${formIdValue}`, formData)
+    axios.post(`/api/auth/${formIdValue}`, formData)
         .then(response => {
             if(response.data === "find"){
                 openModal(document.getElementById("username").value);
@@ -79,7 +79,7 @@ function submitChangePw() {
     const changeForm = document.getElementById("change-pw");
     let formData = new FormData(changeForm);
 
-    axios.post("/api/login/change-pw", formData)
+    axios.post("/api/auth/change-pw", formData)
         .then(response => {
             alert(response.data); // 서버 응답 출력
             closeModal(); // 모달 닫기

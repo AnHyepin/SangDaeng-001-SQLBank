@@ -24,9 +24,7 @@ public class JwtTokenProvider {
     private long expirationTime;
 
     public String createToken(String username, String name, String role) {
-        log.info("JWT Claims: {}", username);
-        log.info("JWT Claims: {}", name);
-        log.info("JWT Claims: {}", role);
+        log.info("JWT Claims username: {}, name: {}, role: {}", username, name, role);
 
         return Jwts.builder()
                 .setSubject(username)
@@ -34,10 +32,9 @@ public class JwtTokenProvider {
                 .claim("role", role)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + expirationTime))
-                .signWith(SignatureAlgorithm.HS256, key)  // 🔥 최신 버전에서는 key 자체를 사용
+                .signWith(SignatureAlgorithm.HS256, key)
                 .compact();
     }
-
 
     public String getUsernameFromToken(String token) {
         return Jwts.parser()
@@ -48,18 +45,14 @@ public class JwtTokenProvider {
                 .getSubject();
     }
 
-/*
-    public String getNameFromToken(String token) {
-        return Jwts.parser()
-                .setSigningKey(key)
-                .build()
-                .parseClaimsJws(token)
-                .getBody()
-                .get("name", String.class);
-    }
-
- */
-
+//    public String getNameFromToken(String token) {
+//        return Jwts.parser()
+//                .setSigningKey(key)
+//                .build()
+//                .parseClaimsJws(token)
+//                .getBody()
+//                .get("name", String.class);
+//    }
 
     public String getNameFromToken(String token) {
         Claims claims = Jwts.parser()
@@ -68,12 +61,11 @@ public class JwtTokenProvider {
                 .parseClaimsJws(token)
                 .getBody();
 
-        log.info("JWT Claims: {}", claims);  // ✅ Lombok SLF4J 사용
+        log.info("JWT Claims name: {}", claims);
 
         return claims.get("name", String.class);
     }
 
-
     public String getRoleFromToken(String token) {
         Claims claims = Jwts.parser()
                 .setSigningKey(key)
@@ -81,22 +73,19 @@ public class JwtTokenProvider {
                 .parseClaimsJws(token)
                 .getBody();
 
-        log.info("JWT Claims: {}", claims);  // ✅ Lombok SLF4J 사용
+        log.info("JWT Claims role: {}", claims);
 
         return claims.get("role", String.class);
     }
 
-    /*
-    public String getRoleFromToken(String token) {
-        return Jwts.parser()
-                .setSigningKey(key)
-                .build()
-                .parseClaimsJws(token)
-                .getBody()
-                .get("role", String.class);
-    }
-
-     */
+//    public String getRoleFromToken(String token) {
+//        return Jwts.parser()
+//                .setSigningKey(key)
+//                .build()
+//                .parseClaimsJws(token)
+//                .getBody()
+//                .get("role", String.class);
+//    }
 
     public boolean validateToken(String token) {
         try {
