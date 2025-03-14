@@ -3,6 +3,7 @@ package com.example.sangdaeng001sqlbank.utils;
 import com.example.sangdaeng001sqlbank.jwt.JwtTokenProvider;
 import com.example.sangdaeng001sqlbank.secu.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.GrantedAuthority;
@@ -11,11 +12,25 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class SecurityUtil {
 
     private final JwtTokenProvider jwtTokenProvider;
 
-    // SecurityContextHolder에서 현재 로그인된 사용자 ID 가져오기
+    // SecurityContextHolder에서 현재 로그인된 사용자 고유 식별 ID 가져오기
+    public static Long getUserId() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication != null) {
+            log.info("🔍 SecurityContext 인증 정보: {}", authentication);
+            if (authentication.getPrincipal() instanceof CustomUserDetails userDetails) {
+                return userDetails.getUserId();
+            }
+        }
+        return null;
+    }
+
+    // SecurityContextHolder에서 현재 로그인된 사용자 uesrname 가져오기
     public static String getUsername() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.getPrincipal() instanceof CustomUserDetails) {
@@ -44,6 +59,16 @@ public class SecurityUtil {
             }
         }
         return "ROLE_UNKNOWN";
+    }
+
+    // SecurityContextHolder에서 현재 로그인된 사용자 이름 가져오기
+    public static String getPassword() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof CustomUserDetails) {
+            CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+            return userDetails.getPassword();
+        }
+        return null;
     }
 
     

@@ -28,24 +28,13 @@ public class JwtTokenProvider {
         this.refreshTokenExpiration = refreshTokenExpiration;
     }
 
-//    public String createToken(String username, String name, String role) {
-//
-//        return Jwts.builder()
-//                .setSubject(username)
-//                .claim("name", name)
-//                .claim("role", role)
-//                .setIssuedAt(new Date())
-//                .setExpiration(new Date(System.currentTimeMillis() + expirationTime))
-//                .signWith(SignatureAlgorithm.HS256, key)
-//                .compact();
-//    }
-
     // Access Token 생성 (1시간 유지)
-    public String createAccessToken(String username, String name, String role) {
-        log.info("JWT Claims username: {}, name: {}, role: {}", username, name, role);
+    public String createAccessToken(Long userId, String username, String name, String role) {
+        log.info("Access Token userId: {}, username: {}, name: {}, role: {}", userId, username, name, role);
 
         return Jwts.builder()
                 .setSubject(username)
+                .claim("userId", userId)
                 .claim("name", name)
                 .claim("role", role)
                 .setIssuedAt(new Date()) // 토큰 발급 시간
@@ -55,11 +44,12 @@ public class JwtTokenProvider {
     }
 
     // Refresh Token 생성 (7일 유지)
-    public String createRefreshToken(String username, String name , String role) {
-        log.info("JWT Claims username: {}, name: {}, role: {}", username, name, role);
+    public String createRefreshToken(Long userId, String username,String name , String role) {
+        log.info("Refresh Token userId: {}, username: {}, name: {}, role: {}", userId, username, name, role);
 
         return Jwts.builder()
                 .setSubject(username)
+                .claim("userId", userId)
                 .claim("name", name)
                 .claim("role", role)
                 .setIssuedAt(new Date())
@@ -75,6 +65,16 @@ public class JwtTokenProvider {
                 .parseClaimsJws(token)
                 .getBody()
                 .getSubject();
+    }
+
+    public Long getUserIdFromToken(String token) {
+        return Jwts.parser()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .get("userId", Number.class)
+                .longValue();
     }
 
     public String getNameFromToken(String token) {

@@ -44,13 +44,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             String refreshToken = getTokenFromCookie(request, "refreshSD");
 
             if (refreshToken != null && jwtTokenProvider.validateToken(refreshToken)) {
+                Long userId = jwtTokenProvider.getUserIdFromToken(refreshToken);
                 String username = jwtTokenProvider.getUsernameFromToken(refreshToken);
                 String name = jwtTokenProvider.getNameFromToken(refreshToken);
                 String role = jwtTokenProvider.getRoleFromToken(refreshToken);
 
                 // 새로운 Access Token & Refresh Token 발급
-                String newAccessToken = jwtTokenProvider.createAccessToken(username,name, role);
-                String newRefreshToken = jwtTokenProvider.createRefreshToken(username, name, role);
+                String newAccessToken = jwtTokenProvider.createAccessToken(userId, username,name, role);
+                String newRefreshToken = jwtTokenProvider.createRefreshToken(userId, username, name, role);
 
                 // TODO: 기존 Refresh Token 폐기
                 //invalidateOldRefreshToken(refreshToken);
@@ -75,11 +76,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String username = jwtTokenProvider.getUsernameFromToken(token);
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
-        UsernamePasswordAuthenticationToken authentication =
-                new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-        authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+        if (userDetails != null) {
+            UsernamePasswordAuthenticationToken authentication =
+                    new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+            authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+        } else {
+            SecurityContextHolder.clearContext();
+        }
     }
 
     // 특정 쿠키 값 가져오기
