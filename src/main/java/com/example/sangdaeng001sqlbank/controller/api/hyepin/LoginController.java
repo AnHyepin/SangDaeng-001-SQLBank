@@ -6,6 +6,7 @@ import com.example.sangdaeng001sqlbank.jwt.JwtCookieUtil;
 import com.example.sangdaeng001sqlbank.jwt.JwtTokenProvider;
 import com.example.sangdaeng001sqlbank.repository.UserRepository;
 import com.example.sangdaeng001sqlbank.service.hyepin.LoginService;
+import com.example.sangdaeng001sqlbank.utils.SecurityUtil;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -73,7 +74,7 @@ public class LoginController {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("사용자를 찾을 수 없습니다.");
             }
 
-            log.info("로그인한 사용자 정보: username: {}, name: {}, role: {}", user.getUsername(), user.getName(), user.getRole());
+            log.info("로그인한 사용자 정보: userId: {}, username: {}, name: {}, role: {}", user.getUserId(), user.getUsername(), user.getName(), user.getRole());
 
             // 인증 수행
             authenticationManager.authenticate(
@@ -81,8 +82,8 @@ public class LoginController {
             );
 
             // Access Token & Refresh Token 생성
-            String accessToken = jwtTokenProvider.createAccessToken(user.getUsername(), user.getName(), user.getRole());
-            String refreshToken = jwtTokenProvider.createRefreshToken(user.getUsername(), user.getName(), user.getRole());
+            String accessToken = jwtTokenProvider.createAccessToken(user.getUserId(), user.getUsername(), user.getName(), user.getRole());
+            String refreshToken = jwtTokenProvider.createRefreshToken(user.getUserId(), user.getUsername(), user.getName(), user.getRole());
 
             // Access Token을 HttpOnly Cookie에 저장
             jwtCookieUtil.addTokenToCookie(response, "accessSD", accessToken, accessTokenExpiration);
