@@ -9,4 +9,5 @@ public class CommentDto {
     private int userId; // 작성자 ID
     private String content; // 댓글 내용
     private String createdAt; // 작성일
+    private String createdBy; // 작성자 이름
 }

@@ -21,23 +21,5 @@ public class CommonViewController_sangin {
         return "sangin/common/problemDetail";
     }
 
-    @GetMapping("/communityDetail")
-    public String communityDetail() {
-        return "sangin/common/communityDetail";
-    }
 
-    @GetMapping("/communityList")
-    public String communityList() {
-        return "sangin/common/communityList";
-    }
-
-    @GetMapping("/suggestionDetail")
-    public String suggestionDetail() {
-        return "sangin/common/suggestionDetail";
-    }
-
-    @GetMapping("/suggestionList")
-    public String suggestionList() {
-        return "sangin/common/suggestionList";
-    }
 }

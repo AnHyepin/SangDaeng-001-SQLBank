@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>게시글 등록</title>
+    <link rel="stylesheet" href="/css/sangin/common/postRegist.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+<!-- content -->
+<div layout:fragment="content">
+    <input type="hidden" id="post_id" th:value="${postId}">
+    <div id="adjust_section">
+        <div id="main_section">
+            <div id="main_header">
+                <div class="info_section1">
+                    <span class="info_title">제목</span>
+                    <input type="text" id="title"  maxlength="50" placeholder="제목은 50자 이내로 작성해주십시오."/>
+                </div>
+                <div class="info_section2">
+                    <span class="info_title">유형</span>
+                    <select id="category" name="category">
+                        <option value="N">공지사항</option>
+                        <option value="F">자유게시판</option>
+                        <option value="S">건의사항</option>
+<!--                        <option value="Q">QNA</option>-->
+                    </select>
+                </div>
+            </div>
+            <div class="info_section3">
+                <span class="info_title">내용</span>
+                <textarea id="content"  placeholder="내용을 작성해주십시오."></textarea>
+            </div>
+        </div>
+        <div id="post_regist_btn_box">
+            <button id="post_regist_btn">
+                + 게시글 등록
+            </button>
+        </div>
+
+    </div>
+</div>
+
+</body>
+
+<!--이거밖에서 스크립트 작성하면 안돌아갑니다...-->
+<div layout:fragment="scripts">
+    <script src="/js/sangin/common/postRegist.js"></script>
+</div>
+</html>

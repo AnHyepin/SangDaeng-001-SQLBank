@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.sangdaeng001sqlbank.dao.sangin.BoardDao_sangin">
+    <!-- ✅ 게시글 등록 -->
+    <insert id="addPost" useGeneratedKeys="true" keyProperty="postId">
+        insert into tbl_posts
+        (user_id,title,content,category,created_at)
+        values (#{userId},#{title},#{content},#{category},now())
+    </insert>
+    <!-- ✅ 게시글 목록 조회 -->
+    <select id="getPostList" resultType="com.example.sangdaeng001sqlbank.dto.PostDto">
+        SELECT p.*, u.username AS createdBy
+        FROM tbl_posts p
+        JOIN tbl_users u ON p.user_id = u.user_id
+        WHERE p.category = #{category}
+        ORDER BY p.post_id desc
+    </select>
+
+    <!-- ✅ 게시글 수정 -->
+    <update id="updatePost">
+        UPDATE tbl_posts
+        SET title = #{title},
+        content = #{content},
+        category = #{category}
+        WHERE post_id = #{postId}
+    </update>
+
+
+    <!-- ✅ 게시글 상세 조회 -->
+    <select id="getPostDetail" resultType="com.example.sangdaeng001sqlbank.dto.PostDto">
+        SELECT p.*, u.username AS createdBy
+        FROM tbl_posts p
+        JOIN tbl_users u ON p.user_id = u.user_id
+        WHERE p.post_id = #{postId}
+    </select>
+
+    <!-- ✅ 게시글 삭제 -->
+    <delete id="deletePost">
+        DELETE FROM tbl_posts WHERE post_id = #{postId}
+    </delete>
+
+    <!-- ✅ 댓글 등록 -->
+    <insert id="addComment">
+        INSERT INTO tbl_comments (post_id, user_id, content, created_at)
+        VALUES (#{postId}, #{userId}, #{content}, NOW());
+    </insert>
+
+    <!-- ✅ 특정 게시글의 댓글 목록 조회 -->
+    <select id="getCommentsByPostId" resultType="com.example.sangdaeng001sqlbank.dto.CommentDto">
+        SELECT c.comment_id, c.post_id, c.user_id, u.username AS createdBy, c.content, c.created_at
+        FROM tbl_comments c
+        JOIN tbl_users u ON c.user_id = u.user_id
+        WHERE c.post_id = #{postId}
+        ORDER BY c.created_at DESC;
+    </select>
+
+    <!-- ✅ 댓글 삭제 -->
+    <delete id="deleteComment">
+        DELETE FROM tbl_comments WHERE comment_id = #{commentId};
+    </delete>
+</mapper>
