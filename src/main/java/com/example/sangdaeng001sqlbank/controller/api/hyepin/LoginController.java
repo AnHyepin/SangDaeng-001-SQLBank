@@ -42,19 +42,20 @@ public class LoginController {
 
     //회원가입
     @PostMapping("/join")
-    public ResponseEntity<String> register(@ModelAttribute UserDto userDto) {
+    public  ResponseEntity<Map<String, String>> register(@ModelAttribute UserDto userDto) {
         log.info("userDto: {}", userDto);
         try {
             String msg = loginService.registerUser(userDto);
 
             if ("중복된 ID입니다.".equals(msg) || "중복된 email입니다.".equals(msg)) {
-                return ResponseEntity.badRequest().body(msg); // 400 상태코드 + 메시지 반환
+                return ResponseEntity.badRequest().body(Map.of("message", msg)); // 400 상태코드 + 메시지 반환
             }
 
-            return ResponseEntity.ok(msg); // 200 상태코드 + "회원가입 성공" 메시지 반환
+            return ResponseEntity.ok().body(Map.of("message", msg)); // 200 상태코드 + "회원가입 성공" 메시지 반환
         } catch (Exception e) {
             log.error("회원가입 중 오류 발생: {}", e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("서버 오류");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("message", "서버 오류"));
         }
     }
 

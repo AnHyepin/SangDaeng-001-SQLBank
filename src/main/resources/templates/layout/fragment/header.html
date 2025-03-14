@@ -7,7 +7,7 @@
     <div id="header_authentication">
 
         <th:block th:if="${#authorization.expression('isAuthenticated()')}">
-            <span><strong th:text="${#authentication.name}"></strong>님, 짱짱맨!</span>
+            <span><strong th:text="${#authentication.principal.name}"></strong>님, 짱짱맨!</span>
             <a href="#" id="logout">로그아웃</a>
         </th:block>
 
