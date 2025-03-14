@@ -5,9 +5,38 @@
         <a href="/">SQL 문제은행</a>
     </div>
     <div id="header_authentication">
-    <!--th:if user != null 이면 로그아웃으로 뜨게 할 예정입니다-->
-        <a href="/view/common/login">로그인</a>
-        <a href="/view/common/join">회원가입</a>
+
+        <th:block th:if="${#authorization.expression('isAuthenticated()')}">
+            <span><strong th:text="${#authentication.name}"></strong>님, 짱짱맨!</span>
+            <a href="#" id="logout">로그아웃</a>
+        </th:block>
+
+        <th:block th:if="${#authorization.expression('isAnonymous()')}">
+            <a href="/view/common/login">로그인</a>
+            <a href="/view/common/join">회원가입</a>
+        </th:block>
     </div>
+    <script>
+        axios.defaults.withCredentials = true;
+
+        document.getElementById("logout").addEventListener("click", async (event) => {
+            event.preventDefault();
+
+            axios.post('/api/auth/logout', {
+            })
+                .then(response => {
+                    if (response.status === 200) {
+                        alert(response.data.message);
+                        window.location.href = "/view/common/login"; //로그인 페이지로 이동
+                    } else {
+                        alert("로그아웃 실패!");
+                    }
+                })
+                .catch(error => {
+                    alert('에러 발생. 다시 시도해주세요.');
+                    console.error(error);
+                });
+        });
+    </script>
 </header>
 </html>

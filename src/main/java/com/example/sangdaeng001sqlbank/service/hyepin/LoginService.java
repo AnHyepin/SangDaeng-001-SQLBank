@@ -7,6 +7,7 @@ import com.example.sangdaeng001sqlbank.jwt.JwtTokenProvider;
 import com.example.sangdaeng001sqlbank.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,8 +18,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class LoginService {
 
-    private final JwtTokenProvider jwtTokenProvider;
-    private final AuthenticationManager authenticationManager;
+
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
     private final UserDao userDao;
@@ -58,13 +58,6 @@ public class LoginService {
             return "ID 또는 PW가 일치하지 않습니다."; // 동일한 메시지 반환
         }
 
-        // 인증 수행
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(userDto.getUsername(), userDto.getPassword())
-        );
-
-        // JWT 토큰 생성
-        jwtTokenProvider.createToken(user.getUsername(), user.getName(), user.getRole());
         return "로그인 성공!";
     }
 
