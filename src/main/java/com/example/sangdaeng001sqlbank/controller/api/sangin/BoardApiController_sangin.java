@@ -3,6 +3,7 @@ package com.example.sangdaeng001sqlbank.controller.api.sangin;
 import com.example.sangdaeng001sqlbank.dto.CommentDto;
 import com.example.sangdaeng001sqlbank.dto.PostDto;
 import com.example.sangdaeng001sqlbank.service.sangin.BoardService_sangin;
+import com.example.sangdaeng001sqlbank.utils.SecurityUtil;
 import org.apache.ibatis.annotations.Param;
 import org.codehaus.groovy.transform.SourceURIASTTransformation;
 import org.springframework.http.HttpStatus;
@@ -27,7 +28,7 @@ public class BoardApiController_sangin {
         if (postDto == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        int userId = 1;
+        int userId = SecurityUtil.getUserId();
         postDto.setUserId(userId);
         return ResponseEntity.ok(boardService.addPost(postDto));
     }
@@ -55,7 +56,7 @@ public class BoardApiController_sangin {
         if (postDto == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        int userId = 1;
+        int userId = SecurityUtil.getUserId();
         postDto.setUserId(userId);
         postDto.setPostId(postId);
         if (boardService.updatePost(postDto) > 0) {
@@ -74,7 +75,7 @@ public class BoardApiController_sangin {
     // ✅ 댓글 등록
     @PostMapping("/comment")
     public ResponseEntity<?> addComment(@RequestBody CommentDto commentDto) {
-        int userId = 1;
+        int userId = SecurityUtil.getUserId();
         commentDto.setUserId(userId);
         int result = boardService.addComment(commentDto);
         if (result > 0) {

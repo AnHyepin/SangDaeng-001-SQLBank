@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 commentItem.classList.add("comment_item");
 
                 commentItem.innerHTML = `
-                    <div class="comment_user_id">${comment.userId}</div>
+                    <div class="comment_user_id">${comment.createdByName}</div>
                     <div class="comment_created_at">${new Date(comment.createdAt).toLocaleString()}</div>
                     <div class="comment_content">${comment.content}</div>
                     <button class="comment_delete_btn" data-id="${comment.commentId}">삭제</button>

@@ -2,6 +2,7 @@ package com.example.sangdaeng001sqlbank.controller.api.sangin;
 
 import com.example.sangdaeng001sqlbank.dto.*;
 import com.example.sangdaeng001sqlbank.service.sangin.StudentService_sangin;
+import com.example.sangdaeng001sqlbank.utils.SecurityUtil;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,7 +32,7 @@ public class StudentApiController_sangin {
         if (answers == null) {
             return ResponseEntity.badRequest().body("문제가 제출되지 않았습니다.");
         }
-        int userId = 1;
+        int userId = SecurityUtil.getUserId();
         int totalScore = studentService.submitExam(userId, answers);
         return ResponseEntity.ok().body("시험 제출 완료! 최종 점수: " + totalScore);
     }
@@ -39,7 +40,7 @@ public class StudentApiController_sangin {
     // ✅ 사용자의 성적 리스트 조회
     @GetMapping("/scoreList")
     public ResponseEntity<List<AttemptSessionDto>> getScoreList() {
-        int userId = 1;
+        int userId = SecurityUtil.getUserId();
         List<AttemptSessionDto> scoreList = studentService.getScoreListWithDetails(userId);
         if (scoreList.isEmpty()) {
             return ResponseEntity.noContent().build();

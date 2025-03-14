@@ -17,7 +17,7 @@ function loadPostList() {
                 postDiv.innerHTML = `
                     <span class="post_id post_text">${post.postId}</span>
                     <span class="post_title post_text link">${post.title}</span>
-                    <span class="post_created_by post_text">${post.createdBy}</span>
+                    <span class="post_created_by post_text">${post.createdByName}</span>
                     <span class="post_created_at post_text">${post.createdAt}</span>
                     <div class="post_delete_btn_box">
                         <button class="post_delete_btn" data-id="${post.postId}">삭제</button>

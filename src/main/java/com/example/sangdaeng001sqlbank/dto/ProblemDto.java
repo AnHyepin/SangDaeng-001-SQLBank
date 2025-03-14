@@ -11,6 +11,7 @@ public class ProblemDto {
     private String description; // 문제 설명
     private String difficulty; // 난이도 (EASY, MEDIUM, HARD)
     private int createdBy; // 출제자 ID
+    private String createdByName; // 출제자 이름
     private String createdAt; // 출제일
     private char permitYn;
     private String answer;

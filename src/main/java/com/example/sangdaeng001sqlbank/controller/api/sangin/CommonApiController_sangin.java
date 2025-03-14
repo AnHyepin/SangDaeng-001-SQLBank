@@ -4,6 +4,7 @@ import com.example.sangdaeng001sqlbank.dto.ProblemDiscussionDto;
 import com.example.sangdaeng001sqlbank.dto.ProblemDto;
 import com.example.sangdaeng001sqlbank.service.sangin.CommonService_sangin;
 import com.example.sangdaeng001sqlbank.service.sangin.TeacherService_sangin;
+import com.example.sangdaeng001sqlbank.utils.SecurityUtil;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -39,7 +40,7 @@ public class CommonApiController_sangin {
     // ✅ 댓글 등록
     @PostMapping("/discussion")
     public ResponseEntity<String> addDiscussion(@RequestBody ProblemDiscussionDto problemDiscussionDto) {
-        int userId = 1;
+        int userId = SecurityUtil.getUserId();
         problemDiscussionDto.setUserId(userId);
         boolean isSuccess = commonService.addDiscussion(problemDiscussionDto);
         if (isSuccess) {

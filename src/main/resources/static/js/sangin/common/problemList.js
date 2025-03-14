@@ -19,7 +19,7 @@ function loadProblemList() {
                 problemDiv.innerHTML = `
                     <span class="problem_id problem_text">${problem.problemId}</span>
                     <span class="problem_question problem_text link">${problem.question}</span>
-                    <span class="problem_created_by problem_text">${problem.createdBy}</span>
+                    <span class="problem_created_by problem_text">${problem.createdByName}</span>
                     <span class="problem_created_at problem_text">${problem.createdAt}</span>
                     <div class="problem_status_box">
                         <span class="problem_status ${statusClass}" data-id="${problem.problemId}" data-status="${problem.permitYn}">${statusText}</span>

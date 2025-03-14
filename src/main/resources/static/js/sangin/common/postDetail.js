@@ -36,7 +36,7 @@ async function loadPostDetail() {
 
         // ✅ ID로 HTML 요소 업데이트
         document.getElementById("postId").textContent = postData.postId;
-        document.getElementById("createdBy").textContent = postData.createdBy;
+        document.getElementById("createdBy").textContent = postData.createdByName;
         document.getElementById("category").textContent = categoryText; // 변환된 값 적용
         document.getElementById("createdAt").textContent = postData.createdAt;
         document.getElementById("description").textContent = postData.title;

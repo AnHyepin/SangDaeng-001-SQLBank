@@ -46,7 +46,7 @@ async function loadProblemDetail() {
 
         // ✅ ID로 HTML 요소 업데이트
         document.getElementById("problemId").textContent = problemData.problemId;
-        document.getElementById("createdBy").textContent = problemData.createdBy;
+        document.getElementById("createdBy").textContent = problemData.createdByName;
         document.getElementById("difficulty").textContent = difficultyText; // 변환된 값 적용
         document.getElementById("createdAt").textContent = problemData.createdAt;
         document.getElementById("question").textContent = problemData.question;
