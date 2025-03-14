@@ -20,7 +20,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // `AUTO_INCREMENT` 적용
-    private Long userId;
+    private Integer userId;
 
     @Column(nullable = false, unique = true, length = 50)
     private String username; // `VARCHAR(50)`, `NOT NULL`, `UNIQUE`

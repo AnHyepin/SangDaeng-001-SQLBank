@@ -18,7 +18,7 @@ public class SecurityUtil {
     private final JwtTokenProvider jwtTokenProvider;
 
     // SecurityContextHolder에서 현재 로그인된 사용자 고유 식별 ID 가져오기
-    public static Long getUserId() {
+    public static Integer getUserId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication != null) {

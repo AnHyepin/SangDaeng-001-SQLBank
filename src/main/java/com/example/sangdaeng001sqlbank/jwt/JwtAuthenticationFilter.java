@@ -44,7 +44,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             String refreshToken = getTokenFromCookie(request, "refreshSD");
 
             if (refreshToken != null && jwtTokenProvider.validateToken(refreshToken)) {
-                Long userId = jwtTokenProvider.getUserIdFromToken(refreshToken);
+                int userId = jwtTokenProvider.getUserIdFromToken(refreshToken);
                 String username = jwtTokenProvider.getUsernameFromToken(refreshToken);
                 String name = jwtTokenProvider.getNameFromToken(refreshToken);
                 String role = jwtTokenProvider.getRoleFromToken(refreshToken);
