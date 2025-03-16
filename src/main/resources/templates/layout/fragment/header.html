@@ -7,8 +7,16 @@
     <div id="header_authentication">
 
         <th:block th:if="${#authorization.expression('isAuthenticated()')}">
-            <span><strong th:text="${#authentication.principal.name}"></strong>님, 짱짱맨!</span>
-            <a href="#" id="logout">로그아웃</a>
+            <div style="display: flex; gap: 20px; align-items: center;">
+                <img style="width: 100px; height: auto;" th:if="${#strings.contains(#authentication.authorities, 'ROLE_STUDENT')}" th:src="@{/image/icon/student.svg}" />
+                <img style="width: 100px; height: auto;" th:if="${#strings.contains(#authentication.authorities, 'ROLE_TEACHER')}" th:src="@{/image/icon/teacher.svg}" />
+                <img style="width: 100px; height: auto;" th:if="${#strings.contains(#authentication.authorities, 'ROLE_ADMIN')}" th:src="@{/image/icon/admin.svg}" />
+
+                <div><strong th:text="${#authentication.principal.name}"></strong>님, 짱짱맨!</div>
+                <div>
+                    <a href="#" id="logout">로그아웃</a>
+                </div>
+            </div>
         </th:block>
 
         <th:block th:if="${#authorization.expression('isAnonymous()')}">
