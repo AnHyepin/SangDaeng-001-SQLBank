@@ -22,7 +22,7 @@
         document.getElementById("logout").addEventListener("click", async (event) => {
             event.preventDefault();
 
-            axios.post('/api/auth/logout', {
+            axios.post('/api/common/logout', {
             })
                 .then(response => {
                     if (response.status === 200) {

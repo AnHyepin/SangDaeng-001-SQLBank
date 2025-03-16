@@ -30,7 +30,7 @@
 //
 //         const formData = new FormData(form);
 //
-//         axios.post('/api/auth/join', formData)
+//         axios.post('/api/common/join', formData)
 //             .then(response => {
 //                 alert(response.data);
 //                 window.location.href = "/view/common/login";
@@ -114,7 +114,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (isValid) {
             const formData = new FormData(form);
-            axios.post('/api/auth/join', formData)
+            axios.post('/api/common/join', formData)
                 .then(response => {
                     alert(response.data.message);
                     window.location.href = "/view/common/login";
