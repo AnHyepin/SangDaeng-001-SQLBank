@@ -4,20 +4,26 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.sangdaeng001sqlbank.dao.sangin.CommonDao_sangin">
     <select id="getProblemList" resultType="com.example.sangdaeng001sqlbank.dto.ProblemDto">
-        select * from tbl_problems;
+        SELECT p.*, u.name AS createdByName
+        FROM tbl_problems p
+        LEFT JOIN tbl_users u ON p.created_by = u.user_id
+        ORDER BY p.problem_id DESC;
     </select>
 
     <select id="getProblemDetail" resultType="com.example.sangdaeng001sqlbank.dto.ProblemDto">
         SELECT
         p.*,
+        u.name AS createdByName,  -- 작성자 이름 가져오기
         (SELECT choice_text
         FROM tbl_problem_choices
         WHERE problem_id = p.problem_id
         AND is_correct = 1
         LIMIT 1) AS answer
         FROM tbl_problems p
+        LEFT JOIN tbl_users u ON p.created_by = u.user_id  -- 작성자 정보 조인
         WHERE p.problem_id = #{problemId}
     </select>
+
 
     <insert id="addDiscussion">
         INSERT INTO tbl_problem_discussions (problem_id, user_id, content, created_at)
@@ -25,11 +31,19 @@
     </insert>
 
     <select id="getDiscussionsByProblemId" resultType="com.example.sangdaeng001sqlbank.dto.ProblemDiscussionDto">
-        SELECT discussion_id, problem_id, user_id, content, created_at
-        FROM tbl_problem_discussions
-        WHERE problem_id = #{problemId}
-        ORDER BY created_at DESC;
+        SELECT
+        d.discussion_id,
+        d.problem_id,
+        d.user_id,
+        u.name AS createdByName, -- 작성자 이름 추가
+        d.content,
+        d.created_at
+        FROM tbl_problem_discussions d
+        LEFT JOIN tbl_users u ON d.user_id = u.user_id -- 사용자 정보 조인
+        WHERE d.problem_id = #{problemId}
+        ORDER BY d.created_at DESC;
     </select>
+
 
 
 

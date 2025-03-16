@@ -2,6 +2,7 @@ package com.example.sangdaeng001sqlbank.controller.api.sangin;
 
 import com.example.sangdaeng001sqlbank.dto.ProblemDto;
 import com.example.sangdaeng001sqlbank.service.sangin.TeacherService_sangin;
+import com.example.sangdaeng001sqlbank.utils.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,8 @@ public class TeacherApiController_sangin {
 
     @PostMapping("/regist")
     public ResponseEntity<?> registProblem(@RequestBody ProblemDto requestDto) {
-        requestDto.setCreatedBy(1);
+        int userId = SecurityUtil.getUserId();
+        requestDto.setCreatedBy(userId);
         if (requestDto == null || requestDto.getChoices() == null || requestDto.getChoices().isEmpty()) {
             return ResponseEntity.badRequest().body("잘못된 요청입니다.");
         }

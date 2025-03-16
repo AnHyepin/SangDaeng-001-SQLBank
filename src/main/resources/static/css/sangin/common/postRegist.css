@@ -1,0 +1,116 @@
+#adjust_section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+#main_section {
+    width: 1000px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+#main_header {
+    display: flex;
+    width: 100%;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+/* ✅ 정보 섹션 (제목, 내용) */
+.info_section1,.info_section2,.info_section3 {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f5f5f5;
+}
+.info_section1 {
+    flex: 4;
+}
+.info_section2 {
+    flex: 1;
+}
+.info_section3 {
+
+    flex: 1;
+}
+
+.info_title {
+    font-weight: bold;
+    width: 100px;
+    color: #333;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+#title {
+    height: 50px;
+    font-size: 20px;
+    padding-left: 10px;
+    color: #555;
+    outline: none;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+}
+
+#category {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ddd;
+    outline: none;
+    font-size: 18px;
+    height: 50px;
+    color: #555;
+    padding: 5px;
+}
+
+#content {
+    scrollbar-width: none;
+    overflow-y: scroll;
+    min-height: 500px;
+    font-size: 19px;
+    line-height: 24px;
+    padding: 10px;
+    width: 100%;
+    color: #555;
+    resize: none;
+    outline: none;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+}
+
+#post_regist_btn_box {
+    display: flex;
+    width: 1000px;
+    justify-content: flex-end;
+}
+
+#post_regist_btn {
+    height: 50px;
+    width: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #007bff;
+    font-weight: bold;
+    font-size: 20px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    margin-top: 30px;
+    border-radius: 5px;
+    color: white;
+    transition: 0.2s ease;
+}
+
+#post_regist_btn:hover {
+    background-color: #016bdd;
+    scale: 1.02;
+}
