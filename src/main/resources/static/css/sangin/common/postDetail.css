@@ -324,3 +324,8 @@
     visibility: hidden; /* 버튼을 숨기지만 공간은 유지 */
 }
 
+.hidden-delete {
+    display: none !important;  /* 삭제 버튼을 아예 숨김 */
+}
+
+

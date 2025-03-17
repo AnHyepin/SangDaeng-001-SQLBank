@@ -59,9 +59,13 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // 댓글 목록 불러오기
+    // ✅ 댓글 목록 불러오기
     async function loadDiscussions() {
         try {
+            const problemId = document.getElementById("problem_id").value;
+            const userId = document.getElementById("user_id").value; // 현재 로그인한 사용자 ID 가져오기
+            const role = document.getElementById("role").value; // 현재 로그인한 사용자 역할 가져오기
+
             const response = await axios.get(`/api/common/discussionList?problemId=${problemId}`);
             const commentList = document.getElementById("comment_list");
             commentList.innerHTML = ""; // 기존 목록 초기화
@@ -70,17 +74,19 @@ document.addEventListener("DOMContentLoaded", () => {
                 const commentItem = document.createElement("div");
                 commentItem.classList.add("comment_item");
 
+                const showDelete = (role === "ROLE_ADMIN") ? "" : "hidden-delete";
+
                 commentItem.innerHTML = `
-                    <div class="comment_user_id">${comment.createdByName}</div>
-                    <div class="comment_created_at">${new Date(comment.createdAt).toLocaleString()}</div>
-                    <div class="comment_content">${comment.content}</div>
-                    <button class="comment_delete_btn role_admin" data-id="${comment.discussionId}">삭제</button>
-                `;
+                <div class="comment_user_id">${comment.createdByName}</div>
+                <div class="comment_created_at">${new Date(comment.createdAt).toLocaleString()}</div>
+                <div class="comment_content">${comment.content}</div>
+                <button class="comment_delete_btn ${showDelete}" data-id="${comment.discussionId}">삭제</button>
+            `;
 
                 commentList.appendChild(commentItem);
             });
 
-            // 삭제 버튼 이벤트 리스너 추가
+            // ✅ 삭제 버튼 이벤트 리스너 추가
             document.querySelectorAll(".comment_delete_btn").forEach(btn => {
                 btn.addEventListener("click", async (e) => {
                     const discussionId = e.target.dataset.id;
@@ -89,9 +95,10 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
         } catch (error) {
-            console.error("댓글 목록 불러오기 실패:", error);
+            console.error("🚨 댓글 목록 불러오기 실패:", error);
         }
     }
+
 
     // 댓글 삭제 기능
     async function deleteDiscussion(discussionId) {
