@@ -6,12 +6,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/view/admin")
-public class TestController {
+public class AdminController {
 
 
     @GetMapping
     public String admin(){
 
-        return "hyepin/admin/admin-test";
+        return "hyepin/admin/admin-main";
     }
 }
