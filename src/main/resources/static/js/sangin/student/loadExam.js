@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
     loadProblems();
 });
 
-function loadProblems() {
+async function loadProblems() {
     // URL에서 난이도 가져오기
     const urlParams = new URLSearchParams(window.location.search);
     let difficulty = urlParams.get("difficulty");
@@ -39,22 +39,22 @@ function loadProblems() {
     // 대문자로 변환하여 API 요청
     difficulty = difficulty.toUpperCase();
 
-    axios.get(`/api/student/loadExam?difficulty=${difficulty}`)
-        .then(response => {
-            const problems = response.data;
-            if (problems.length === 0) {
-                alert("해당 난이도의 문제가 없습니다.");
-                return;
-            }
+    try {
+        const response = await axios.get(`/api/student/loadExam?difficulty=${difficulty}`);
+        const problems = response.data;
 
-            renderProblems(problems.slice(0, 10)); // 문제 개수 제한
-        })
-        .catch(error => {
-            console.error("문제 불러오기 실패:", error);
-        });
+        if (problems.length === 0) {
+            alert("해당 난이도의 문제가 없습니다.");
+            return;
+        }
+
+        await renderProblemsSequentially(problems); // 문제를 하나씩 로드
+    } catch (error) {
+        console.error("문제 불러오기 실패:", error);
+    }
 }
 
-function renderProblems(problems) {
+async function renderProblemsSequentially(problems) {
     const leftSection = document.getElementById("main_left_section");
     const rightSection = document.getElementById("main_right_section");
 
@@ -63,16 +63,18 @@ function renderProblems(problems) {
 
     const numberToKorean = ["①", "②", "③", "④", "⑤", "⑥", "⑦", "⑧"];
 
-    problems.forEach((problem, index) => {
+    for (let index = 0; index < problems.length; index++) {
+        const problem = problems[index];
+
         const problemDiv = document.createElement("div");
         problemDiv.className = "problem";
-        problemDiv.dataset.problemId = problem.problemId; // ✅ data-attribute로 problemId 저장
+        problemDiv.dataset.problemId = problem.problemId;
 
         problemDiv.innerHTML = `
             <div class="problem_metadata">
                 <span class="problem_id">문제 고유 ID : ${problem.problemId}</span>
                 <span class="created_by">출제자 : ${problem.createdBy}</span>
-                <input type="hidden" class="hidden_problem_id" value="${problem.problemId}"> <!-- ✅ hidden input 추가 -->
+                <input type="hidden" class="hidden_problem_id" value="${problem.problemId}">
             </div>
             <div class="problem_question_box">
                 <span class="problem_no">${index + 1}.</span>
@@ -80,15 +82,13 @@ function renderProblems(problems) {
             </div>
             <span class="description">${problem.description}</span>
             <div class="choice_box">
-                ${problem.choices.map((choice, i) => `
+                ${problem.choices ? problem.choices.map((choice, i) => `
                     <label class="choice">
                         <input type="radio" name="answer${problem.problemId}" value="${choice.choiceId}">
                         <span class="radio_custom">${numberToKorean[i]}</span>
-                        <span class="choice_context">
-                            ${choice.choiceText}
-                        </span>
+                        <span class="choice_context">${choice.choiceText}</span>
                     </label>
-                `).join("")}
+                `).join("") : "<p class='no-choice'>선택지가 없습니다.</p>"}
             </div>
         `;
 
@@ -97,5 +97,8 @@ function renderProblems(problems) {
         } else {
             rightSection.appendChild(problemDiv);
         }
-    });
+
+        // **비동기 로딩을 위해 약간의 지연을 줘서 순차적 렌더링을 구현**
+        await new Promise(resolve => setTimeout(resolve, 1)); // 100ms 대기 후 다음 문제 렌더링
+    }
 }

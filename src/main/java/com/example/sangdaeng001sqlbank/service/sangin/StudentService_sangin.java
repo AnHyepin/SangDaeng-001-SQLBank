@@ -22,10 +22,10 @@ public class StudentService_sangin {
         List<ProblemDto> problemDtos;
 
         if ("TEST".equalsIgnoreCase(difficulty)) {
-            // ✅ 시험 모드: 초급 3개, 중급 4개, 고급 3개 랜덤으로 가져오기
-            List<ProblemDto> easyProblems = getRandomProblems("EASY", 3);
+            // ✅ 시험 모드: 초급 4개, 중급 4개, 고급 2개 랜덤으로 가져오기
+            List<ProblemDto> easyProblems = getRandomProblems("EASY", 4);
             List<ProblemDto> mediumProblems = getRandomProblems("MEDIUM", 4);
-            List<ProblemDto> hardProblems = getRandomProblems("HARD", 3);
+            List<ProblemDto> hardProblems = getRandomProblems("HARD", 2);
 
             problemDtos = easyProblems;
             problemDtos.addAll(mediumProblems);

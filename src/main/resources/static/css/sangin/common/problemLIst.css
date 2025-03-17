@@ -62,27 +62,27 @@
 }
 
 #problem_id_text {
-    width: 10%;
+    flex: 1;
 }
 
 #problem_question_text {
-    width: 50%;
+    flex: 5;
 }
 
 #problem_created_by_text {
-    width: 10%;
+    flex: 1;
 }
 
 #problem_created_at_text {
-    width: 10%;
+    flex: 2;
 }
 
 #problem_status_text {
-    width: 10%;
+    flex: 1;
 }
 
 #problem_delete_btn_text {
-    width: 10%;
+    flex: 1;
 }
 #problem_list_container{
     margin-bottom: 100px;
@@ -110,25 +110,28 @@
 }
 
 .problem_id {
-    width: 10%;
+    flex: 1;
 }
 
 .problem_question {
-    width: 50%;
+    flex: 5;
     cursor : pointer;
 }
 
 .problem_created_by {
-    width: 10%;
+    flex: 1;
 }
 
 .problem_created_at {
-    width: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 2;
 }
 
 .problem_status_box {
     display: flex;
-    width: 10%;
+    flex: 1;
     align-items: center;
     justify-content: center;
 }
@@ -156,7 +159,7 @@
 
 .problem_delete_btn_box {
     display: flex;
-    width: 10%;
+    flex: 1;
     align-items: center;
     justify-content: center;
 }

@@ -28,7 +28,7 @@
                 </div>
                 <div id="main_header_box4">
                     <span id="current_name_text">성명</span>
-                    <span id="current_name">한상인</span>
+                    <span id="current_name" th:text="${#authentication.principal.name}"></span>
                     <!--<span id="current_name">${currentUser.name}</span>-->
                 </div>
             </div>

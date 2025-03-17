@@ -5,6 +5,9 @@ document.addEventListener("DOMContentLoaded", function () {
 // ✅ 게시글 목록 불러오기
 function loadPostList() {
     const category = document.getElementById("category").value;
+    const userId = document.getElementById("userId").value; // 현재 로그인한 사용자 ID 가져오기
+    const role = document.getElementById("role").value; // 현재 로그인한 사용자 역할 가져오기
+
     axios.get(`/api/common/postList?category=${category}`)
         .then(response => {
             const postListContainer = document.getElementById('post_list_container');
@@ -14,12 +17,16 @@ function loadPostList() {
                 const postDiv = document.createElement('div');
                 postDiv.className = 'post';
 
+                // ✅ ROLE_ADMIN이면 모든 삭제 버튼 표시, 아니라면 자신의 글만 표시
+                const isOwner = post.userId.toString() === userId.toString();
+                const showDelete = (role === "ROLE_ADMIN" || isOwner) ? "" : "hidden-delete"; // 숨김 클래스 적용
+
                 postDiv.innerHTML = `
                     <span class="post_id post_text">${post.postId}</span>
                     <span class="post_title post_text link">${post.title}</span>
                     <span class="post_created_by post_text">${post.createdByName}</span>
                     <span class="post_created_at post_text">${post.createdAt}</span>
-                    <div class="post_delete_btn_box">
+                    <div class="post_delete_btn_box ${showDelete}">
                         <button class="post_delete_btn" data-id="${post.postId}">삭제</button>
                     </div>
                 `;
@@ -30,9 +37,12 @@ function loadPostList() {
                 });
 
                 // 게시글 삭제 버튼 클릭 이벤트 추가
-                postDiv.querySelector('.post_delete_btn').addEventListener('click', function () {
-                    deletePost(post.postId);
-                });
+                const deleteButton = postDiv.querySelector('.post_delete_btn');
+                if (deleteButton) {
+                    deleteButton.addEventListener('click', function () {
+                        deletePost(post.postId);
+                    });
+                }
 
                 postListContainer.appendChild(postDiv);
             });

@@ -23,7 +23,7 @@
                 <div class="info_section2">
                     <span class="info_title">유형</span>
                     <select id="category" name="category">
-                        <option value="N">공지사항</option>
+                        <option value="N" th:if="${#strings.contains(#authentication.authorities, 'ROLE_ADMIN')}">공지사항</option>
                         <option value="F">자유게시판</option>
                         <option value="S">건의사항</option>
 <!--                        <option value="Q">QNA</option>-->

@@ -19,6 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
 // ✅ 문제 상세 정보 불러오기
 async function loadProblemDetail() {
     try {
+        const role = document.getElementById("role").value;
         const problemId = document.getElementById("problem_id").value;
 
         if (!problemId) {
@@ -60,9 +61,24 @@ async function loadProblemDetail() {
         statusBtn.classList.toggle("active", problemData.permitYn === "Y");
         statusBtn.classList.toggle("inactive", problemData.permitYn === "N");
 
+
+        // ✅ STUDENT이면 상태, 수정, 삭제 숨기기
+        if (role === "ROLE_STUDENT") {
+            document.querySelectorAll(".role_teacher, .role_admin").forEach(el => {
+                el.style.display = "none";
+            });
+        }
+
+        // ✅ TEACHER이면 삭제만 숨기기
+        if (role === "ROLE_TEACHER") {
+            document.querySelectorAll(".role_admin").forEach(el => {
+                el.style.display = "none";
+            });
+        }
     } catch (error) {
         console.error("🚨 문제 상세 정보를 불러오는 데 실패했습니다:", error);
     }
+
 }
 
 // ✅ 문제 상태 변경 (활성화 ↔ 비활성화)

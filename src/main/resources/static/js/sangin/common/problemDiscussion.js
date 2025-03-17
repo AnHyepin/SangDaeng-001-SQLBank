@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     <div class="comment_user_id">${comment.createdByName}</div>
                     <div class="comment_created_at">${new Date(comment.createdAt).toLocaleString()}</div>
                     <div class="comment_content">${comment.content}</div>
-                    <button class="comment_delete_btn" data-id="${comment.discussionId}">삭제</button>
+                    <button class="comment_delete_btn role_admin" data-id="${comment.discussionId}">삭제</button>
                 `;
 
                 commentList.appendChild(commentItem);

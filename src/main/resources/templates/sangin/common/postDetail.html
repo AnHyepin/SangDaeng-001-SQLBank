@@ -13,6 +13,8 @@
 <!-- content -->
 <div layout:fragment="content">
     <input type="hidden" id="post_id" th:value="${postId}">
+    <input type="hidden" id="role" th:value="${role}">
+    <input type="hidden" id="user_id" th:value="${userId}">
     <!-- 댓글 등록 모달 -->
     <div id="comment_modal_background">
         <div id="comment_modal">
@@ -47,8 +49,8 @@
                     <th>작성자</th>
                     <th>유형</th>
                     <th>등록일</th>
-                    <th>수정</th>
-                    <th>삭제</th>
+                    <th id="updateBtn_text">수정</th>
+                    <th id="deleteBtn_text">삭제</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -57,10 +59,10 @@
                     <td id="createdBy"></td>
                     <td id="category"></td>
                     <td id="createdAt"></td>
-                    <td>
+                    <td id="updateBtn_box">
                         <button id="updateBtn">수정</button>
                     </td>
-                    <td>
+                    <td id="deleteBtn_box>
                         <button id="deleteBtn">삭제</button>
                     </td>
                 </tr>

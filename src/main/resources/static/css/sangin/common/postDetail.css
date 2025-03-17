@@ -319,3 +319,8 @@
     background: #bbb;
     transform: scale(1.05);
 }
+
+.hidden-action {
+    visibility: hidden; /* 버튼을 숨기지만 공간은 유지 */
+}
+

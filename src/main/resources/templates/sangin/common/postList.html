@@ -13,6 +13,8 @@
 <body>
 <!-- content -->
 <div layout:fragment="content">
+    <input type="hidden" id="userId" th:value="${userId}">
+    <input type="hidden" id="role" th:value="${role}">
     <div id="adjust_section">
         <div id="main_section">
             <div id="post_list_text" th:text="${categoryText}">

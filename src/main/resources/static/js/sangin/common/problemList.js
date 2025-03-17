@@ -8,6 +8,8 @@ function loadProblemList() {
             const problemListContainer = document.getElementById('problem_list_container');
             problemListContainer.innerHTML = ''; // 기존 목록 초기화
 
+            const role = document.getElementById("role").value; // 현재 로그인된 사용자의 역할 가져오기
+
             response.data.forEach(problem => {
                 const problemDiv = document.createElement('div');
                 problemDiv.className = 'problem';
@@ -21,10 +23,10 @@ function loadProblemList() {
                     <span class="problem_question problem_text link">${problem.question}</span>
                     <span class="problem_created_by problem_text">${problem.createdByName}</span>
                     <span class="problem_created_at problem_text">${problem.createdAt}</span>
-                    <div class="problem_status_box">
+                    <div class="problem_status_box role_teacher">
                         <span class="problem_status ${statusClass}" data-id="${problem.problemId}" data-status="${problem.permitYn}">${statusText}</span>
                     </div>
-                    <div class="problem_delete_btn_box" >
+                    <div class="problem_delete_btn_box role_admin">
                         <button class="problem_delete_btn" data-id="${problem.problemId}">삭제</button>
                     </div>
                 `;
@@ -35,17 +37,37 @@ function loadProblemList() {
                 });
 
                 // 상태 변경 (활성화 <-> 비활성화)
-                problemDiv.querySelector('.problem_status').addEventListener('click', function () {
-                    toggleProblemStatus(problem.problemId, this);
-                });
+                const statusElement = problemDiv.querySelector('.problem_status');
+                if (statusElement) {
+                    statusElement.addEventListener('click', function () {
+                        toggleProblemStatus(problem.problemId, this);
+                    });
+                }
 
                 // 문제 삭제 버튼 클릭 이벤트 추가
-                problemDiv.querySelector('.problem_delete_btn').addEventListener('click', function () {
-                    deleteProblem(problem.problemId);
-                });
+                const deleteButton = problemDiv.querySelector('.problem_delete_btn');
+                if (deleteButton) {
+                    deleteButton.addEventListener('click', function () {
+                        deleteProblem(problem.problemId);
+                    });
+                }
 
                 problemListContainer.appendChild(problemDiv);
             });
+
+            // ✅ STUDENT이면 상태, 수정, 삭제 숨기기
+            if (role === 'ROLE_STUDENT') {
+                document.querySelectorAll('.role_teacher, .role_admin').forEach(el => {
+                    el.style.display = 'none';
+                });
+            }
+
+            // ✅ TEACHER이면 삭제만 숨기기
+            if (role === 'ROLE_TEACHER') {
+                document.querySelectorAll('.role_admin').forEach(el => {
+                    el.style.display = 'none';
+                });
+            }
         })
         .catch(error => {
             console.error("문제 목록을 불러오는 데 실패했습니다.", error);
@@ -57,7 +79,7 @@ function toggleProblemStatus(problemId, statusElement) {
     const currentStatus = statusElement.dataset.status;
     const newStatus = currentStatus === 'Y' ? 'N' : 'Y';
 
-    axios.put(`/api/teacher/updateStatus/${problemId}`, { permitYn: newStatus })
+    axios.put(`/api/teacher/updateStatus/${problemId}`, {permitYn: newStatus})
         .then(response => {
             statusElement.dataset.status = newStatus;
             statusElement.textContent = newStatus === 'Y' ? '활성화' : '비활성화';

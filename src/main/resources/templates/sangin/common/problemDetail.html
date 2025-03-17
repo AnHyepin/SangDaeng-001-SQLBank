@@ -1,111 +1,105 @@
-    <!DOCTYPE html>
-    <html xmlns:th="http://www.thymeleaf.org"
-          xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-          layout:decorate="~{/layout/layout/layout}">
-    <head>
-        <meta charset="UTF-8">
-        <title>문제 상세</title>
-        <link rel="stylesheet" href="/css/sangin/common/problemDetail.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    </head>
-    <body>
-    <!-- content -->
-    <div layout:fragment="content">
-        <input type="hidden" id="problem_id" th:value="${problemId}">
-        <!-- 댓글 등록 모달 -->
-        <div id="comment_modal_background">
-            <div id="comment_modal">
-                <!-- 모달 헤더 -->
-                <div id="comment_modal_header">
-                    <span>댓글 등록</span>
-                    <span id="comment_modal_close">&times;</span>
-                </div>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>문제 상세</title>
+    <link rel="stylesheet" href="/css/sangin/common/problemDetail.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+<!-- content -->
+<div layout:fragment="content">
+    <input type="hidden" id="problem_id" th:value="${problemId}">
+    <input type="hidden" id="role" th:value="${role}">
 
-                <!-- 모달 입력 폼 -->
-                <div id="comment_modal_content">
-                    <div id="comment_input_text">댓글 내용</div>
-
-                    <textarea id="comment_input" placeholder="댓글을 입력하세요..."></textarea>
-                </div>
-                <div id="comment_caution">
-                    * 등록 후 삭제는 문의가 필요하니 신중히 댓글을 작성하여 주십시오.
-                </div>
-                <!-- 모달 버튼 -->
-                <div id="comment_modal_btn_box">
-                    <button id="comment_submit_btn">등록</button>
-                    <button id="comment_cancel_btn">취소</button>
-                </div>
+    <!-- 댓글 등록 모달 -->
+    <div id="comment_modal_background">
+        <div id="comment_modal">
+            <div id="comment_modal_header">
+                <span>댓글 등록</span>
+                <span id="comment_modal_close">&times;</span>
             </div>
-        </div>
-
-        <div id="adjust_section">
-            <div id="main_section">
-                <table id="title_section">
-                    <thead>
-                    <tr>
-                        <th>문제 ID</th>
-                        <th>출제자</th>
-                        <th>난이도</th>
-                        <th>등록일</th>
-                        <th>상태</th>
-                        <th>수정</th>
-                        <th>삭제</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td id="problemId"></td>
-                        <td id="createdBy"></td>
-                        <td id="difficulty"></td>
-                        <td id="createdAt"></td>
-                        <td>
-                            <button id="statusBtn"></button>
-                        </td>
-                        <td>
-                            <button id="updateBtn">수정</button>
-                        </td>
-                        <td>
-                            <button id="deleteBtn">삭제</button>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-
-                <div class="info_section">
-                    <span class="info_title">질문</span>
-                    <span id="question" class="info_content"></span>
-                </div>
-
-                <div class="info_section">
-                    <span class="info_title">설명</span>
-                    <span id="description" class="info_content"></span>
-                </div>
-
-                <div class="info_section">
-                    <span class="info_title">정답</span>
-                    <span id="answer" class="info_content answer"></span>
-                </div>
+            <div id="comment_modal_content">
+                <div id="comment_input_text">댓글 내용</div>
+                <textarea id="comment_input" placeholder="댓글을 입력하세요..."></textarea>
             </div>
-            <div id="comment_section">
-                <div id="comment_list_header">
-                    <div id="comment_list_text">댓글 목록</div>
-                    <button id="comment_register_btn">
-                        + 댓글 등록
-                    </button>
-                </div>
-                <div id="comment_list">
-
-                </div>
+            <div id="comment_caution">
+                * 등록 후 삭제는 문의가 필요하니 신중히 댓글을 작성하여 주십시오.
+            </div>
+            <div id="comment_modal_btn_box">
+                <button id="comment_submit_btn">등록</button>
+                <button id="comment_cancel_btn">취소</button>
             </div>
         </div>
     </div>
 
-    </body>
+    <div id="adjust_section">
+        <div id="main_section">
+            <table id="title_section">
+                <thead>
+                <tr>
+                    <th>문제 ID</th>
+                    <th>출제자</th>
+                    <th>난이도</th>
+                    <th>등록일</th>
+                    <th class="role_teacher">상태</th>
+                    <th class="role_admin">수정</th>
+                    <th class="role_admin">삭제</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td id="problemId"></td>
+                    <td id="createdBy"></td>
+                    <td id="difficulty"></td>
+                    <td id="createdAt"></td>
+                    <td class="role_teacher">
+                        <button id="statusBtn"></button>
+                    </td>
+                    <td class="role_admin">
+                        <button id="updateBtn">수정</button>
+                    </td>
+                    <td class="role_admin">
+                        <button id="deleteBtn">삭제</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
 
-    <!--이거밖에서 스크립트 작성하면 안돌아갑니다...-->
-    <div layout:fragment="scripts">
-        <script src="/js/sangin/common/problemDetail.js"></script>
-        <script src="/js/sangin/common/problemDiscussion.js"></script>
+            <div class="info_section">
+                <span class="info_title">질문</span>
+                <span id="question" class="info_content"></span>
+            </div>
+
+            <div class="info_section">
+                <span class="info_title">설명</span>
+                <span id="description" class="info_content"></span>
+            </div>
+
+            <div class="info_section">
+                <span class="info_title">정답</span>
+                <span id="answer" class="info_content answer"></span>
+            </div>
+        </div>
+        <div id="comment_section">
+            <div id="comment_list_header">
+                <div id="comment_list_text">댓글 목록</div>
+                <button id="comment_register_btn">
+                    + 댓글 등록
+                </button>
+            </div>
+            <div id="comment_list"></div>
+        </div>
     </div>
-    </html>
+</div>
+</body>
+
+<!-- JavaScript -->
+<div layout:fragment="scripts">
+    <script src="/js/sangin/common/problemDetail.js"></script>
+    <script src="/js/sangin/common/problemDiscussion.js"></script>
+</div>
+</html>

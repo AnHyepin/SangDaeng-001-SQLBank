@@ -15,11 +15,8 @@
 <div layout:fragment="content">
     <div id="adjust_section">
         <div id="main_section">
+            <input type="hidden" id="role" name="role" th:value="${role}">
 
-<!--            <div id="search_container">-->
-<!--                <input type="text" id="search_input">-->
-<!--                <button id="search_btn">검색</button>-->
-<!--            </div>-->
             <div id="problem_list_text">문제 목록</div>
             <div id="problem_list_shadow">
                 <div id="problem_text_box">
@@ -27,21 +24,20 @@
                     <span id="problem_question_text">문제 질문</span>
                     <span id="problem_created_by_text">작성자</span>
                     <span id="problem_created_at_text">작성일</span>
-                    <span id="problem_status_text">상태</span>
-                    <span id="problem_delete_btn_text">삭제</span>
+                    <span id="problem_status_text" class="role_teacher">상태</span>
+<!--                    <span id="problem_edit_btn_text" class="role_teacher role_admin">수정</span>-->
+                    <span id="problem_delete_btn_text" class="role_admin">삭제</span>
                 </div>
                 <div id="problem_list_container">
                     <!--동적 생성-->
                 </div>
             </div>
-
-
         </div>
     </div>
 </div>
 </body>
 
-<!--이거밖에서 스크립트 작성하면 안돌아갑니다...-->
+<!-- JavaScript -->
 <div layout:fragment="scripts">
     <script src="/js/sangin/common/problemList.js"></script>
 </div>

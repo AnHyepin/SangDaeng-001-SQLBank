@@ -1,5 +1,6 @@
 package com.example.sangdaeng001sqlbank.controller.view.sangin;
 
+import com.example.sangdaeng001sqlbank.utils.SecurityUtil;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class BoardViewController_sangin {
     @GetMapping("/postDetail/{postId}")
     public String postDetail(@PathVariable int postId, Model model) {
+        int userId = SecurityUtil.getUserId();
+        String role = SecurityUtil.getRole();
+        model.addAttribute("userId", userId);
+        model.addAttribute("role", role);
         model.addAttribute("postId", postId);
         return "sangin/common/postDetail";
     }
@@ -33,6 +38,10 @@ public class BoardViewController_sangin {
                 categoryText = "Q&A";
                 break;
         }
+        int userId = SecurityUtil.getUserId();
+        String role = SecurityUtil.getRole();
+        model.addAttribute("userId", userId);
+        model.addAttribute("role", role);
         model.addAttribute("categoryText", categoryText);
         model.addAttribute("category", category);
         return "sangin/common/postList";

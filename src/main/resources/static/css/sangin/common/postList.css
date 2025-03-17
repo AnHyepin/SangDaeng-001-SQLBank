@@ -74,7 +74,7 @@
 }
 
 #post_created_at_text {
-    flex: 1;
+    flex: 2;
 }
 
 #post_delete_btn_text {
@@ -119,7 +119,7 @@
 }
 
 .post_created_at {
-    flex: 1;
+    flex: 2;
 }
 .post_delete_btn {
     flex: 1;
@@ -145,4 +145,7 @@
     background-color: #b1b1b1;
     color: white;
     cursor: pointer;
+}
+.hidden-delete {
+    visibility: hidden; /* 버튼을 숨기지만 공간은 유지 */
 }
