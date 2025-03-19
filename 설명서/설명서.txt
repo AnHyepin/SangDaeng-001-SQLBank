@@ -1,8 +1,9 @@
-[ 1 ] 1. 한번에 db 만들기 = 2. create_tbls + 3. insert_problems
+[ 1 ] 1. 한번에 db 만들기 실행
+ 1. = 2. + 3.
 
 [ 2 ] application.properties 내 db에 맞춰서 수정하기
 
-[ 3 ] 역할
+[ 3 ] 역할 - 총 3개
 
 - ROLE_STUDENT
 
