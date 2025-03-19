@@ -15,18 +15,18 @@
 <div layout:fragment="content">
     <input type="hidden" id="userId" th:value="${userId}">
     <input type="hidden" id="role" th:value="${role}">
+    <input type="hidden" id="category" th:value="${category}">
     <div id="adjust_section">
         <div id="main_section">
             <div id="post_list_text" th:text="${categoryText}">
             </div>
-            <input type="hidden" th:value="${category}" id="category">
             <div id="post_list_shadow">
                 <div id="post_text_box">
                     <span id="post_id_text">고유 ID</span>
                     <span id="post_title_text">게시글 제목</span>
                     <span id="post_created_by_text">작성자</span>
                     <span id="post_created_at_text">작성일</span>
-                    <span id="post_delete_btn_text">삭제</span>
+                    <span id="post_delete_btn_text" th:if="${role} == 'ROLE_ADMIN'">삭제</span>
                 </div>
                 <div id="post_list_container">
                     <!--동적 생성-->

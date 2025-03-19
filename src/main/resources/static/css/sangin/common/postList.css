@@ -146,6 +146,9 @@
     color: white;
     cursor: pointer;
 }
+
 .hidden-delete {
-    visibility: hidden; /* 버튼을 숨기지만 공간은 유지 */
+    display: none;  /* 삭제 버튼을 아예 숨김 */
 }
+
+

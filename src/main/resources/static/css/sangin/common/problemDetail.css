@@ -363,5 +363,8 @@
     transform: scale(1.05);
 }
 
+.hidden-delete {
+    display: none;  /* 삭제 버튼을 아예 숨김 */
+}
 
 

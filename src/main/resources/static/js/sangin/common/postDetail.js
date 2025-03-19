@@ -61,6 +61,7 @@ async function loadPostDetail() {
         document.getElementById("postId").textContent = postData.postId;
         document.getElementById("createdBy").textContent = postData.createdByName;
         document.getElementById("category").textContent = categoryText;
+        document.getElementById("category").dataset.categoryCode = postData.category; // ✅ category 코드 저장
         document.getElementById("createdAt").textContent = postData.createdAt;
         document.getElementById("description").textContent = postData.title;
         document.getElementById("answer").textContent = postData.content;
@@ -87,17 +88,22 @@ async function loadPostDetail() {
 async function deletePost() {
     try {
         const postId = document.getElementById("post_id").value;
+        const category = document.getElementById("category").dataset.categoryCode; // ✅ 카테고리 값 가져오기
+
         if (!confirm("정말로 이 게시글을 삭제하시겠습니까?")) return;
 
-        await axios.delete(`/api/common/delete/${postId}`);
+        await axios.delete(`/api/common/post/${postId}`);
         alert("✅ 게시글이 삭제되었습니다.");
-        window.location.href = "/view/common/postList"; // 게시글 목록으로 이동
+
+        // ✅ 삭제 후 해당 카테고리의 게시글 목록으로 이동
+        window.location.href = `/view/common/postList?category=${category}`;
 
     } catch (error) {
         alert("🚨 게시글 삭제에 실패했습니다.");
         console.error(error);
     }
 }
+
 
 // ✅ 게시글 수정 페이지로 이동
 async function updatePost() {

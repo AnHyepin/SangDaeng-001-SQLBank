@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <nav th:fragment="nav">
-    <div id="nav_section">
+    <div id="nav_section"  th:if="${#authorization.expression('isAuthenticated()')}">
         <!--teacher 부분은 th:if 로 나중에 role을 검사할 예정입니다-->
         <a href="/view/teacher/problemRegist">문제등록</a>
         <a href="/view/common/problemList">문제목록</a>

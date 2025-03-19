@@ -21,7 +21,9 @@ public class CommonViewController_sangin {
 
     @GetMapping("/problemDetail/{problemId}")
     public String problemDetail(@PathVariable("problemId") int problemId, Model model) {
+        int userId = SecurityUtil.getUserId();
         String role = SecurityUtil.getRole();
+        model.addAttribute("userId", userId);
         model.addAttribute("role", role);
         model.addAttribute("problemId", problemId);
         return "sangin/common/problemDetail";

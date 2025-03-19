@@ -14,6 +14,7 @@
 <div layout:fragment="content">
     <input type="hidden" id="problem_id" th:value="${problemId}">
     <input type="hidden" id="role" th:value="${role}">
+    <input type="hidden" id="user_id" th:value="${userId}">
 
     <!-- 댓글 등록 모달 -->
     <div id="comment_modal_background">
@@ -27,7 +28,7 @@
                 <textarea id="comment_input" placeholder="댓글을 입력하세요..."></textarea>
             </div>
             <div id="comment_caution">
-                * 등록 후 삭제는 문의가 필요하니 신중히 댓글을 작성하여 주십시오.
+                * 문제 상세보기 댓글은 등록 후 삭제시 관리자 권한이 필요하니 신중히 댓글을 작성하여 주십시오.
             </div>
             <div id="comment_modal_btn_box">
                 <button id="comment_submit_btn">등록</button>
