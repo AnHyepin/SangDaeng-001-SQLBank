@@ -76,9 +76,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 // ✅ 본인이 작성한 댓글이거나 ROLE_ADMIN이면 삭제 버튼 표시, 아니면 숨김 처리
                 const showDelete = (comment.userId.toString() === userId.toString() || role === "ROLE_ADMIN") ? "" : "hidden-delete";
-
+                var classNumText = '';
+                if(comment.classNum !== null){
+                    classNumText = `${comment.classNum}기&nbsp;`;
+                }
                 commentItem.innerHTML = `
-                <div class="comment_user_id">${comment.createdByName}</div>
+                <div class="comment_user_id">${classNumText}${comment.createdByName}</div>
                 <div class="comment_created_at">${new Date(comment.createdAt).toLocaleString()}</div>
                 <div class="comment_content">${comment.content}</div>
                 <button class="comment_delete_btn ${showDelete}" data-id="${comment.commentId}">삭제</button>

@@ -18,11 +18,14 @@ function loadPostList() {
 
                 // ✅ ROLE_ADMIN만 삭제 버튼 표시, 일반 사용자는 삭제 버튼 숨김
                 const showDelete = (role === "ROLE_ADMIN") ? "" : "hidden-delete"; // 관리자만 삭제 버튼 보이도록 클래스 적용
-
+                var classNumText = '';
+                if(post.classNum !== null){
+                    classNumText = `${post.classNum}기&nbsp;`
+                }
                 postDiv.innerHTML = `
                     <span class="post_id post_text">${post.postId}</span>
                     <span class="post_title post_text link">${post.title}</span>
-                    <span class="post_created_by post_text">${post.createdByName}</span>
+                    <span class="post_created_by post_text">${classNumText}${post.createdByName}</span>
                     <span class="post_created_at post_text">${post.createdAt}</span>
                     <div class="post_delete_btn_box ${showDelete}">
                         <button class="post_delete_btn" data-id="${post.postId}">삭제</button>
