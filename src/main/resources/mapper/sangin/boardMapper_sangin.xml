@@ -11,7 +11,7 @@
     </insert>
     <!-- ✅ 게시글 목록 조회 -->
     <select id="getPostList" resultType="com.example.sangdaeng001sqlbank.dto.PostDto">
-        SELECT p.*, u.name AS createdByName
+        SELECT p.*, u.name AS createdByName, u.class_num AS classNum
         FROM tbl_posts p
         JOIN tbl_users u ON p.user_id = u.user_id
         WHERE p.category = #{category}
@@ -49,7 +49,7 @@
 
     <!-- ✅ 특정 게시글의 댓글 목록 조회 -->
     <select id="getCommentsByPostId" resultType="com.example.sangdaeng001sqlbank.dto.CommentDto">
-        SELECT c.comment_id, c.post_id, c.user_id, u.name AS createdByName, c.content, c.created_at
+        SELECT c.comment_id, c.post_id, c.user_id, u.name AS createdByName, u.class_num AS classNum, c.content, c.created_at
         FROM tbl_comments c
         JOIN tbl_users u ON c.user_id = u.user_id
         WHERE c.post_id = #{postId}

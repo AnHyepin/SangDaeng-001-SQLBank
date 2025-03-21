@@ -9,5 +9,6 @@ public class ProblemDiscussionDto {
     private int userId; // 작성자 ID
     private String content; // 의견 내용
     private String createdAt; // 작성일
-    private String createdByName;
+    private String createdByName; // 작성자 이름
+    private Integer classNum; // 작성자 기수
 }

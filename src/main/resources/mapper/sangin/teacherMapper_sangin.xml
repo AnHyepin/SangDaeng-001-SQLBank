@@ -5,7 +5,7 @@
 <mapper namespace="com.example.sangdaeng001sqlbank.dao.sangin.TeacherDao_sangin">
     <insert id="insertProblem" parameterType="com.example.sangdaeng001sqlbank.dto.ProblemDto"
             useGeneratedKeys="true" keyProperty="problemId">
-        INSERT INTO tbl_problems (question, description, difficulty, created_by, created_at)
+        INSERT INTO tbl_problems (question, description, difficulty, user_id, created_at)
         VALUES (#{question}, #{description}, #{difficulty}, #{createdBy}, NOW())
     </insert>
 

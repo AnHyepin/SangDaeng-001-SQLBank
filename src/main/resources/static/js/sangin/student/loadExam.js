@@ -69,18 +69,18 @@ async function renderProblemsSequentially(problems) {
         const problemDiv = document.createElement("div");
         problemDiv.className = "problem";
         problemDiv.dataset.problemId = problem.problemId;
+        // <span className="description">${problem.description}</span>
 
         problemDiv.innerHTML = `
             <div class="problem_metadata">
                 <span class="problem_id">문제 고유 ID : ${problem.problemId}</span>
-                <span class="created_by">출제자 : ${problem.createdBy}</span>
+                <span class="created_by">출제자 : ${problem.createdByName}</span>
                 <input type="hidden" class="hidden_problem_id" value="${problem.problemId}">
             </div>
             <div class="problem_question_box">
                 <span class="problem_no">${index + 1}.</span>
                 <span class="question">${problem.question}</span>
             </div>
-            <span class="description">${problem.description}</span>
             <div class="choice_box">
                 ${problem.choices ? problem.choices.map((choice, i) => `
                     <label class="choice">

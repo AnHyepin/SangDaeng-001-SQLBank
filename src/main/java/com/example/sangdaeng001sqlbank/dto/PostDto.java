@@ -11,5 +11,6 @@ public class PostDto {
     private String createdAt; // 작성일
     private String createdByName; // 작성자
     private String category; // 카테고리
+    private Integer classNum; // 기수
 }
 

@@ -73,11 +73,14 @@ document.addEventListener("DOMContentLoaded", () => {
             response.data.forEach(comment => {
                 const commentItem = document.createElement("div");
                 commentItem.classList.add("comment_item");
-
+                var classNumText = '';
+                if(comment.classNum !== null){
+                    classNumText = `${comment.classNum}기&nbsp;`;
+                }
                 const showDelete = (role === "ROLE_ADMIN") ? "" : "hidden-delete";
 
                 commentItem.innerHTML = `
-                <div class="comment_user_id">${comment.createdByName}</div>
+                <div class="comment_user_id">${classNumText}${comment.createdByName}</div>
                 <div class="comment_created_at">${new Date(comment.createdAt).toLocaleString()}</div>
                 <div class="comment_content">${comment.content}</div>
                 <button class="comment_delete_btn ${showDelete}" data-id="${comment.discussionId}">삭제</button>

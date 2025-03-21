@@ -15,6 +15,7 @@ public class ProblemDto {
     private String createdAt; // 출제일
     private char permitYn; // 시험 출제 활성, 비활성
     private String answer; // 정답
+    private Integer classNum;
 
     private List<ProblemChoiceDto> choices; // 보기들
 }

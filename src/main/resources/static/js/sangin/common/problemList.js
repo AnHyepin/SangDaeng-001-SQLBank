@@ -17,11 +17,14 @@ function loadProblemList() {
                 // 문제 상태 설정 (permit_yn이 'Y'이면 활성화, 'N'이면 비활성화)
                 const statusText = problem.permitYn === 'Y' ? '활성화' : '비활성화';
                 const statusClass = problem.permitYn === 'Y' ? 'active' : 'inactive';
-
+                var classNumText = '';
+                if(problem.classNum !== null){
+                    classNumText = `${problem.classNum}기&nbsp;`
+                }
                 problemDiv.innerHTML = `
                     <span class="problem_id problem_text">${problem.problemId}</span>
                     <span class="problem_question problem_text link">${problem.question}</span>
-                    <span class="problem_created_by problem_text">${problem.createdByName}</span>
+                    <span class="problem_created_by problem_text">${classNumText}${problem.createdByName}</span>
                     <span class="problem_created_at problem_text">${problem.createdAt}</span>
                     <div class="problem_status_box role_teacher">
                         <span class="problem_status ${statusClass}" data-id="${problem.problemId}" data-status="${problem.permitYn}">${statusText}</span>
