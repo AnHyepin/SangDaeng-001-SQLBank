@@ -3,6 +3,7 @@ package com.example.sangdaeng001sqlbank.dao.sangin;
 import com.example.sangdaeng001sqlbank.dto.CommentDto;
 import com.example.sangdaeng001sqlbank.dto.PostDto;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -12,7 +13,13 @@ public interface BoardDao_sangin {
     void addPost(PostDto postDto);
 
     // ✅ 게시글 목록 조회
-    List<PostDto> getPostList(String category);
+    List<PostDto> getPostList(@Param("category") String category,
+                              @Param("offset") int offset,
+                              @Param("size") int size);
+
+    int getPostCount(@Param("category") String category);
+
+    List<PostDto> selectRecentNotices();
 
     // ✅ 게시글 상세 조회
     PostDto getPostDetail(int postId);
@@ -28,6 +35,9 @@ public interface BoardDao_sangin {
 
     // ✅ 특정 게시글의 댓글 목록 조회
     List<CommentDto> getCommentsByPostId(int postId);
+
+    // ✅ 댓글 수정
+    void updateComment(@Param("commentId") int commentId, @Param("content") String content);
 
     // ✅ 댓글 삭제
     int deleteComment(int commentId);

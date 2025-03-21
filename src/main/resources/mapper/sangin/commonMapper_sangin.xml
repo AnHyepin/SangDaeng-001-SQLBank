@@ -3,12 +3,20 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.sangdaeng001sqlbank.dao.sangin.CommonDao_sangin">
+    <!-- ✅ 문제 목록 조회 (페이징) -->
     <select id="getProblemList" resultType="com.example.sangdaeng001sqlbank.dto.ProblemDto">
-        SELECT p.*, u.name AS createdByName, u.class_num as classNum
+        SELECT p.*, u.name AS createdByName, u.class_num AS classNum
         FROM tbl_problems p
-        LEFT JOIN tbl_users u ON p.user_id = u.user_id
-        ORDER BY p.problem_id DESC;
+        JOIN tbl_users u ON p.user_id = u.user_id
+        ORDER BY p.problem_id DESC
+        LIMIT #{size} OFFSET #{offset}
     </select>
+
+    <!-- ✅ 총 문제 개수 조회 -->
+    <select id="getProblemCount" resultType="int">
+        SELECT COUNT(*) FROM tbl_problems
+    </select>
+
 
     <select id="getProblemDetail" resultType="com.example.sangdaeng001sqlbank.dto.ProblemDto">
         SELECT

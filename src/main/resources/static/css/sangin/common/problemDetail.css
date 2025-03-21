@@ -29,7 +29,7 @@
 }
 
 #title_section th {
-    background-color: #007BFF;
+    background-color: #6f7583;
     color: white;
     font-weight: bold;
 }
@@ -52,7 +52,7 @@
 }
 
 .inactive {
-    background-color: #cdcdcd;
+    background-color: #ccc;
 }
 
 #updateBtn {
@@ -61,7 +61,7 @@
     border: none;
     cursor: pointer;
     border-radius: 10px;
-    background-color: #cdcdcd;
+    background-color: #bbb;
     color: white;
     font-weight: bold;
     font-size: 16px;
@@ -75,7 +75,7 @@
     border: none;
     cursor: pointer;
     border-radius: 10px;
-    background-color: #cdcdcd;
+    background-color: #bbb;
     color: white;
     font-weight: bold;
     font-size: 16px;
@@ -85,7 +85,7 @@
 
 #deleteBtn:hover, #updateBtn:hover {
     scale: 1.05;
-    background-color: #cccccc;
+    background-color: #999;
 }
 
 
@@ -194,15 +194,15 @@
     font-weight: bold;
     font-size: 16px;
     text-align: center;
-    background: linear-gradient(45deg, #28a745, #218838); /* 초록색 */
-    box-shadow: 0 4px 8px rgba(40, 167, 69, 0.3);
+    background-color: #6f7583;
+    box-shadow: 0 4px 8px rgba(160, 160, 160, 0.3);
     transition: all 0.2s ease-in-out;
     margin-right: 10px;
 }
 
 #comment_register_btn:hover {
+    background-color: #525761;
     transform: scale(1.05);
-    background: linear-gradient(45deg, #218838, #1e7e34);
 }
 
 #comment_register_btn i {
@@ -217,7 +217,7 @@
     cursor: pointer;
     border-radius: 10px;
     color: white;
-    background-color: #c5c5c5;
+    background-color: #bbb;
     font-weight: bold;
     font-size: 15px;
     text-align: center;
@@ -244,7 +244,7 @@
 
 /* ✅ 모달 창 */
 #comment_modal {
-    background: white;
+    background: #fafafa;
     width: 600px;
     padding: 20px;
     border-radius: 10px;
@@ -325,11 +325,11 @@
     justify-content: space-between;
 }
 
-/* ✅ 등록 버튼 */
+/* 모달 내 등록 버튼 */
 #comment_submit_btn {
     width: 48%;
     padding: 10px;
-    background: #007bff;
+    background: #6f7583;
     color: white;
     font-size: 16px;
     font-weight: bold;
@@ -340,15 +340,15 @@
 }
 
 #comment_submit_btn:hover {
-    background: #0056b3;
+    background: #525761;
     transform: scale(1.05);
 }
 
-/* ✅ 취소 버튼 */
+/* 모달 내 취소 버튼 */
 #comment_cancel_btn {
     width: 48%;
     padding: 10px;
-    background: #ddd;
+    background: #bbb;
     color: black;
     font-size: 16px;
     font-weight: bold;
@@ -358,10 +358,12 @@
     transition: all 0.2s ease-in-out;
 }
 
+
 #comment_cancel_btn:hover {
-    background: #bbb;
+    background: #999;
     transform: scale(1.05);
 }
+
 
 .hidden-delete {
     display: none;  /* 삭제 버튼을 아예 숨김 */

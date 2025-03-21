@@ -8,9 +8,12 @@ import org.apache.ibatis.annotations.Param;
 import org.codehaus.groovy.transform.SourceURIASTTransformation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/common")
@@ -34,14 +37,31 @@ public class BoardApiController_sangin {
     }
 
     // ✅ 게시글 목록 조회
+
+
     @GetMapping("/postList")
-    public ResponseEntity<List<PostDto>> getPostList(@Param("category") String category) {
-        if (category == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        List<PostDto> postList = boardService.getPostList(category);
-        return ResponseEntity.ok(postList);
+    public Map<String, Object> getPostList(@RequestParam("category") String category,
+                                           @RequestParam(value = "page", defaultValue = "1") int page,
+                                           @RequestParam(value = "size", defaultValue = "20") int size) {
+
+        int offset = (page - 1) * size;
+        List<PostDto> posts = boardService.getPostList(category, offset, size);
+        int totalCount = boardService.getPostCount(category);
+        int totalPages = (int) Math.ceil((double) totalCount / size);
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("posts", posts);
+        result.put("totalPages", totalPages);
+        result.put("currentPage", page);
+        return result;
     }
+
+
+    @GetMapping("/noticeList")
+    public List<PostDto> getNoticeList() {
+        return boardService.getRecentNoticeList();
+    }
+
 
     // ✅ 게시글 상세 조회
     @GetMapping("/postDetail/{postId}")
@@ -91,6 +111,17 @@ public class BoardApiController_sangin {
         List<CommentDto> comments = boardService.getCommentsByPostId(postId);
         return ResponseEntity.ok(comments);
     }
+    // ✅ 댓글 수정
+    @PutMapping("/comment/{commentId}")
+    public ResponseEntity<?> updateComment(@PathVariable int commentId, @RequestBody Map<String, String> body) {
+        String content = body.get("content");
+        if (content == null || content.trim().isEmpty()) {
+            return ResponseEntity.badRequest().body("내용이 비어있습니다.");
+        }
+        boardService.updateComment(commentId, content.trim());
+        return ResponseEntity.ok().build();
+    }
+
 
     // ✅ 댓글 삭제
     @DeleteMapping("/comment/{commentId}")

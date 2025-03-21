@@ -58,7 +58,7 @@
 
 .main_choice_description_text {
     font-size: 20px;
-    color: #0062ff;
+    color: #6f7583;
 }
 
 .choice_item {
@@ -100,7 +100,7 @@
 .delete_choice_btn{
     width: 100px;
     height: 45px;
-    background: #0092ff;
+    background: #6f7583;
     color: #fff;
     text-align: center;
     border-radius: 10px;
@@ -120,7 +120,7 @@
 
 .choice_item input[type="radio"]:checked + span {
     color: #ffffff; /* 흰색 텍스트 */
-    background-color: #007bff; /* 강조 배경색 (진한 파랑) */
+    background-color: #6f7583; /* 강조 배경색 (진한 파랑) */
     padding: 4px 10px;
     border-radius: 8px;
     font-weight: bold;
@@ -157,7 +157,7 @@
 }
 
 #add_choice_btn {
-    background-color: #0092ff;
+    background-color: #6f7583;
     color: white;
 }
 

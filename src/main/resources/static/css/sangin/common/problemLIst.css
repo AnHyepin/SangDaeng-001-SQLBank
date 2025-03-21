@@ -7,6 +7,28 @@
 #main_section {
     margin-top: 40px;
 }
+#main_section_header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+/* ✅ 선택박스 */
+#pageSizeSelector {
+    height: 40px;
+    padding: 5px 10px;
+    font-size: 16px;
+    border: 1px solid #bbb;
+    border-radius: 6px;
+    outline: none;
+    background-color: white;
+    cursor: pointer;
+    transition: border 0.2s;
+}
+
+#pageSizeSelector:hover,
+#pageSizeSelector:focus {
+    border-color: #888;
+}
 
 #search_container {
     display: flex;
@@ -30,7 +52,7 @@
     width: 80px;
     font-size: 24px;
     border-radius: 0 10px 10px 0;
-    background-color: #0092ff;
+    background-color: #2c3e50;
     border: none;
     color: white;
 }
@@ -46,7 +68,7 @@
 
 #problem_text_box {
     width: 1200px;
-    background-color: #0092ff;
+    background-color: #6f7583;
     border-radius: 10px 10px 0 0;
     display: flex;
 }
@@ -85,7 +107,7 @@
     flex: 1;
 }
 #problem_list_container{
-    margin-bottom: 100px;
+    margin-bottom: 30px;
 }
 
 
@@ -105,21 +127,26 @@
 .problem > span {
     font-size: 19px;
     display: flex;
-    justify-content: center;
     overflow-x: hidden;
 }
 
 .problem_id {
     flex: 1;
+    justify-content: center;
+
 }
 
 .problem_question {
+    display: flex;
+    align-items: center;
     flex: 5;
     cursor : pointer;
 }
 
 .problem_created_by {
     flex: 1;
+    justify-content: center;
+
 }
 
 .problem_created_at {
@@ -127,6 +154,8 @@
     justify-content: center;
     align-items: center;
     flex: 2;
+    justify-content: center;
+
 }
 
 .problem_status_box {
@@ -134,6 +163,7 @@
     flex: 1;
     align-items: center;
     justify-content: center;
+
 }
 
 .problem_status {
@@ -173,4 +203,62 @@
     background-color: #b1b1b1;
     color: white;
     cursor: pointer;
+    justify-content: center;
+
 }
+
+/* 페이징 전체 영역 */
+#pagination_container {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+/* ✅ 개별 페이지 버튼 */
+.page-btn {
+    padding: 10px 16px;
+    border: 1px solid #bbb;
+    background-color: white;
+    color: #333;
+    border-radius: 6px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.page-btn:hover {
+    background-color: #bcbcbc;
+    color: white;
+    border-color: #aaa;
+}
+
+
+/* ✅ 현재 페이지 버튼 */
+.page-btn.active {
+    background-color: #999;
+    color: white;
+    border: none;
+}
+
+/* ✅ 비활성 버튼 */
+.page-btn.disabled {
+    pointer-events: none;
+    opacity: 0.4;
+}
+
+
+/* ✅ 이전/다음 버튼 */
+.prev-btn, .next-btn {
+    font-size: 14px;
+    padding: 10px 12px;
+}
+
+
+
+
+
+
+
+
+
+

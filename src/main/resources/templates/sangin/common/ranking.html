@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{/layout/layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>시상대</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="podium-container">
+        <!-- 2등 -->
+        <div class="podium second">
+            <div class="podium-name">⚔️</div>
+            <div class="rank-medal">🥈</div>
+            <div class="podium-score"></div>
+        </div>
+
+        <!-- 예시: 1등 -->
+        <div class="podium first">
+            <div class="podium-name">👑</div>
+            <div class="rank-medal">🥇</div>
+            <div class="podium-score"></div>
+        </div>
+
+        <!-- 3등 -->
+        <div class="podium third">
+            <div class="podium-name">🛡️</div>
+            <div class="rank-medal">🥉</div>
+            <div class="podium-score"></div>
+        </div>
+    </div>
+
+    <div class="others-container">
+        <div class="others-title">기타 순위</div>
+        <div class="other-item"><span>4. 박민준</span><span>85점</span></div>
+        <div class="other-item"><span>5. 최서연</span><span>82점</span></div>
+        <div class="other-item"><span>6. 장하늘</span><span>79점</span></div>
+        <div class="other-item"><span>7. 서유리</span><span>75점</span></div>
+    </div>
+
+</div>
+</body>
+<div layout:fragment="scripts"></div>
+</html>

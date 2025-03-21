@@ -98,7 +98,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #007bff;
+    background-color: #999;
     font-weight: bold;
     font-size: 20px;
     border: none;
@@ -111,6 +111,6 @@
 }
 
 #post_regist_btn:hover {
-    background-color: #016bdd;
+    background-color: #777;
     scale: 1.02;
 }

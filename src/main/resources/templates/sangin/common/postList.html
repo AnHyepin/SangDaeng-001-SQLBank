@@ -18,7 +18,25 @@
     <input type="hidden" id="category" th:value="${category}">
     <div id="adjust_section">
         <div id="main_section">
-            <div id="post_list_text" th:text="${categoryText}">
+            <div id="main_section_header">
+                    <div id="post_list_text_box">
+                        <div id="tab_free" class="tab" onclick="location.href='/view/common/postList?category=F'">자유게시판
+                        </div>
+                        <div id="tab_suggestion" class="tab" onclick="location.href='/view/common/postList?category=S'">
+                            건의사항
+                        </div>
+                        <div id="tab_qna" class="tab" onclick="location.href='/view/common/postList?category=Q'">
+                            Q&A
+                        </div>
+                    </div>
+
+                    <select id="pageSizeSelector">
+                        <option value="10" selected>10개씩 보기</option>
+                        <option value="20">20개씩 보기</option>
+                        <option value="50">50개씩 보기</option>
+                        <option value="100">100개씩 보기</option>
+                    </select>
+
             </div>
             <div id="post_list_shadow">
                 <div id="post_text_box">
@@ -32,6 +50,8 @@
                     <!--동적 생성-->
                 </div>
             </div>
+            <div id="pagination_container" class="pagination"></div>
+
         </div>
     </div>
 </div>

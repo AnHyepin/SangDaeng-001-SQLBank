@@ -17,8 +17,14 @@ public class CommonService_sangin {
         this.commonDao = commonDao;
     }
 
-    public List<ProblemDto> getProblemList() {
-        return commonDao.getProblemList();
+    // ✅ 문제 목록 조회 (페이징 적용)
+    public List<ProblemDto> getProblemList(int offset, int size) {
+        return commonDao.getProblemList(offset, size);
+    }
+
+    // ✅ 총 문제 개수 조회
+    public int getProblemCount() {
+        return commonDao.getProblemCount();
     }
 
     public ProblemDto getProblemDetail(int problemId) {

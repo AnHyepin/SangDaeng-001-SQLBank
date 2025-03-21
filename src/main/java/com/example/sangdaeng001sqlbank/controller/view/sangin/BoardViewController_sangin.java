@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/view/common")
@@ -22,30 +23,27 @@ public class BoardViewController_sangin {
     }
 
     @GetMapping("/postList")
-    public String postList(@Param("category") String category, Model model) {
-        String categoryText = null;
-        switch (category) {
-            case "N":
-                categoryText = "공지사항";
-                break;
-            case "F":
-                categoryText = "자유게시판";
-                break;
-            case "S":
-                categoryText = "건의사항";
-                break;
-            case "Q":
-                categoryText = "Q&A";
-                break;
-        }
+    public String postList(@RequestParam("category") String category,
+                           Model model) {
         int userId = SecurityUtil.getUserId();
         String role = SecurityUtil.getRole();
+
+        String categoryText = switch (category) {
+            case "N" -> "공지사항";
+            case "F" -> "자유게시판";
+            case "S" -> "건의사항";
+            case "Q" -> "Q&A";
+            default -> "게시판";
+        };
+
         model.addAttribute("userId", userId);
         model.addAttribute("role", role);
-        model.addAttribute("categoryText", categoryText);
         model.addAttribute("category", category);
+        model.addAttribute("categoryText", categoryText);
+
         return "sangin/common/postList";
     }
+
 
     @GetMapping("/postRegist")
     public String postRegist() {

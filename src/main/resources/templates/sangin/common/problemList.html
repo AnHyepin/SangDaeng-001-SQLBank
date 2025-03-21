@@ -6,7 +6,6 @@
     <meta charset="UTF-8">
     <title>문제 목록</title>
     <link rel="stylesheet" href="/css/sangin/common/problemList.css">
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
@@ -17,7 +16,16 @@
         <div id="main_section">
             <input type="hidden" id="role" name="role" th:value="${role}">
 
-            <div id="problem_list_text">문제 목록</div>
+            <div id="main_section_header">
+                <div id="problem_list_text">문제 목록</div>
+                <select id="pageSizeSelector">
+                    <option value="10" selected>10개씩 보기</option>
+                    <option value="20" >20개씩 보기</option>
+                    <option value="50">50개씩 보기</option>
+                    <option value="100">100개씩 보기</option>
+                </select>
+            </div>
+
             <div id="problem_list_shadow">
                 <div id="problem_text_box">
                     <span id="problem_id_text">문제 ID</span>
@@ -25,13 +33,12 @@
                     <span id="problem_created_by_text">작성자</span>
                     <span id="problem_created_at_text">작성일</span>
                     <span id="problem_status_text" class="role_teacher">상태</span>
-<!--                    <span id="problem_edit_btn_text" class="role_teacher role_admin">수정</span>-->
                     <span id="problem_delete_btn_text" class="role_admin">삭제</span>
                 </div>
-                <div id="problem_list_container">
-                    <!--동적 생성-->
-                </div>
+                <div id="problem_list_container"></div>
             </div>
+
+            <div id="pagination_container" class="pagination"></div>
         </div>
     </div>
 </div>

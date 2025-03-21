@@ -1,3 +1,5 @@
+// ✅ 댓글 기능 전체 연결 스크립트
+
 document.addEventListener("DOMContentLoaded", () => {
     const modalBackground = document.getElementById("comment_modal_background");
     const modal = document.getElementById("comment_modal");
@@ -7,17 +9,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const submitBtn = document.getElementById("comment_submit_btn");
     const commentInput = document.getElementById("comment_input");
 
-    // ✅ 게시글 ID 가져오기
     const postId = document.getElementById("post_id").value;
+    const userId = document.getElementById("user_id").value;
+    const role = document.getElementById("role").value;
 
-    // ✅ 모달 열기
     openModalBtn.addEventListener("click", () => {
         modalBackground.classList.add("active");
         modal.classList.add("active");
-        commentInput.value = ""; // 입력창 초기화
+        commentInput.value = "";
     });
 
-    // ✅ 모달 닫기
     function closeModal() {
         modalBackground.classList.remove("active");
         modal.classList.remove("active");
@@ -26,15 +27,12 @@ document.addEventListener("DOMContentLoaded", () => {
     closeModalBtn.addEventListener("click", closeModal);
     cancelBtn.addEventListener("click", closeModal);
 
-    // ✅ 배경 클릭 시 모달 닫기
     modalBackground.addEventListener("click", (e) => {
         if (e.target === modalBackground) closeModal();
     });
 
-    // ✅ 댓글 등록 요청
     submitBtn.addEventListener("click", async () => {
         const commentText = commentInput.value.trim();
-
         if (commentText === "") {
             alert("댓글을 입력하세요.");
             return;
@@ -42,14 +40,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
         try {
             const response = await axios.post("/api/common/comment", {
-                postId: postId,  // 게시글 ID 포함
+                postId: postId,
                 content: commentText,
             });
 
             if (response.status === 200 || response.status === 201) {
                 alert("✅ 댓글이 등록되었습니다.");
                 closeModal();
-                loadComments(); // 댓글 목록 다시 불러오기
+                loadComments();
             } else {
                 alert("🚨 댓글 등록에 실패했습니다.");
             }
@@ -59,38 +57,54 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // ✅ 댓글 목록 불러오기
     async function loadComments() {
         try {
-            const postId = document.getElementById("post_id").value;
-            const userId = document.getElementById("user_id").value; // 현재 로그인한 사용자 ID 가져오기
-            const role = document.getElementById("role").value; // 현재 로그인한 사용자 역할 가져오기
-
             const response = await axios.get(`/api/common/commentList?postId=${postId}`);
             const commentList = document.getElementById("comment_list");
-            commentList.innerHTML = ""; // 기존 목록 초기화
+            commentList.innerHTML = "";
 
             response.data.forEach(comment => {
                 const commentItem = document.createElement("div");
                 commentItem.classList.add("comment_item");
 
-                // ✅ 본인이 작성한 댓글이거나 ROLE_ADMIN이면 삭제 버튼 표시, 아니면 숨김 처리
-                const showDelete = (comment.userId.toString() === userId.toString() || role === "ROLE_ADMIN") ? "" : "hidden-delete";
-                var classNumText = '';
-                if(comment.classNum !== null){
-                    classNumText = `${comment.classNum}기&nbsp;`;
-                }
+                const showModify = (comment.userId.toString() === userId.toString() || role === "ROLE_ADMIN") ? "" : "hidden-action";
+                let classNumText = comment.classNum ? `${comment.classNum}기&nbsp;` : "";
+
                 commentItem.innerHTML = `
-                <div class="comment_user_id">${classNumText}${comment.createdByName}</div>
-                <div class="comment_created_at">${new Date(comment.createdAt).toLocaleString()}</div>
-                <div class="comment_content">${comment.content}</div>
-                <button class="comment_delete_btn ${showDelete}" data-id="${comment.commentId}">삭제</button>
-            `;
+                    <div class="comment_user_id">${classNumText}${comment.createdByName}</div>
+                    <div class="comment_created_at">${new Date(comment.createdAt).toLocaleString()}</div>
+                    <div class="comment_content">${comment.content}</div>
+                    <textarea class="comment_edit_input hidden-action">${comment.content}</textarea>
+                    <button class="comment_update_btn ${showModify}" data-id="${comment.commentId}">수정</button>
+                    <button class="comment_confirm_btn hidden-action" data-id="${comment.commentId}">수정 완료</button>
+                    <button class="comment_cancel_edit_btn hidden-action" data-id="${comment.commentId}">취소</button>
+                    <button class="comment_delete_btn ${showModify}" data-id="${comment.commentId}">삭제</button>
+                `;
 
                 commentList.appendChild(commentItem);
             });
 
-            // ✅ 삭제 버튼 이벤트 리스너 추가
+            document.querySelectorAll(".comment_update_btn").forEach(btn => {
+                btn.addEventListener("click", (e) => {
+                    const commentId = e.target.dataset.id;
+                    toggleEditMode(commentId, true);
+                });
+            });
+
+            document.querySelectorAll(".comment_confirm_btn").forEach(btn => {
+                btn.addEventListener("click", async (e) => {
+                    const commentId = e.target.dataset.id;
+                    await updateComment(commentId);
+                });
+            });
+
+            document.querySelectorAll(".comment_cancel_edit_btn").forEach(btn => {
+                btn.addEventListener("click", (e) => {
+                    const commentId = e.target.dataset.id;
+                    toggleEditMode(commentId, false);
+                });
+            });
+
             document.querySelectorAll(".comment_delete_btn").forEach(btn => {
                 btn.addEventListener("click", async (e) => {
                     const commentId = e.target.dataset.id;
@@ -103,9 +117,60 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    function toggleEditMode(commentId, isEditing) {
+        const commentItem = document.querySelector(`.comment_update_btn[data-id="${commentId}"]`).closest(".comment_item");
+        const contentDiv = commentItem.querySelector(".comment_content");
+        const editInput = commentItem.querySelector(".comment_edit_input");
+        const deleteBtn = commentItem.querySelector(".comment_delete_btn");
+        const updateBtn = commentItem.querySelector(".comment_update_btn");
+        const confirmBtn = commentItem.querySelector(".comment_confirm_btn");
+        const cancelBtn = commentItem.querySelector(".comment_cancel_edit_btn");
 
+        if (isEditing) {
+            contentDiv.classList.add("hidden-action");
+            editInput.classList.remove("hidden-action");
+            updateBtn.classList.add("hidden-action");
+            deleteBtn.classList.add("hidden-action");
+            confirmBtn.classList.remove("hidden-action");
+            cancelBtn.classList.remove("hidden-action");
+            editInput.focus();
+        } else {
+            contentDiv.classList.remove("hidden-action");
+            deleteBtn.classList.remove("hidden-action");
+            editInput.classList.add("hidden-action");
+            updateBtn.classList.remove("hidden-action");
+            confirmBtn.classList.add("hidden-action");
+            cancelBtn.classList.add("hidden-action");
+        }
+    }
 
-    // ✅ 댓글 삭제 기능
+    async function updateComment(commentId) {
+        const commentItem = document.querySelector(`.comment_update_btn[data-id="${commentId}"]`).closest(".comment_item");
+        const editInput = commentItem.querySelector(".comment_edit_input");
+        const newContent = editInput.value.trim();
+
+        if (newContent === "") {
+            alert("수정할 내용을 입력하세요.");
+            return;
+        }
+
+        try {
+            const response = await axios.put(`/api/common/comment/${commentId}`, {
+                content: newContent
+            });
+
+            if (response.status === 200) {
+                alert("✅ 댓글이 수정되었습니다.");
+                loadComments();
+            } else {
+                alert("🚨 댓글 수정에 실패했습니다.");
+            }
+        } catch (error) {
+            console.error("🚨 댓글 수정 중 오류 발생:", error);
+            alert("🚨 댓글 수정 중 오류가 발생했습니다.");
+        }
+    }
+
     async function deleteComment(commentId) {
         if (!confirm("정말로 댓글을 삭제하시겠습니까?")) return;
 
@@ -114,7 +179,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (response.status === 200) {
                 alert("✅ 댓글이 삭제되었습니다.");
-                loadComments(); // 삭제 후 다시 로드
+                loadComments();
             } else {
                 alert("🚨 댓글 삭제에 실패했습니다.");
             }
@@ -124,6 +189,5 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // ✅ 페이지 로드 시 댓글 목록 가져오기
     loadComments();
 });

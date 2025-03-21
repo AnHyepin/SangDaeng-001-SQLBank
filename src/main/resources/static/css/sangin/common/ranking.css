@@ -1,0 +1,91 @@
+.podium-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    height: 500px;
+    gap: 80px;
+}
+
+.podium {
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 20px 20px 0 0;
+    position: relative;
+    padding-bottom: 30px;
+    text-align: center;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0,0,0,0.15);
+}
+
+.first {
+    height: 350px;
+    background: linear-gradient(135deg, #f5d142, #fff3b0);
+    box-shadow: 0 0 30px gold;
+    transform: scale(1.1);
+}
+
+.second {
+    height: 280px;
+    background: linear-gradient(135deg, #d4d4d4, #eeeeee);
+    box-shadow: 0 0 25px silver;
+}
+
+.third {
+    height: 230px;
+    background: linear-gradient(135deg, #cd7f32, #f4e2d8);
+    box-shadow: 0 0 20px #b87333;
+}
+
+.podium-name {
+    font-size: 26px;
+    font-weight: bold;
+    color: #222;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.podium-score {
+    font-weight: bold;
+    font-size: 26px;
+    color: #111;
+    margin-top: 10px;
+}
+
+.rank-medal {
+    font-size: 42px;
+    margin-top: 20px;
+}
+
+.others-container {
+    margin-top: 80px;
+    width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    padding: 30px;
+}
+
+.others-title {
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 25px;
+    text-align: center;
+    color: #444;
+}
+
+.other-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 16px;
+    border-bottom: 1px solid #ddd;
+    font-size: 18px;
+}
+
+.other-item:last-child {
+    border-bottom: none;
+}

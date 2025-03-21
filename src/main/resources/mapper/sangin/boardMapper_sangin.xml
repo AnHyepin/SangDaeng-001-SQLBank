@@ -10,13 +10,32 @@
         values (#{userId},#{title},#{content},#{category},now())
     </insert>
     <!-- ✅ 게시글 목록 조회 -->
+    <!-- 게시글 목록 (페이징 적용) -->
     <select id="getPostList" resultType="com.example.sangdaeng001sqlbank.dto.PostDto">
         SELECT p.*, u.name AS createdByName, u.class_num AS classNum
         FROM tbl_posts p
         JOIN tbl_users u ON p.user_id = u.user_id
         WHERE p.category = #{category}
-        ORDER BY p.post_id desc
+        ORDER BY p.post_id DESC
+        LIMIT #{size} OFFSET #{offset}
     </select>
+
+    <!-- 게시글 총 개수 -->
+    <select id="getPostCount" resultType="int">
+        SELECT COUNT(*) FROM tbl_posts WHERE category = #{category}
+    </select>
+
+
+
+    <select id="selectRecentNotices" resultType="com.example.sangdaeng001sqlbank.dto.PostDto">
+        SELECT p.*, u.name AS createdByName
+        FROM tbl_posts p
+        JOIN tbl_users u ON p.user_id = u.user_id
+        WHERE p.category = 'N'
+        ORDER BY p.post_id DESC
+        LIMIT 5
+    </select>
+
 
     <!-- ✅ 게시글 수정 -->
     <update id="updatePost">
@@ -55,6 +74,13 @@
         WHERE c.post_id = #{postId}
         ORDER BY c.created_at DESC;
     </select>
+
+    <!-- ✅ 댓글 수정 -->
+    <update id="updateComment">
+        UPDATE tbl_comments
+        SET content = #{content}
+        WHERE comment_id = #{commentId}
+    </update>
 
     <!-- ✅ 댓글 삭제 -->
     <delete id="deleteComment">

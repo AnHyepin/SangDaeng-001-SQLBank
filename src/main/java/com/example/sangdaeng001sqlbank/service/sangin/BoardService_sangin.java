@@ -22,9 +22,19 @@ public class BoardService_sangin {
     }
 
     // ✅ 게시글 목록 조회
-    public List<PostDto> getPostList(String category) {
-        return boardDao.getPostList(category);
+    public List<PostDto> getPostList(String category, int offset, int size) {
+        return boardDao.getPostList(category, offset, size);
     }
+
+    public int getPostCount(String category) {
+        return boardDao.getPostCount(category);
+    }
+
+
+    public List<PostDto> getRecentNoticeList() {
+        return boardDao.selectRecentNotices();
+    }
+
 
     // ✅ 게시글 상세 조회
     public PostDto getPostDetail(int postId) {
@@ -48,6 +58,11 @@ public class BoardService_sangin {
     public List<CommentDto> getCommentsByPostId(int postId) {
         return boardDao.getCommentsByPostId(postId);
     }
+    // ✅ 댓글 삭제
+    public void updateComment(int commentId, String content) {
+        boardDao.updateComment(commentId, content);
+    }
+
 
     // ✅ 댓글 삭제
     public int deleteComment(int commentId) {
