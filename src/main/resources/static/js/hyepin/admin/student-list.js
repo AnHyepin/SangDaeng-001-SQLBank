@@ -1,29 +1,78 @@
-
 // 페이지네이션 상태
-let currentPage = 0; // 현재 페이지
+let currentPage = 1; // 현재 페이지
 const itemsPerPage = 10; // 한 페이지당 아이템 수
+let totalPages = 1; // 전체 페이지 수 (서버에서 받아올 예정)
 
-// 이벤트 리스너 등록 코드
-document.getElementById("prevPageBtn").addEventListener("click", () => {
-    if (currentPage > 0) {
-        currentPage -= 1; // 이전 페이지로 이동
-        getStudentList(); // 페이지 변경 후 데이터 가져오기
+// 페이지네이션 생성 함수
+function renderPagination() {
+    const pageNumbers = document.getElementById("pageNumbers");
+    pageNumbers.innerHTML = ""; // 기존 버튼 초기화
+
+    for (let i = 1; i <= totalPages; i++) {
+        const button = document.createElement("button");
+        button.textContent = i;
+        button.classList.add("page-button");
+
+        // 현재 페이지 강조
+        if (i === currentPage) {
+            button.classList.add("active");
+        }
+
+        button.addEventListener("click", function () {
+            if (currentPage !== i) {
+                currentPage = i;
+                getStudentList(currentPage);
+            }
+        });
+
+        pageNumbers.appendChild(button);
+    }
+
+    updateActivePage();
+}
+
+// 클릭한 버튼에만 'active' 스타일 적용 + 이전/다음 버튼 숨김 처리
+function updateActivePage() {
+    document.querySelectorAll(".page-button").forEach(button => {
+        button.classList.remove("active");
+        if (parseInt(button.textContent) === currentPage) {
+            button.classList.add("active");
+        }
+    });
+
+    // 이전 버튼 숨김 처리
+    if (currentPage === 1) {
+        document.getElementById("prevPageBtn").classList.add("hidden");
+    } else {
+        document.getElementById("prevPageBtn").classList.remove("hidden");
+    }
+
+    // 다음 버튼 숨김 처리
+    if (currentPage === totalPages) {
+        document.getElementById("nextPageBtn").classList.add("hidden");
+    } else {
+        document.getElementById("nextPageBtn").classList.remove("hidden");
+    }
+}
+
+// 이전 페이지 버튼
+document.getElementById("prevPageBtn").addEventListener("click", function () {
+    if (currentPage > 1) {
+        currentPage--;
+        getStudentList(currentPage);
     }
 });
 
-document.getElementById("nextPageBtn").addEventListener("click", () => {
-    currentPage += 1; // 다음 페이지로 이동
-    getStudentList(); // 페이지 변경 후 데이터 가져오기
+// 다음 페이지 버튼
+document.getElementById("nextPageBtn").addEventListener("click", function () {
+    if (currentPage < totalPages) {
+        currentPage++;
+        getStudentList(currentPage);
+    }
 });
 
-function setPageAndFetch() {
-    currentPage = 0; // 현재 페이지를 0으로 초기화
-    getStudentList(); // 학생 리스트 조회
-}
-
-
 //기수별 학생 조회
-function getStudentListByClassNum(){
+function getStudentListByClassNum() {
     let classNum = document.getElementById("classNumSelect").value;
     if (!classNum) {
         alert("기수를 입력하세요!");
@@ -49,19 +98,25 @@ function getStudentListByClassNum(){
         });
 }
 
-//학생 전체 조회
-function getStudentList(){
-    axios.get(`/api/admin/students?page=${currentPage}&size=${itemsPerPage}`)
+// 전체 학생 조회 (페이지네이션 포함)
+function getStudentList(page = 1) {
+    axios.get(`/api/admin/students?page=${page - 1}&size=${itemsPerPage}`)
         .then(response => {
             console.log("학생 리스트:", response.data);
             renderTable(response.data.content);
             document.getElementById("pagination").classList.remove("hidden");
+
+            totalPages = response.data.totalPages; // 전체 페이지 수 업데이트
+            currentPage = page; // 현재 페이지 설정
+            renderPagination(); // 페이지네이션 다시 그림
         })
         .catch(error => {
             console.error("데이터 가져오기 실패:", error);
         });
-
 }
+
+// 페이지 로드 시 실행
+getStudentList();
 
 // 테이블 데이터 렌더링
 function renderTable(data) {

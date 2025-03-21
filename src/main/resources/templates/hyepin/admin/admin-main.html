@@ -55,7 +55,7 @@
                             제<input class="class-number" id="classNumSelect" type="number">기 &nbsp;
                             <input class="styled-button" onclick="getStudentListByClassNum()" type="button" value="조회">
                         </div>
-                        <input class="styled-button" onclick="setPageAndFetch()" type="button" value="전체보기">
+                        <input class="styled-button" onclick="getStudentList()" type="button" value="전체보기">
                     </div>
                     <table>
                         <thead>
@@ -76,12 +76,13 @@
 
                     <div class="pagination" id="pagination">
                         <button id="prevPageBtn" class="styled-button">이전</button>
+                        <div id="pageNumbers"></div> <!-- 여기에 숫자 버튼 추가됨 -->
                         <button id="nextPageBtn" class="styled-button">다음</button>
                     </div>
                 </div>
 
                 <div class="box">
-                    현재 기수 학생별 평균 점수 및 랭킹 분석
+                    현재 기수 학생별 평균 점수 및 랭킹 분석 &nbsp;
                     <select id="difficultySelect2">
                         <option value="EASY">초급</option>
                         <option value="MEDIUM">중급</option>
@@ -92,7 +93,7 @@
                 <div class="chart-container">
                     <canvas id="rankingChart"></canvas>
                 </div>
-                <div class="box">현재 기수 학생별 점수 변화
+                <div class="box">현재 기수 학생별 점수 변화 &nbsp;
                     <select id="difficultySelect3">
                         <option value="EASY">초급</option>
                         <option value="MEDIUM">중급</option>
