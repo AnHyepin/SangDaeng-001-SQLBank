@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -37,6 +38,9 @@ public class User {
 
     @Column(nullable = false, length = 50)
     private String role = "ROLE_STUDENT"; // `VARCHAR(50)`, 기본값 `ROLE_STUDENT`
+
+    @Column(name = "class_num")
+    private int classNum;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)

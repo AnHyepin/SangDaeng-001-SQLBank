@@ -62,7 +62,7 @@
     text-align: center;
     margin: 10px 0;
     border-radius: 5px;
-    height: 400px;
+    height: 550px;
     width: 100%;
 }
 
@@ -108,6 +108,10 @@ th {
     color: white;
 }
 
+td {
+    background: white;
+}
+
 select, button {
     padding: 5px;
 }
@@ -136,9 +140,27 @@ select, button {
     border-radius: 5px;
     cursor: pointer;
     transition: background 0.3s ease;
-    width: 150px;
+    width: 100px;
 }
 
 .styled-button:hover {
     background-color: #34495e;
+}
+
+#wrongRateChart{
+    height: 90% !important; /* 🔥 차트 높이 지정 */
+}
+
+.class-search{
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.pagination{
+    margin-top: 20px;
+}
+
+.hidden{
+    display: none;
 }

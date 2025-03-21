@@ -24,9 +24,16 @@
                 <h2 class="section-title">📊 통계</h2>
                 <div class="statistics-section">
                     <section class="wrongRateChart">
-                        <div class="box">문제별 오답률 TOP 10</div>
+                        <div class="box">문제별 오답률 TOP 10 &nbsp;
+                            <select id="difficultySelect">
+                                <option value="EASY">초급</option>
+                                <option value="MEDIUM">중급</option>
+                                <option value="HARD">고급</option>
+                            </select>
+                        </div>
                         <div class="chart-container">
                             <canvas id="wrongRateChart"></canvas>
+                            <div style="margin-top: 10px;">각 차트를 클릭하면 해당 문제 상세 페이지로 이동합니다.</div>
                         </div>
                     </section>
                     <section class="difficultyChart">
@@ -42,57 +49,59 @@
             <section id="user-management">
                 <h2 class="section-title">🧑‍🏫 학생 관리</h2>
                 <div class="box">권한 부여</div>
-<!--                분기별로 셀렉트박스-->
-                <table>
-                    <thead>
-                    <tr>
-                        <th>번호</th>
-                        <th>기수</th>
-                        <th>이름</th>
-                        <th>ID</th>
-                        <th>가입일자</th>
-                        <th>권한 변경</th>
-                        <th>관리</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>제1기</td>
-                        <td>김철수</td>
-                        <td>user001</td>
-                        <td>2024-01-01</td>
-                        <td>
-                            <select>
-                                <option value="STUDENT">학생</option>
-                                <option value="TEACHER">교사</option>
-                            </select>
-                        </td>
-                        <td><button>확인</button></td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>제2기</td>
-                        <td>이영희</td>
-                        <td>user002</td>
-                        <td>2023-12-15</td>
-                        <td>
-                            <select>
-                                <option value="STUDENT">학생</option>
-                                <option value="TEACHER">교사</option>
-                            </select>
-                        </td>
-                        <td><button>확인</button></td>
-                    </tr>
-                    </tbody>
-                </table>
+                <div class="chart-container" style="height: 100%;">
+                    <div class="class-search">
+                        <div>
+                            제<input class="class-number" id="classNumSelect" type="number">기 &nbsp;
+                            <input class="styled-button" onclick="getStudentListByClassNum()" type="button" value="조회">
+                        </div>
+                        <input class="styled-button" onclick="setPageAndFetch()" type="button" value="전체보기">
+                    </div>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>고유ID</th>
+                            <th>기수</th>
+                            <th>이름</th>
+                            <th>ID</th>
+                            <th>가입일자</th>
+                            <th>권한 변경</th>
+                            <th>관리</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <!-- 데이터가 여기에 추가됩니다 -->
+                        </tbody>
+                    </table>
 
-                <div class="box">학생별 평균 점수 및 랭킹 분석</div>
+                    <div class="pagination" id="pagination">
+                        <button id="prevPageBtn" class="styled-button">이전</button>
+                        <button id="nextPageBtn" class="styled-button">다음</button>
+                    </div>
+                </div>
+
+                <div class="box">
+                    현재 기수 학생별 평균 점수 및 랭킹 분석
+                    <select id="difficultySelect2">
+                        <option value="EASY">초급</option>
+                        <option value="MEDIUM">중급</option>
+                        <option value="HARD">고급</option>
+                        <option value="TEST">시험</option>
+                    </select>
+                </div>
                 <div class="chart-container">
                     <canvas id="rankingChart"></canvas>
                 </div>
-                <div class="box">학생별 평균 점수 변화</div>
-<!--                난이도를 회차 옆에 (쉬움) 이렇게 적을건지, 셀렉트박스로 나눌건지.-->
+                <div class="box">현재 기수 학생별 점수 변화
+                    <select id="difficultySelect3">
+                        <option value="EASY">초급</option>
+                        <option value="MEDIUM">중급</option>
+                        <option value="HARD">고급</option>
+                        <option value="TEST">시험</option>
+                    </select>
+                    <select id="studentSelect">
+                    </select>
+                </div>
                 <div class="chart-container">
                     <canvas id="scoreTrendChart"></canvas>
                 </div>
@@ -102,9 +111,9 @@
                 <h2 class="section-title">🏫 기수 설정</h2>
                 <div class="box">기수를 설정하고 관리할 수 있습니다.</div>
                 <div class="class-container">
-                    <div>현재 기수: 제1기</div>
-                    <div><span>제</span><input class="class-number" type="number"><span>기</span></div>
-                    <input class="styled-button" type="button" value="확인">
+                    <div>현재 기수: 제<span th:text="${classNum}" id="current_classNum"></span>기</div>
+                    <div><span>제</span><input class="class-number" id="classNum" type="number"><span>기</span></div>
+                    <input class="styled-button" id="classConfirmBtn" type="button" value="확인">
                 </div>
             </section>
         </div>
@@ -115,74 +124,10 @@
 <!--이거밖에서 스크립트 작성하면 안돌아갑니다...-->
 <div layout:fragment="scripts">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        const ctx1 = document.getElementById('wrongRateChart').getContext('2d');
-        new Chart(ctx1, {
-            type: 'bar',
-            data: {
-                labels: ['문제 번호', '문제 번호', '문제 번호', '문제 번호', '문제 번호'],
-                datasets: [{
-                    label: '오답률 (%)',
-                    data: [85, 80, 78, 76, 72], // 오답률 데이터
-                    backgroundColor: 'blue'
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        max: 100
-                    }
-                }
-            }
-        });
-        const ctx2 = document.getElementById('difficultyChart').getContext('2d');
-        new Chart(ctx2, {
-            type: 'pie',
-            data: {
-                labels: ['쉬움', '보통', '어려움'],
-                datasets: [{
-                    label: '해결률',
-                    data: [70, 50, 30],
-                    backgroundColor: ['green', 'yellow', 'red']
-                }]
-            }
-        });
+    <script src="/js/hyepin/admin/main.js"></script>
+    <script src="/js/hyepin/admin/problem-chart.js"></script>
+    <script src="/js/hyepin/admin/student-list.js"></script>
+    <script src="/js/hyepin/admin/student-chart.js"></script>
 
-        const ctx3 = document.getElementById('rankingChart').getContext('2d');
-        new Chart(ctx3, {
-            type: 'line',
-            data: {
-                labels: ['학생1', '학생2', '학생3', '학생4', '학생5'],
-                datasets: [{
-                    label: '평균 점수',
-                    data: [85, 75, 90, 80, 70],
-                    borderColor: 'blue',
-                    fill: false
-                }]
-            }
-        });
-
-
-        const ctx5 = document.getElementById('scoreTrendChart').getContext('2d');
-        new Chart(ctx5, {
-            type: 'line',
-            data: {
-                labels: ['1회차', '2회차', '3회차', '4회차', '5회차'],
-                datasets: [{
-                    label: '김철수',
-                    data: [75, 78, 80, 85, 90],
-                    borderColor: 'blue',
-                    fill: false
-                }, {
-                    label: '이영희',
-                    data: [85, 88, 87, 90, 92],
-                    borderColor: 'red',
-                    fill: false
-                }]
-            }
-        });
-    </script>
 </div>
 </html>

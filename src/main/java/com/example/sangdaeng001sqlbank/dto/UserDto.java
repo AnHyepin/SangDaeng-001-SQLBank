@@ -14,6 +14,6 @@ public class UserDto {
     private String email; // 이메일
     private String role; // 사용자 역할 (일반/관리자  )
     private String createdAt; // 가입일
-
+    private Integer classNum;
 
 }

@@ -4,6 +4,7 @@ import com.example.sangdaeng001sqlbank.dao.hyepin.UserDao;
 import com.example.sangdaeng001sqlbank.dto.UserDto;
 import com.example.sangdaeng001sqlbank.entity.User;
 import com.example.sangdaeng001sqlbank.jwt.JwtTokenProvider;
+import com.example.sangdaeng001sqlbank.repository.ClassSettingRepository;
 import com.example.sangdaeng001sqlbank.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +21,7 @@ public class LoginService {
 
 
     private final UserRepository userRepository;
+    private final ClassSettingRepository classSettingRepository;
     private final BCryptPasswordEncoder passwordEncoder;
     private final UserDao userDao;
 
@@ -35,12 +37,14 @@ public class LoginService {
             return "중복된 email입니다.";
         }
 
+        int currentClass = classSettingRepository.findClassNum();
         User user = new User();
         user.setUsername(userDto.getUsername());
         user.setName(userDto.getName());
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         user.setEmail(userDto.getEmail());
         user.setRole("ROLE_STUDENT");
+        user.setClassNum(currentClass);
         userRepository.save(user);
 
         return "회원가입 완료!";

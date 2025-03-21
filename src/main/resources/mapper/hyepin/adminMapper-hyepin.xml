@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.sangdaeng001sqlbank.dao.hyepin.AdminDao">
+    <select id="getWrongRate">
+        SELECT
+            p.difficulty,
+            p.problem_id,
+            p.question,
+            COUNT(CASE WHEN a.is_correct = 0 THEN 1 END) AS wrong_attempts, -- 틀린 횟수
+            COUNT(*) AS total_attempts,       -- 전체 시도 횟수
+            (COUNT(CASE WHEN a.is_correct = 0 THEN 1 END) * 100.0 / COUNT(*)) AS wrong_rate -- 오답률 계산
+        FROM tbl_attempt_details a
+        JOIN tbl_problems p ON a.problem_id = p.problem_id
+        WHERE p.difficulty = #{difficulty}
+        GROUP BY p.difficulty, p.problem_id, p.question
+        ORDER BY p.difficulty, wrong_rate DESC
+        LIMIT 10;
+    </select>
+
+    <select id="getCorrectRate" resultType="com.example.sangdaeng001sqlbank.dto.CorrectDto">
+        SELECT
+            p.difficulty,  -- 난이도 (초급/중급/고급)
+            COUNT(a.problem_id) AS total_attempts,  -- 전체 시도 횟수
+            COUNT(CASE WHEN a.is_correct = 1 THEN 1 END) AS correct_attempts, -- 정답 횟수
+            (COUNT(CASE WHEN a.is_correct = 1 THEN 1 END) * 100.0 / COUNT(*)) AS correct_rate -- 정답률 계산
+        FROM tbl_attempt_details a
+        JOIN tbl_problems p ON a.problem_id = p.problem_id
+        GROUP BY p.difficulty
+        ORDER BY correct_rate DESC;
+    </select>
+
+    <select id="getAverageScore" resultType="com.example.sangdaeng001sqlbank.dto.AverageScore">
+        SELECT
+            a.user_id,
+            u.username,
+            u.name,
+            a.difficulty,
+        AVG(a.total_score) AS avg_score
+        FROM tbl_attempt_sessions a
+        JOIN tbl_users u ON a.user_id = u.user_id
+        JOIN tbl_class_settings c
+        WHERE u.class_num = c.class_num
+        GROUP BY a.user_id, u.name, a.difficulty
+        ORDER BY u.user_id;
+    </select>
+
+    <select id="getScoreChange" resultType="com.example.sangdaeng001sqlbank.dto.ScoreChangeDto">
+        SELECT
+            a.user_id,
+            u.name,
+            a.difficulty,
+            a.total_score AS score,
+        ROW_NUMBER() OVER (PARTITION BY a.user_id, a.difficulty ORDER BY a.started_at) AS round
+        FROM tbl_attempt_sessions a
+        JOIN tbl_users u ON a.user_id = u.user_id
+        JOIN tbl_class_settings c
+        WHERE u.class_num = c.class_num;
+    </select>
+
+
+</mapper>

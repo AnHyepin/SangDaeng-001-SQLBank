@@ -55,6 +55,7 @@ public class SecurityConfig {
 
                         //API 엔드포인트
                         .requestMatchers("/api/common/**").permitAll()
+                        .requestMatchers("/api/admin/class-num").permitAll()
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/teacher/**").hasAnyRole("TEACHER", "ADMIN")
                         .requestMatchers("/api/student/**").hasAnyRole("STUDENT", "TEACHER", "ADMIN")
