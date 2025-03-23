@@ -40,7 +40,7 @@ public class User {
     private String role = "ROLE_STUDENT"; // `VARCHAR(50)`, 기본값 `ROLE_STUDENT`
 
     @Column(name = "class_num")
-    private int classNum;
+    private Integer classNum;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
