@@ -14,10 +14,15 @@ public class JwtCookieUtil {
 
         // HTTPS가 아닐 때 Secure 속성 해제 (테스트 환경)
         boolean isLocal = isLocalEnvironment();
-        cookie.setSecure(!isLocal); // 로컬 환경에서는 Secure 설정 해제
-
+        cookie.setSecure(!isLocal); // HTTPS 환경에 맞게 조정
         cookie.setPath("/");
-        cookie.setMaxAge(maxAge / 1000); // 밀리초 → 초 변환 필요!
+
+        if ("accessSD".equals(cookieName)) {
+            cookie.setMaxAge(maxAge / 1000);
+        } else if ("refreshSD".equals(cookieName)) {
+            cookie.setMaxAge(-1); // 세션 쿠키 (브라우저 종료 시 삭제)
+        }
+
         response.addCookie(cookie);
     }
 

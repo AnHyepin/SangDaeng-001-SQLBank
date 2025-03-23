@@ -108,13 +108,29 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     // 새로운 JWT를 쿠키에 저장 (쿠키 갱신)
+//    private void saveTokenToCookie(HttpServletResponse response, String cookieName, String token, int maxAge) {
+//        Cookie cookie = new Cookie(cookieName, token);
+//        cookie.setHttpOnly(true);
+//        cookie.setSecure(false); // 배포 시 true 설정 (HTTPS 필요)
+//        cookie.setPath("/");
+//        cookie.setMaxAge(maxAge);
+//        response.addCookie(cookie);
+//    }
+
     private void saveTokenToCookie(HttpServletResponse response, String cookieName, String token, int maxAge) {
         Cookie cookie = new Cookie(cookieName, token);
         cookie.setHttpOnly(true);
-        cookie.setSecure(false); // 배포 시 true 설정 (HTTPS 필요)
+        cookie.setSecure(false); // 운영환경에서 true
         cookie.setPath("/");
-        cookie.setMaxAge(maxAge);
-        response.addCookie(cookie);
+
+        // accessSD는 세션 쿠키로 설정 (maxAge 설정 안 함)
+        if ("accessSD".equals(cookieName)) {
+            cookie.setMaxAge(maxAge);
+        }
+        // refreshSD는 영속 쿠키로 설정 (7일짜리 유지)
+        else if ("refreshSD".equals(cookieName)) {
+            cookie.setMaxAge(-1); // 세션 쿠키 → 브라우저 종료 시 삭제
+        }
     }
 
     // 기존 Refresh Token을 폐기 (보안 강화)
