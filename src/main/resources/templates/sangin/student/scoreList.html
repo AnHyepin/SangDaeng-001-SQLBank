@@ -1,27 +1,33 @@
-    <!DOCTYPE html>
-    <html xmlns:th="http://www.thymeleaf.org"
-          xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-          layout:decorate="~{/layout/layout/layout}">
-    <head>
-        <meta charset="UTF-8">
-        <title>성적 조회</title>
-        <link rel="stylesheet" href="/css/sangin/student/scoreList.css">
-        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    </head>
-    <body>
-    <!-- content -->
-    <div layout:fragment="content">
-        <div id="score_detail_modal" class="score_modal">
-            <div class="score_modal_content">
-                <span id="score_close_modal" class="score_close">&times;</span>
-                <h2>문제 상세보기</h2>
-                <div id="score_detail_container"></div>
-                <div id="score_detail_link">문제 링크</div>
-            </div>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>성적 조회</title>
+    <link rel="stylesheet" href="/css/sangin/student/scoreList.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+<!-- content -->
+<div layout:fragment="content">
+    <div id="score_detail_modal" class="score_modal">
+        <div class="score_modal_content">
+            <span id="score_close_modal" class="score_close">&times;</span>
+            <h2>문제 상세보기</h2>
+            <div id="score_detail_container"></div>
+            <div id="score_detail_link">문제 링크</div>
         </div>
+    </div>
 
-        <div id="adjust_section">
-            <div id="main_section">
+
+    <div id="adjust_section">
+        <div id="main_section">
+            <div id="score_header">
+                <a href="/view/common/ranking" id="ranking_link">🏆 랭킹 보기</a>
+            </div>
+            <div id="score_table_box_shadow">
+
                 <table id="score_table">
                     <thead>
                     <tr>
@@ -45,14 +51,16 @@
                     </tbody>
                 </table>
             </div>
+
         </div>
     </div>
+</div>
 
 
-    </body>
+</body>
 
-    <!--이거밖에서 스크립트 작성하면 안돌아갑니다...-->
-    <div layout:fragment="scripts">
-        <script src="/js/sangin/student/scoreList.js"></script>
-    </div>
-    </html>
+<!--이거밖에서 스크립트 작성하면 안돌아갑니다...-->
+<div layout:fragment="scripts">
+    <script src="/js/sangin/student/scoreList.js"></script>
+</div>
+</html>

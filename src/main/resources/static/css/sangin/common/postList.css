@@ -44,7 +44,7 @@
 }
 
 .tab:hover {
-    background-color: #f2f2f2;
+    background-color: #efefef;
 }
 
 .active-tab {
@@ -71,6 +71,32 @@
 #pageSizeSelector:hover,
 #pageSizeSelector:focus {
     border-color: #6f7583;
+}
+
+#header_right_controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#post_register_link {
+    height: 40px;
+    padding: 0 18px;
+    background-color: #6f7583;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    border-radius: 6px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: ease 0.2s;
+}
+
+#post_register_link:hover {
+    background-color: #5c606b;
+    scale: 1.02;
 }
 
 

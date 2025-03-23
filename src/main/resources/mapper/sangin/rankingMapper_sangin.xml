@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.sangdaeng001sqlbank.dao.sangin.RankingDao_sangin">
+    <!-- 전체 참가자 수 카운트 -->
+    <select id="getTotalParticipants" resultType="int">
+        SELECT COUNT(DISTINCT user_id)
+        FROM tbl_attempt_sessions
+    </select>
+
+    <!-- 랭킹 데이터 조회 -->
+    <select id="getRankingData" resultType="com.example.sangdaeng001sqlbank.dto.RankingData">
+        WITH UserStats AS (
+        SELECT
+        u.user_id AS userId,
+        u.name AS userName,
+        COUNT(a.attempt_id) AS totalAttempts,
+        SUM(a.is_correct) AS correctAnswers,
+        SUM(CASE WHEN p.difficulty = 'EASY' THEN 1 ELSE 0 END) AS easyCount,
+        SUM(CASE WHEN p.difficulty = 'MEDIUM' THEN 1 ELSE 0 END) AS mediumCount,
+        SUM(CASE WHEN p.difficulty = 'HARD' THEN 1 ELSE 0 END) AS hardCount,
+        CASE
+        WHEN SUM(CASE WHEN p.difficulty = 'HARD' THEN 1 ELSE 0 END) > SUM(CASE WHEN p.difficulty = 'MEDIUM' THEN 1 ELSE 0 END)
+        AND SUM(CASE WHEN p.difficulty = 'HARD' THEN 1 ELSE 0 END) > SUM(CASE WHEN p.difficulty = 'EASY' THEN 1 ELSE 0 END) THEN 'HARD'
+        WHEN SUM(CASE WHEN p.difficulty = 'MEDIUM' THEN 1 ELSE 0 END) > SUM(CASE WHEN p.difficulty = 'EASY' THEN 1 ELSE 0 END) THEN 'MEDIUM'
+        ELSE 'EASY'
+        END AS difficulty
+        FROM
+        tbl_users u
+        JOIN tbl_attempt_sessions s ON u.user_id = s.user_id
+        JOIN tbl_attempt_details a ON s.session_id = a.session_id
+        JOIN tbl_problems p ON a.problem_id = p.problem_id
+        GROUP BY
+        u.user_id, u.name
+        )
+
+        SELECT * FROM UserStats
+        ORDER BY
+        (correctAnswers * 10 + totalAttempts * 0.5 +
+        CASE
+        WHEN difficulty = 'HARD' THEN 5
+        WHEN difficulty = 'MEDIUM' THEN 3
+        ELSE 1
+        END) DESC,
+        (CASE WHEN totalAttempts = 0 THEN 0 ELSE CAST(correctAnswers AS FLOAT) / totalAttempts * 100 END) DESC,
+        totalAttempts DESC
+        LIMIT 20;
+    </select>
+</mapper>

@@ -79,6 +79,31 @@
 
 /*여기까지 모달*/
 
+#score_header {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+}
+
+#ranking_link {
+    height: 42px;
+    background-color: #6f7583;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: 0.2s ease-in-out;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+}
+
+#ranking_link:hover {
+    background-color: #5d6370;
+    scale: 1.02;
+}
+
 #adjust_section {
     width: 100%;
     display: flex;
@@ -88,6 +113,8 @@
 
 #main_section {
     width: 1200px;
+}
+#score_table_box_shadow {
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);

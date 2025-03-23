@@ -2,42 +2,80 @@
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{/layout/layout/layout}">
 <head>
     <meta charset="UTF-8">
-    <title>시상대</title>
+    <title>학습 랭킹</title>
+    <link rel="stylesheet" href="/css/sangin/common/ranking.css">
 </head>
 <body>
 <div layout:fragment="content">
+    <div class="ranking-header">
+        <h1>학습 성취도 랭킹</h1>
+        <div class="ranking-info">
+            <span>총 참여자: <strong id="total-participants">0</strong>명</span>
+            <span>최근 업데이트: <strong id="last-updated">-</strong></span>
+        </div>
+    </div>
+
     <div class="podium-container">
         <!-- 2등 -->
         <div class="podium second">
-            <div class="podium-name">⚔️</div>
+            <div class="crown">⚔️</div>
+            <div class="user-avatar">
+                <div class="avatar-image">2</div>
+            </div>
+            <div class="user-name" id="second-name">-</div>
             <div class="rank-medal">🥈</div>
-            <div class="podium-score"></div>
+            <div class="podium-score" id="second-score">-</div>
+            <div class="podium-detail" id="second-detail">-</div>
         </div>
 
-        <!-- 예시: 1등 -->
+        <!-- 1등 -->
         <div class="podium first">
-            <div class="podium-name">👑</div>
+            <div class="crown">👑</div>
+            <div class="user-avatar">
+                <div class="avatar-image">1</div>
+            </div>
+            <div class="user-name" id="first-name">-</div>
             <div class="rank-medal">🥇</div>
-            <div class="podium-score"></div>
+            <div class="podium-score" id="first-score">-</div>
+            <div class="podium-detail" id="first-detail">-</div>
         </div>
 
         <!-- 3등 -->
         <div class="podium third">
-            <div class="podium-name">🛡️</div>
+            <div class="crown">🛡️</div>
+            <div class="user-avatar">
+                <div class="avatar-image">3</div>
+            </div>
+            <div class="user-name" id="third-name">-</div>
             <div class="rank-medal">🥉</div>
-            <div class="podium-score"></div>
+            <div class="podium-score" id="third-score">-</div>
+            <div class="podium-detail" id="third-detail">-</div>
         </div>
     </div>
 
     <div class="others-container">
         <div class="others-title">기타 순위</div>
-        <div class="other-item"><span>4. 박민준</span><span>85점</span></div>
-        <div class="other-item"><span>5. 최서연</span><span>82점</span></div>
-        <div class="other-item"><span>6. 장하늘</span><span>79점</span></div>
-        <div class="other-item"><span>7. 서유리</span><span>75점</span></div>
+        <div class="others-header">
+            <span>순위</span>
+            <span>이름</span>
+            <span>점수</span>
+            <span>정답률</span>
+            <span>난이도</span>
+        </div>
+        <div class="others-list" id="others-list">
+            <!-- 여기에 4위 이하 랭킹이 JavaScript로 삽입됩니다 -->
+        </div>
     </div>
 
+    <div class="ranking-footer">
+        <button id="refresh-btn" class="refresh-button">
+            <span class="refresh-icon">🔄</span> 새로고침
+        </button>
+    </div>
 </div>
 </body>
-<div layout:fragment="scripts"></div>
+<div layout:fragment="scripts">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/js/sangin/common/ranking.js"></script>
+</div>
 </html>
