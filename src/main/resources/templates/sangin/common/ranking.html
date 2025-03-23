@@ -2,16 +2,59 @@
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{/layout/layout/layout}">
 <head>
     <meta charset="UTF-8">
-    <title>학습 랭킹</title>
+    <title>학습 순위</title>
     <link rel="stylesheet" href="/css/sangin/common/ranking.css">
 </head>
 <body>
 <div layout:fragment="content">
     <div class="ranking-header">
-        <h1>학습 성취도 랭킹</h1>
+        <h1>학습 순위</h1>
         <div class="ranking-info">
             <span>총 참여자: <strong id="total-participants">0</strong>명</span>
             <span>최근 업데이트: <strong id="last-updated">-</strong></span>
+        </div>
+        
+        <!-- 점수 계산 방식 버튼 - 스타일 변경 -->
+        <div class="score-info-wrapper">
+            <button class="score-info-btn" id="score-info-btn" type="button" onclick="openScoreInfoModal(); return false;">
+                <span class="info-icon">ℹ️</span> 점수 계산 방식
+            </button>
+        </div>
+        
+        <!-- 점수 계산 방식 모달 -->
+        <div class="score-info-modal" id="score-info-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>점수 계산 방식</h3>
+                    <span class="close-btn" id="close-modal">×</span>
+                </div>
+                <div class="modal-body">
+                    <p>총 점수는 다음 요소를 고려하여 계산됩니다:</p>
+                    <ul>
+                        <li><strong>정답 수</strong>: 정답 1개당 10점</li>
+                        <li><strong>시도 횟수</strong>: 시도 1회당 0.5점</li>
+                        <li><strong>난이도 보너스</strong>:
+                            <ul>
+                                <li>고급(HARD): +5점</li>
+                                <li>중급(MEDIUM): +3점</li>
+                                <li>초급(EASY): +1점</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <p>계산식: <code>(정답 수 × 10) + (시도 횟수 × 0.5) + 난이도 보너스</code></p>
+                    <p>동점일 경우 정답률이 높은 사용자가 우선 순위가 높습니다.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="difficulty-filter">
+            <label for="difficulty-select">난이도 필터: </label>
+            <select id="difficulty-select">
+                <option value="ALL" selected>전체</option>
+                <option value="EASY">초급</option>
+                <option value="MEDIUM">중급</option>
+                <option value="HARD">고급</option>
+            </select>
         </div>
     </div>
 
@@ -59,8 +102,8 @@
             <span>순위</span>
             <span>이름</span>
             <span>점수</span>
+            <span class="attempts-header">문제 푼 횟수</span>
             <span>정답률</span>
-            <span>난이도</span>
         </div>
         <div class="others-list" id="others-list">
             <!-- 여기에 4위 이하 랭킹이 JavaScript로 삽입됩니다 -->

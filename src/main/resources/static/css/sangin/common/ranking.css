@@ -34,13 +34,48 @@ body {
     color: var(--text-secondary);
 }
 
+/* 난이도 필터 스타일 */
+.difficulty-filter {
+    margin: 20px auto 0;
+    text-align: center;
+}
+
+.difficulty-filter label {
+    font-weight: bold;
+    color: var(--primary-dark);
+    margin-right: 10px;
+}
+
+.difficulty-filter select {
+    padding: 8px 15px;
+    border-radius: 8px;
+    border: 1px solid var(--primary-light);
+    background-color: white;
+    font-size: 1rem;
+    color: var(--text-primary);
+    cursor: pointer;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.difficulty-filter select:hover {
+    border-color: var(--primary-color);
+}
+
+.difficulty-filter select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(78, 121, 167, 0.2);
+}
+
 .podium-container {
     display: flex;
     justify-content: center;
     align-items: flex-end;
-    height: 500px;
-    gap: 80px;
-    margin-bottom: 80px;
+    min-height: 480px;
+    height: auto;
+    gap: 60px;
+    margin-bottom: 40px;
+    padding-bottom: 20px;
 }
 
 .podium {
@@ -61,12 +96,132 @@ body {
     transform: translateY(-10px);
 }
 
+.first, .second, .third {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .first {
-    height: 350px;
+    height: 440px;
     background: linear-gradient(135deg, #f5d142, #fff3b0);
     box-shadow: 0 0 30px var(--gold);
     transform: scale(1.1);
     z-index: 3;
+    position: relative;
+    overflow: hidden;
+}
+
+.first .user-avatar {
+    margin: 8px 0 5px 0;
+}
+
+.first .user-name {
+    margin-bottom: 2px;
+}
+
+.first .rank-medal {
+    margin: 3px 0;
+}
+
+.first .podium-detail {
+    margin-top: 5px;
+    padding: 8px 12px;
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+}
+
+.first .podium-detail div {
+    margin: 6px 0;
+}
+
+.first .podium-detail div:nth-child(2) {
+    font-weight: bold;
+    color: var(--primary-dark);
+    padding: 3px 8px;
+    background-color: rgba(78, 121, 167, 0.1);
+    border-radius: 12px;
+    display: inline-block;
+}
+
+.first .crown::before {
+    content: "⭐";
+    position: absolute;
+    top: -5px;
+    left: -15px;
+    font-size: 18px;
+    transform: rotate(-20deg);
+}
+
+.first .crown::after {
+    content: "⭐";
+    position: absolute;
+    top: -5px;
+    right: -15px;
+    font-size: 18px;
+    transform: rotate(20deg);
+}
+
+.first .podium-score {
+    position: relative;
+    display: inline-block;
+    padding: 5px 15px;
+    background: linear-gradient(45deg, rgba(255, 215, 0, 0.4), rgba(255, 215, 0, 0.1));
+    border-radius: 20px;
+    margin: 5px 0 10px 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+.first::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 10px;
+    background: repeating-linear-gradient(
+        45deg,
+        #f5d142,
+        #f5d142 10px,
+        #fff3b0 10px,
+        #fff3b0 20px
+    );
+    border-radius: 20px 20px 0 0;
+    animation: shimmer 2s linear infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 40px 0;
+    }
+}
+
+.first::after {
+    content: "🏆 최고의 SQL 마스터 🏆";
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 13px;
+    font-weight: bold;
+    color: #b8860b;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 5px 0;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .first:hover {
@@ -74,41 +229,103 @@ body {
 }
 
 .second {
-    height: 280px;
+    height: 430px;
     background: linear-gradient(135deg, #d4d4d4, #eeeeee);
     box-shadow: 0 0 25px var(--silver);
     z-index: 2;
+    padding-bottom: 50px;
+    position: relative;
+}
+
+.second::after {
+    content: "🥈 SQL 2짱 🥈";
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 12px;
+    font-weight: bold;
+    color: #666;
+    background-color: rgba(255, 255, 255, 0.75);
+    padding: 4px 0;
+}
+
+.second .user-avatar {
+    margin: 8px 0 5px 0;
+}
+
+.second .user-name {
+    margin-bottom: 2px;
+}
+
+.second .rank-medal {
+    margin: 3px 0;
 }
 
 .third {
-    height: 230px;
+    height: 420px;
     background: linear-gradient(135deg, var(--bronze), #f4e2d8);
     box-shadow: 0 0 20px var(--bronze);
     z-index: 1;
+    padding-bottom: 50px;
+    position: relative;
+}
+
+.third::after {
+    content: "🥉 SQL 3짱 🥉";
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 12px;
+    font-weight: bold;
+    color: #8B4513;
+    background-color: rgba(255, 255, 255, 0.75);
+    padding: 4px 0;
+}
+
+.third .user-avatar {
+    margin: 8px 0 5px 0;
+}
+
+.third .user-name {
+    margin-bottom: 2px;
+}
+
+.third .rank-medal {
+    margin: 3px 0;
 }
 
 .crown {
     font-size: 28px;
-    margin-top: 20px;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    height: 28px;
+    display: block;
 }
 
 .user-avatar {
     width: 80px;
     height: 80px;
+    min-height: 80px;
     border-radius: 50%;
     background-color: white;
-    margin: 15px 0;
+    margin: 8px 0;
     display: flex;
     justify-content: center;
     align-items: center;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     overflow: hidden;
     border: 3px solid white;
+    position: relative;
+    z-index: 4;
 }
 
 .avatar-image {
-    width: 100%;
-    height: 100%;
+    min-width: 100%;
+    min-height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -118,26 +335,103 @@ body {
 }
 
 .user-name {
-    font-size: 18px;
+    font-size: 17px;
     font-weight: bold;
-    margin-bottom: 5px;
+    margin: 5px 0;
+    height: auto;
+    min-height: 20px;
+    padding: 0 5px;
 }
 
 .rank-medal {
-    font-size: 42px;
-    margin: 10px 0;
+    font-size: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    margin: 8px auto;
+    line-height: 1;
+    position: relative;
+    z-index: 5;
+    overflow: visible;
+}
+
+.first .rank-medal, 
+.second .rank-medal, 
+.third .rank-medal {
+    width: 60px;
+    height: 60px;
+    margin: 10px auto;
+    min-height: 60px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.6);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.first .rank-medal {
+    background-color: rgba(255, 215, 0, 0.2);
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    color: #b8860b;
+    border: 2px solid rgba(255, 215, 0, 0.3);
+}
+
+.second .rank-medal {
+    background-color: rgba(192, 192, 192, 0.2);
+    box-shadow: 0 0 8px rgba(192, 192, 192, 0.5);
+    color: #666;
+    border: 2px solid rgba(192, 192, 192, 0.3);
+}
+
+.third .rank-medal {
+    background-color: rgba(205, 127, 50, 0.2);
+    box-shadow: 0 0 8px rgba(205, 127, 50, 0.5);
+    color: #8B4513;
+    border: 2px solid rgba(205, 127, 50, 0.3);
 }
 
 .podium-score {
     font-weight: bold;
-    font-size: 28px;
+    font-size: 26px;
     color: #111;
+    margin: 5px 0;
+    height: auto;
+    min-height: 30px;
 }
 
 .podium-detail {
-    font-size: 14px;
+    font-size: 13.5px;
     color: var(--text-secondary);
     margin-top: 8px;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+    width: 85%;
+    max-width: 90%;
+    position: relative;
+    z-index: 3;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.podium-detail div {
+    margin: 4px 0;
+    line-height: 1.3;
+}
+
+.podium-detail div:nth-child(2) {
+    font-weight: bold;
+    color: var(--primary-dark);
+    padding: 3px 8px;
+    background-color: rgba(78, 121, 167, 0.1);
+    border-radius: 12px;
+    display: inline-block;
 }
 
 .others-container {
@@ -177,6 +471,40 @@ body {
     padding: 15px;
     border-bottom: 1px solid #eee;
     transition: background-color 0.2s;
+}
+
+/* 문제 푼 횟수 헤더 스타일 */
+.attempts-header {
+    color: var(--primary-dark);
+    font-weight: bold;
+    position: relative;
+}
+
+.attempts-header::after {
+    content: '💡';
+    margin-left: 5px;
+    font-size: 14px;
+}
+
+/* 문제 푼 횟수 값 스타일 */
+.attempts-value {
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+/* 문제 푼 횟수 클래스 스타일 */
+.attempts-count {
+    position: relative;
+    font-weight: 700 !important;
+    color: #4e79a7 !important;
+    background-color: rgba(78, 121, 167, 0.1);
+    padding: 4px 10px;
+    border-radius: 20px;
+    text-align: center;
+    display: inline-block;
+    min-width: 60px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
 }
 
 .other-item:hover {
@@ -224,7 +552,8 @@ body {
 
 @media (max-width: 768px) {
     .podium-container {
-        gap: 30px;
+        gap: 20px;
+        min-height: 500px;
     }
 
     .podium {
@@ -232,55 +561,364 @@ body {
     }
 
     .first {
-        height: 300px;
+        height: 440px;
     }
 
     .second {
-        height: 240px;
+        height: 380px;
     }
 
     .third {
-        height: 190px;
+        height: 330px;
+    }
+    
+    .rank-medal {
+        width: 45px;
+        height: 45px;
+        margin: 6px auto;
+        font-size: 30px;
+    }
+    
+    .first .rank-medal, 
+    .second .rank-medal, 
+    .third .rank-medal {
+        width: 55px;
+        height: 55px;
+        min-height: 55px;
+        margin: 8px auto;
+    }
+
+    .first, .second, .third {
+        transform: scale(1);
+    }
+
+    .first:hover {
+        transform: translateY(-10px);
+    }
+
+    .first .crown::before,
+    .first .crown::after {
+        display: none;
+    }
+
+    .first::after,
+    .second::after,
+    .third::after {
+        font-size: 11px;
+        padding: 3px 0;
     }
 
     .others-header, .other-item {
-        grid-template-columns: 0.5fr 2fr 1fr 1fr;
+        grid-template-columns: 0.5fr 2fr 1fr 1fr 1fr;
     }
 
-    .others-header span:last-child,
-    .other-item span:last-child {
+    .others-header span:nth-child(5),
+    .other-item span:nth-child(5) {
         display: none;
     }
 }
 
 @media (max-width: 480px) {
     .podium-container {
-        gap: 15px;
+        gap: 10px;
+        min-height: 560px;
     }
 
     .podium {
-        width: 120px;
+        width: 110px;
+    }
+
+    .first {
+        height: 460px;
+    }
+
+    .second {
+        height: 400px;
+    }
+
+    .third {
+        height: 350px;
+    }
+    
+    .rank-medal {
+        width: 40px;
+        height: 40px;
+        font-size: 26px;
+        margin: 5px auto;
+    }
+    
+    .first .rank-medal, 
+    .second .rank-medal, 
+    .third .rank-medal {
+        width: 45px;
+        height: 45px;
+        min-height: 45px;
+        margin: 6px auto;
     }
 
     .user-avatar {
-        width: 60px;
-        height: 60px;
+        width: 55px;
+        height: 55px;
+        min-height: 55px;
     }
 
     .crown, .rank-medal {
-        font-size: 24px;
+        font-size: 22px;
+    }
+    
+    .crown {
+        height: 22px;
+        margin-top: 10px;
     }
 
     .podium-score {
-        font-size: 20px;
+        font-size: 18px;
+        min-height: 25px;
+    }
+    
+    .first::after,
+    .second::after,
+    .third::after {
+        font-size: 10px;
+        padding: 2px 0;
+    }
+    
+    .ranking-section h2 {
+        margin-bottom: 20px;
+        font-size: 24px;
+    }
+    
+    .ranking-section h2::after {
+        width: 60px;
     }
 
     .others-header, .other-item {
         grid-template-columns: 0.5fr 2fr 1fr;
+        font-size: 0.9rem;
     }
 
+    /* 가장 작은 화면에서는 순위, 이름, 점수만 표시 */
     .others-header span:nth-child(4),
-    .other-item span:nth-child(4) {
+    .others-header span:nth-child(5),
+    .other-item span:nth-child(4),
+    .other-item span:nth-child(5) {
         display: none;
+    }
+    
+    .ranking-info {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .difficulty-filter {
+        margin-top: 15px;
+    }
+    
+    .difficulty-filter select {
+        padding: 6px 12px;
+        width: 80%;
+        max-width: 200px;
+    }
+}
+
+/* 컨테이너 상단에 타이틀 추가 */
+.ranking-section h2 {
+    position: relative;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 28px;
+    color: var(--primary-dark);
+    padding-bottom: 10px;
+}
+
+.ranking-section h2::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(to right, var(--primary), var(--primary-dark));
+    border-radius: 3px;
+}
+
+/* 상단 디자인 강조 */
+.first .crown {
+    font-size: 30px;
+    margin-top: 12px;
+    position: relative;
+    z-index: 6;
+    animation: floatCrown 3s ease-in-out infinite;
+    height: 30px;
+    display: block;
+}
+
+@keyframes floatCrown {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-3px);
+    }
+}
+
+/* 점수 계산 방식 버튼 래퍼 */
+.score-info-wrapper {
+    margin: 15px 0;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+/* 점수 계산 방식 버튼 */
+.score-info-btn {
+    margin: 0 auto;
+    text-align: center;
+    background-color: var(--primary-light);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: 500;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+    font-size: 14px;
+    border: none;
+    outline: none;
+}
+
+.score-info-btn:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    outline: none;
+}
+
+.info-icon {
+    font-size: 16px;
+}
+
+/* 점수 계산 방식 모달 */
+.score-info-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    animation: fadeIn 0.3s;
+}
+
+.modal-content {
+    background-color: white;
+    margin: 10% auto;
+    padding: 0;
+    width: 90%;
+    max-width: 500px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    animation: slideIn 0.3s;
+    position: relative;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.modal-header {
+    padding: 15px 20px;
+    background: linear-gradient(135deg, var(--primary-light), var(--primary-dark));
+    color: white;
+    border-radius: 15px 15px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h3 {
+    margin: 0;
+    font-size: 1.3rem;
+}
+
+.close-btn {
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.close-btn:hover {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.modal-body {
+    padding: 20px;
+    color: var(--text-primary);
+    line-height: 1.5;
+}
+
+.modal-body p {
+    margin: 15px 0;
+}
+
+.modal-body ul {
+    padding-left: 20px;
+    margin: 15px 0;
+}
+
+.modal-body li {
+    margin-bottom: 8px;
+}
+
+.modal-body code {
+    background-color: #f8f8f8;
+    padding: 3px 6px;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 0.9em;
+    color: #d63384;
+    border: 1px solid #eee;
+}
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@keyframes slideIn {
+    from {transform: translateY(-50px); opacity: 0;}
+    to {transform: translateY(0); opacity: 1;}
+}
+
+/* 모바일 반응형 */
+@media (max-width: 768px) {
+    .modal-content {
+        margin: 15% auto;
+        width: 95%;
+    }
+    
+    .score-info-btn {
+        padding: 6px 14px;
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 480px) {
+    .modal-content {
+        margin: 20% auto;
+    }
+    
+    .modal-body {
+        padding: 15px;
+        font-size: 0.95rem;
+    }
+    
+    .score-info-btn {
+        padding: 5px 10px;
+        font-size: 12px;
     }
 }
