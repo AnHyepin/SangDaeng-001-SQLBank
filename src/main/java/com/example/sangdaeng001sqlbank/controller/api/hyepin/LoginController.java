@@ -1,26 +1,27 @@
 package com.example.sangdaeng001sqlbank.controller.api.hyepin;
 
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.example.sangdaeng001sqlbank.dto.UserDto;
 import com.example.sangdaeng001sqlbank.entity.User;
 import com.example.sangdaeng001sqlbank.jwt.JwtCookieUtil;
 import com.example.sangdaeng001sqlbank.jwt.JwtTokenProvider;
 import com.example.sangdaeng001sqlbank.repository.UserRepository;
 import com.example.sangdaeng001sqlbank.service.hyepin.LoginService;
-import com.example.sangdaeng001sqlbank.utils.SecurityUtil;
+
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseCookie;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
-
 
 @RestController
 @RequiredArgsConstructor
@@ -42,7 +43,7 @@ public class LoginController {
 
     //회원가입
     @PostMapping("/join")
-    public  ResponseEntity<Map<String, String>> register(@ModelAttribute UserDto userDto) {
+    public ResponseEntity<Map<String, String>> register(@ModelAttribute UserDto userDto) {
         log.info("userDto: {}", userDto);
         try {
             String msg = loginService.registerUser(userDto);
@@ -87,10 +88,10 @@ public class LoginController {
             String refreshToken = jwtTokenProvider.createRefreshToken(user.getUserId(), user.getUsername(), user.getName(), user.getRole());
 
             // Access Token을 HttpOnly Cookie에 저장
-            jwtCookieUtil.addTokenToCookie(response, "accessSD", accessToken, accessTokenExpiration);
+            jwtCookieUtil.addTokenToCookie(response, "accessSD", accessToken, 5); // 5초
 
-            // Refresh Token을 HttpOnly Cookie에 저장
-            jwtCookieUtil.addTokenToCookie(response, "refreshSD", refreshToken, refreshTokenExpiration);
+            // Refresh Token을 HttpOnly Cookie에 저장 (세션)
+            jwtCookieUtil.addTokenToCookie(response, "refreshSD", refreshToken, 0); // 세션 쿠키
 
             return ResponseEntity.ok()
                     .body(Map.of("message", "로그인 성공!"));
@@ -112,7 +113,7 @@ public class LoginController {
         return ResponseEntity.ok()
                 .body(Map.of("message", "로그아웃 성공!"));
     }
-    
+
     //ID 찾기
     @PostMapping("/find-id")
     public ResponseEntity<?> findId(@ModelAttribute UserDto userDto) {
@@ -120,9 +121,9 @@ public class LoginController {
         String msg = "이름과 이메일을 다시 확인해 주세요";
         UserDto user = loginService.findId(userDto);
         log.info("user: {}", user);
-        if(user != null) {
+        if (user != null) {
             return ResponseEntity.ok("ID: " + user.getUsername());
-        }else{
+        } else {
             return ResponseEntity.badRequest().body(msg);
         }
     }
@@ -133,9 +134,9 @@ public class LoginController {
         log.info("userDto: {}", userDto);
         String msg = "ID, 이름, 이메일을 다시 확인해 주세요";
         UserDto user = loginService.findPw(userDto);
-        if(user != null) {
+        if (user != null) {
             return ResponseEntity.ok("find");
-        }else {
+        } else {
             return ResponseEntity.badRequest().body(msg);
         }
     }
@@ -145,9 +146,9 @@ public class LoginController {
     public ResponseEntity<?> changePw(@ModelAttribute UserDto userDto) {
         log.info("userDto: {}", userDto);
         int result = loginService.changePw(userDto);
-        if(result == 1) {
+        if (result == 1) {
             return ResponseEntity.ok("비밀번호 변경 완료!");
-        }else {
+        } else {
             return ResponseEntity.badRequest().body("오류 발생. 다시 시도해 주세요.");
         }
     }
