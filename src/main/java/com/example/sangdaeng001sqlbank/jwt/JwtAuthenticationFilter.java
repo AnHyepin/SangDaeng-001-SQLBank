@@ -25,6 +25,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtTokenProvider jwtTokenProvider;
     private final UserDetailsService userDetailsService;
+    private final JwtCookieUtil jwtCookieUtil;
 
     @Value("${jwt.access-expiration}")
     private int accessTokenExpiration;
@@ -61,12 +62,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 String newAccessToken = jwtTokenProvider.createAccessToken(userId, username,name, role);
                 String newRefreshToken = jwtTokenProvider.createRefreshToken(userId, username, name, role);
 
+                jwtCookieUtil.addTokenToCookie(response, "accessSD", newAccessToken, accessTokenExpiration);
+                jwtCookieUtil.addTokenToCookie(response, "refreshSD", newRefreshToken, refreshTokenExpiration);
+
                 // TODO: 기존 Refresh Token 폐기
                 //invalidateOldRefreshToken(refreshToken);
-
                 // 새로운 Access Token & Refresh Token을 쿠키에 저장
-                saveTokenToCookie(response, "accessSD", newAccessToken, accessTokenExpiration); // 1시간
-                saveTokenToCookie(response, "refreshSD", newRefreshToken, refreshTokenExpiration); // 7일
 
                 // 새 Access Token으로 SecurityContext 설정
                 setAuthentication(newAccessToken, request);
@@ -117,21 +118,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 //        response.addCookie(cookie);
 //    }
 
-    private void saveTokenToCookie(HttpServletResponse response, String cookieName, String token, int maxAge) {
-        Cookie cookie = new Cookie(cookieName, token);
-        cookie.setHttpOnly(true);
-        cookie.setSecure(false); // 운영환경에서 true
-        cookie.setPath("/");
 
-        // accessSD는 세션 쿠키로 설정 (maxAge 설정 안 함)
-        if ("accessSD".equals(cookieName)) {
-            cookie.setMaxAge(maxAge);
-        }
-        // refreshSD는 영속 쿠키로 설정 (7일짜리 유지)
-        else if ("refreshSD".equals(cookieName)) {
-            cookie.setMaxAge(-1); // 세션 쿠키 → 브라우저 종료 시 삭제
-        }
-    }
 
     // 기존 Refresh Token을 폐기 (보안 강화)
     private void invalidateOldRefreshToken(String refreshToken) {

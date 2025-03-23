@@ -53,7 +53,8 @@ public class JwtTokenProvider {
                 .claim("name", name)
                 .claim("role", role)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + refreshTokenExpiration)) // 7일 후 만료
+//                .setExpiration(new Date(System.currentTimeMillis() + refreshTokenExpiration)) // 7일 후 만료
+                .setExpiration(new Date(System.currentTimeMillis() + -1)) // 세션 쿠키로 설정 (-1)
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
     }

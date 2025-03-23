@@ -17,10 +17,12 @@ public class JwtCookieUtil {
         cookie.setSecure(!isLocal); // HTTPS 환경에 맞게 조정
         cookie.setPath("/");
 
-        if ("accessSD".equals(cookieName)) {
-            cookie.setMaxAge(maxAge / 1000);
-        } else if ("refreshSD".equals(cookieName)) {
-            cookie.setMaxAge(-1); // 세션 쿠키 (브라우저 종료 시 삭제)
+        // Refresh Token인 경우 세션 쿠키로 설정 (maxAge = -1)
+        if (cookieName.equals("refreshSD")) {
+            cookie.setMaxAge(-1);
+        } else {
+            // Access Token인 경우 5초로 설정
+            cookie.setMaxAge(5);
         }
 
         response.addCookie(cookie);
