@@ -19,9 +19,9 @@ public class ProblemService {
         switch (type) {
             case "id":
                 return problemRepository.findByIdContaining(keyword);
-            case "question":
+            case "Q":
                 return problemRepository.findByQuestionContaining(keyword);
-            case "author":
+            case "A":
                 return problemRepository.findByCreatedByNameContaining(keyword);
             default:
                 return new ArrayList<>();

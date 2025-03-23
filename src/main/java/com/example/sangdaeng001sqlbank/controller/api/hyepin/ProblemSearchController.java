@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/common/search")
+@RequestMapping("/api/common/search")
 @RequiredArgsConstructor
 public class ProblemSearchController {
 
