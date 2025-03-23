@@ -18,6 +18,15 @@
 
             <div id="main_section_header">
                 <div id="problem_list_text">문제 목록</div>
+                <div>
+                    <select id="type">
+                        <option value="id">문제 ID</option>
+                        <option value="Q">질문</option>
+                        <option value="A">작성자</option>
+                    </select>
+                    <input id="searchKeyword" type="text">
+                    <input type="button" value="검색" onclick="searchProblems()">
+                </div>
                 <select id="pageSizeSelector">
                     <option value="10" selected>10개씩 보기</option>
                     <option value="20" >20개씩 보기</option>
@@ -47,5 +56,6 @@
 <!-- JavaScript -->
 <div layout:fragment="scripts">
     <script src="/js/sangin/common/problemList.js"></script>
+    <script src="/js/hyepin/common/problemSearch.js"></script>
 </div>
 </html>
