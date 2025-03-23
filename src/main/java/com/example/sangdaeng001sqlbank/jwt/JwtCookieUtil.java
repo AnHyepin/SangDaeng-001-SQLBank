@@ -1,10 +1,13 @@
 package com.example.sangdaeng001sqlbank.jwt;
 
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Component;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
+
 @Component
+@Slf4j
 public class JwtCookieUtil {
 
     // Access Token & Refresh Token을 쿠키에 저장
@@ -17,7 +20,16 @@ public class JwtCookieUtil {
         cookie.setSecure(!isLocal); // 로컬 환경에서는 Secure 설정 해제
 
         cookie.setPath("/");
-        cookie.setMaxAge(maxAge / 1000); // 밀리초 → 초 변환 필요!
+
+        // maxAge가 0이면 세션 쿠키로 설정
+        if (maxAge == 0) {
+            cookie.setMaxAge(-1); // 세션 쿠키로 설정
+            log.info("세션 쿠키 설정 - {}: isLocal={}", cookieName, isLocal);
+        } else {
+            cookie.setMaxAge(maxAge);
+            log.info("일반 쿠키 설정 - {}: maxAge={}, isLocal={}", cookieName, maxAge, isLocal);
+        }
+
         response.addCookie(cookie);
     }
 
@@ -28,6 +40,7 @@ public class JwtCookieUtil {
         cookie.setSecure(false); // HTTPS 환경에서는 true로 변경 가능
         cookie.setPath("/");
         cookie.setMaxAge(0); // 즉시 만료 (쿠키 삭제)
+        log.info("쿠키 삭제: {}", cookieName);
         response.addCookie(cookie);
     }
 

@@ -1,12 +1,7 @@
 package com.example.sangdaeng001sqlbank.jwt;
 
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,7 +11,13 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import java.io.IOException;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Component
 @RequiredArgsConstructor
@@ -25,6 +26,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtTokenProvider jwtTokenProvider;
     private final UserDetailsService userDetailsService;
+    private final JwtCookieUtil jwtCookieUtil;
 
     @Value("${jwt.access-expiration}")
     private int accessTokenExpiration;
@@ -43,35 +45,38 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         String accessToken = getTokenFromCookie(request, "accessSD");
+        log.info("Access Token: {}", accessToken);
 
         if (accessToken != null && jwtTokenProvider.validateToken(accessToken)) {
-            // Access Token이 유효하면 SecurityContext 설정
+            log.info("Access Token이 유효함");
             setAuthentication(accessToken, request);
         } else {
-            // Access Token이 만료되었으면 Refresh Token 확인
+            log.info("Access Token이 만료되었거나 없음");
             String refreshToken = getTokenFromCookie(request, "refreshSD");
+            log.info("Refresh Token: {}", refreshToken);
 
             if (refreshToken != null && jwtTokenProvider.validateToken(refreshToken)) {
+                log.info("Refresh Token이 유효함, 새로운 토큰 발급");
                 int userId = jwtTokenProvider.getUserIdFromToken(refreshToken);
                 String username = jwtTokenProvider.getUsernameFromToken(refreshToken);
                 String name = jwtTokenProvider.getNameFromToken(refreshToken);
                 String role = jwtTokenProvider.getRoleFromToken(refreshToken);
 
                 // 새로운 Access Token & Refresh Token 발급
-                String newAccessToken = jwtTokenProvider.createAccessToken(userId, username,name, role);
+                String newAccessToken = jwtTokenProvider.createAccessToken(userId, username, name, role);
                 String newRefreshToken = jwtTokenProvider.createRefreshToken(userId, username, name, role);
 
-                // TODO: 기존 Refresh Token 폐기
-                //invalidateOldRefreshToken(refreshToken);
+                log.info("새로운 Access Token 발급: {}", newAccessToken);
+                log.info("새로운 Refresh Token 발급: {}", newRefreshToken);
 
-                // 새로운 Access Token & Refresh Token을 쿠키에 저장
-                saveTokenToCookie(response, "accessSD", newAccessToken, accessTokenExpiration); // 1시간
-                saveTokenToCookie(response, "refreshSD", newRefreshToken, refreshTokenExpiration); // 7일
+                // 새로운 토큰을 쿠키에 저장
+                jwtCookieUtil.addTokenToCookie(response, "accessSD", newAccessToken, accessTokenExpiration); // 5초
+                jwtCookieUtil.addTokenToCookie(response, "refreshSD", newRefreshToken, 0); // 세션 쿠키 (0으로 설정)
 
                 // 새 Access Token으로 SecurityContext 설정
                 setAuthentication(newAccessToken, request);
             } else {
-                // Refresh Token도 없으면 SecurityContext 초기화 (완전 로그아웃)
+                log.info("Refresh Token이 만료되었거나 없음");
                 SecurityContextHolder.clearContext();
             }
         }
@@ -85,12 +90,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
         if (userDetails != null) {
-            UsernamePasswordAuthenticationToken authentication =
-                    new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+            UsernamePasswordAuthenticationToken authentication
+                    = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
             authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
+            log.info("SecurityContext에 인증 정보 설정 완료: {}", username);
         } else {
+            log.info("UserDetails를 찾을 수 없음: {}", username);
             SecurityContextHolder.clearContext();
         }
     }
@@ -100,21 +107,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (request.getCookies() != null) {
             for (Cookie cookie : request.getCookies()) {
                 if (cookieName.equals(cookie.getName())) {
+                    log.info("쿠키 찾음 - {}: {}", cookieName, cookie.getValue());
                     return cookie.getValue();
                 }
             }
         }
+        log.info("쿠키를 찾을 수 없음: {}", cookieName);
         return null;
-    }
-
-    // 새로운 JWT를 쿠키에 저장 (쿠키 갱신)
-    private void saveTokenToCookie(HttpServletResponse response, String cookieName, String token, int maxAge) {
-        Cookie cookie = new Cookie(cookieName, token);
-        cookie.setHttpOnly(true);
-        cookie.setSecure(false); // 배포 시 true 설정 (HTTPS 필요)
-        cookie.setPath("/");
-        cookie.setMaxAge(maxAge);
-        response.addCookie(cookie);
     }
 
     // 기존 Refresh Token을 폐기 (보안 강화)
