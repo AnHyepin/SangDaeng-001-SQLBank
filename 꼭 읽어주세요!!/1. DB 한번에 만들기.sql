@@ -100,7 +100,9 @@ insert into tbl_users (user_id, username, name, password, email, role, created_a
 values  (1, '1', '관리자', '$2a$10$aGoWkK3b40tmVIgNQqbX6.i5X6NyJVw45FiEsxyjmzHBzLJ8qXPvS', '1', 'ROLE_ADMIN', '2025-02-26 16:20:00', null),
         (2, '2', '안혜빈', '$2a$10$aGoWkK3b40tmVIgNQqbX6.i5X6NyJVw45FiEsxyjmzHBzLJ8qXPvS', '2', 'ROLE_ADMIN', '1998-01-15 23:59:59', null),
         (3, '3', '한상인', '$2a$10$aGoWkK3b40tmVIgNQqbX6.i5X6NyJVw45FiEsxyjmzHBzLJ8qXPvS', '3', 'ROLE_ADMIN', '1999-04-01 00:00:00', null);
-        
+
+INSERT INTO tbl_class_settings VALUES(1, 1);
+
         insert into tbl_problems (problem_id, question, description, difficulty, user_id, created_at, permit_yn)
 values  (1, '부서별 평균 급여를 계산하는 SQL을 작성하시오.', '부서별 평균 급여를 구하기 위해 `AVG()` 함수를 사용합니다. 부서 ID를 기준으로 `GROUP BY`를 사용하여 각 부서별 평균 급여를 계산할 수 있습니다.', 'EASY', 1, '2025-03-19 15:30:32', 'Y'),
         (2, '모든 직원의 정보를 조회하는 SQL을 작성하시오.', '`SELECT * FROM employees;` 명령어를 사용하면 테이블의 모든 데이터를 조회할 수 있습니다.', 'EASY', 1, '2025-03-19 15:30:32', 'Y'),
