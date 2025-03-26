@@ -1,54 +1,77 @@
-[ 1 ] 1. 한번에 db 만들기 실행
- 1. = 2. + 3.
+# SQL 문제은행 시스템
 
-[ 2 ] application.properties 내 db에 맞춰서 수정하기
+## 프로젝트 소개
+SQL 문제은행 시스템은 교육자와 학습자를 위한 SQL 학습 플랫폼입니다. 실시간 랭킹 시스템, 자동 채점 기능, 난이도별 필터링 등 다양한 기능을 제공하여 효과적인 SQL 학습을 지원합니다.
 
-[ 3 ] 역할 - 총 3개
+## 주요 기능
+- 실시간 랭킹 시스템
+- 자동 채점 기능
+- 정답률 기반 점수 계산
+- 난이도별 필터링 (Beginner, Intermediate, Advanced)
+- 반응형 시상대 UI
+- 커뮤니티 기능 (게시글, 댓글)
 
-- ROLE_STUDENT
+## 기술 스택
+- Backend: Spring Boot
+- Frontend: Thymeleaf, JavaScript, CSS
+- Database: MySQL
+- Security: Spring Security, JWT
+- Authentication: Cookie, Filter, Interceptor
 
-	문제 목록 조회
-	문제 상세 조회
-	문제 상세 댓글 조회, 등록
+## 설치 및 실행 방법
 
-	문제 풀기, 제출
-	성적 조회
+### 1. 데이터베이스 설정
+```sql
+# 1. 한번에 DB 생성 및 초기 데이터 입력
+# 프로젝트 루트 디렉토리의 sql 파일 실행
+```
 
-	게시글 CRUD
-	댓글 CRUD
+### 2. 애플리케이션 설정
+```properties
+# application.properties 파일에서 데이터베이스 설정 수정
+spring.datasource.url=jdbc:mysql://localhost:3306/your_database
+spring.datasource.username=your_username
+spring.datasource.password=your_password
+```
 
-- ROLE_TEACHER ( ADMIN이 STUDENT 한테 권한 부여 시 문제 등록, 상태 변경 가능 )
-	
-	문제 등록
-	문제 상태 변경 ( 비활성화 시 시험지에 해당 문제가 등장하지 않습니다. )
-	
-- ROLE_ADMIN ( ID : 1 , PW : 1234 )
+## 사용자 역할 및 권한
 
-	문제 수정, 삭제
-	문제 상세 댓글 삭제 가능
+### ROLE_STUDENT
+- 문제 목록 조회
+- 문제 상세 조회
+- 문제 풀기 및 제출
+- 성적 조회
+- 게시글 CRUD
+- 댓글 CRUD
 
-	커뮤니티 유저 게시글 삭제 가능
-	커뮤니티 유저 댓글 삭제 가능
+### ROLE_TEACHER
+- 문제 등록
+- 문제 상태 변경 (비활성화 시 시험지에서 제외)
+- (ADMIN이 권한 부여 시)
 
-	*** 관리자 페이지 : 하단 footer 에 관리자 클릭시 관리자 페이지로 이동 **
+### ROLE_ADMIN
+- 문제 수정/삭제
+- 문제 상세 댓글 삭제
+- 커뮤니티 게시글/댓글 삭제
+- 관리자 페이지 접근
+- TEACHER 권한 부여
+- 통계 조회
+- 기수 설정
 
-	STUDENT 한테 TEACHER 권한 부여
-	통계 조회
+## 관리자 계정
+- ID: 1
+- PW: 1234
+- 관리자 페이지: 하단 footer의 '관리자' 링크 클릭
 
-	기수 설정
+## 문제 해결
+### 로그인 오류
+- F12 -> Application -> Cookie 삭제 후 재시도
 
-[ 4 ] 오류
+## 개발 예정 기능
+- [ ] 타이머 기능
+- [ ] 검색 기능
+- [ ] 로그인 시간 타이머 & 연장 기능
 
-- 로그인 오류시
-	F12 -> application -> cookie 삭제
-
-[ 5 ] 업데이트
-- 타이머 기능 ( 시작 전 )
-- 검색 기능 ( 진행 중 )
-- 로그인 시간 타이머 & 연장 기능 ( 시작 전 )
-
-[ 6 ] 버그 or 건의 사항
-
-010 2552 9440 // 010 5572 4186 
-gpqls9440@naver.com  // hansam8456@naver.com
-으로 연락부탁드립니다.
+## 문의 및 버그 리포트
+- 연락처: 010-2552-9440, 010-5572-4186
+- 이메일: gpqls9440@naver.com, hansam8456@naver.com
